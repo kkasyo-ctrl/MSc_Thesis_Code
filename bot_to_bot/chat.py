@@ -2,11 +2,12 @@ import datetime # used to generate timestamps
 import requests # making HTTP requests to ollama api
 import json # reading javescript object notation
 import sys # for command-line arguments and I/O encoding.
-import activation 
-import system_info
-import rnd_param
+import os 
+from bot_to_bot import activation 
+from bot_to_bot import system_info
+from shared import rnd_param
 import copy
-from prompts import system_final_prompt
+from bot_to_bot.prompts import system_final_prompt
 
 # ensure encoding is utf-8
 sys.stdout.reconfigure(encoding='utf-8')
@@ -140,20 +141,23 @@ def _chat_to_ai(conversation_history, ai_number, mod_used, temperature=0.1):
 
 
 # Call this function to save conversation history
-def _save_conversation_json(path, conversation, display_save_message=False):
+def _save_conversation_json(filename, conversation, display_save_message=False):
+    save_path = os.path.join("bot_to_bot", filename)  
     if display_save_message:
-        print('Conversation saved to {}'.format(path))
-    with open(path, 'w') as f:
+        print('Conversation saved to {}'.format(save_path))
+    with open(save_path, 'w') as f:
         json.dump(conversation, f, indent=4)
 
 
 # takes formatted_conversation_list (which is human-readable strings of the chat) and saves it to a text file.
-def _save_formatted_conversation(path):
-    print('Formatted Conversation saved to {}'.format(path))
-    with open(path, 'w') as f:
+def _save_formatted_conversation(filename):
+    save_path = os.path.join("bot_to_bot", filename)  # Ensure saving in bot_to_bot
+    print('Formatted Conversation saved to {}'.format(save_path))
+    with open(save_path, 'w') as f:
         for line in formatted_conversation_list:
             f.write(line + '\n')
         f.write('\n\n** The End **')
+
 
 
 
@@ -428,7 +432,9 @@ if __name__ == '__main__':
         print('Please specify the AI chat file as a command-line parameter.')
         sys.exit(1)
 
-    with open(ai_chat_file) as f:
+    ai_chat_file = os.path.join(os.path.dirname(__file__), ai_chat_file)  # Ensure correct path
+
+    with open(ai_chat_file, 'r') as f:
         ai_chat_config = json.load(f)
     
     ai_chat_config['ai_one_conversation_history'][0]['display_name'] = rnd_param.role_other

@@ -1,9 +1,10 @@
 # storage of system variables
 from typing import Optional
-from offer import Offer, OfferList 
-import rnd_param
+from bot_to_bot.offer import Offer, OfferList 
+from shared import rnd_param
 import csv
 import datetime
+import os
 
 # system storage
 class Storage:
@@ -27,7 +28,9 @@ def update_system(history):
 
 
 def saving_convo():
-    with open("output.csv", "a", newline="") as f:
+    save_path = os.path.join("bot_to_bot", "output.csv")  # Ensure correct save location
+
+    with open(save_path, "a", newline="") as f:
         writer = csv.writer(f, delimiter=",")  # Use `;` as separator
         writer.writerow([datetime.datetime.now().strftime('%Y%m%d_%H%M%S'), rnd_param.role, rnd_param.main_constraint, rnd_param.other_constraint, 
                          Storage.offer_list[-1].price, Storage.offer_list[-1].quality, Storage.main_bot_cons, Storage.other_constraint, 

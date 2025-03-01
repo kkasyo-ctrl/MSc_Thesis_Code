@@ -1,21 +1,22 @@
 #### Activation 
 # import packages
-import rnd_param
-import logic
+import os
+from shared import rnd_param
+from bot_to_bot import logic
 import json
 import random
 from typing import Any, List, Union
-from system_info import Storage
-from pareto import pareto_efficient_string
-from offer import (Offer, OfferList, ACCEPT, OFFER_QUALITY, OFFER_PRICE,
+from bot_to_bot.system_info import Storage
+from bot_to_bot.pareto import pareto_efficient_string
+from bot_to_bot.offer import (Offer, OfferList, ACCEPT, OFFER_QUALITY, OFFER_PRICE,
                     NOT_OFFER, INVALID_OFFER, NOT_PROFITABLE)
-from prompts import (PROMPTS, not_profitable_prompt, empty_offer_prompt,
+from bot_to_bot.prompts import (PROMPTS, not_profitable_prompt, empty_offer_prompt,
                       offer_without_price_prompt, offer_without_quality_prompt,
                       offer_invalid)
 
 
 # load the supplier-buyer chat history
-with open('supplier_buyer.json', 'r') as f:
+with open(os.path.join(os.path.dirname(__file__), 'supplier_buyer.json'), 'r') as f:
     supplier_buyer = json.load(f)
 
 # modify the bot message based on the execution count

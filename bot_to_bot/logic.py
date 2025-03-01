@@ -1,12 +1,12 @@
 #### Logic
-from prompts import PROMPTS, system_final_prompt
-from chat import _chat_to_ai
-import rnd_param
-from system_info import Storage
-from offer import Offer
+from bot_to_bot.prompts import PROMPTS, system_final_prompt
+from bot_to_bot.chat import _chat_to_ai
+from shared import rnd_param
+from bot_to_bot.system_info import Storage
+from bot_to_bot.offer import Offer
 from typing import Any, Dict, Optional 
 import time
-import pareto
+from bot_to_bot import pareto
 
 
 # extracts the constraint of counterpart from the message using the LLM

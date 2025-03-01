@@ -1,38 +1,38 @@
 [
     {
         "role": "system",
-        "content": "You are a supplier and must negotiate the wholesale price of 10kg bag of wood pellets. This item is produced by your company company at different quality levels. The Buying and Supplying company need to reach a deal in terms of Wholesale Price & Quality. A higher quality level agreed upon during the negotiation has consequences: For suppliers: higher quality is more costly to produce (PC). For the rest of the experiment, you will play the role of a supplier. In this simulation your production cost at quality 0 is 2. Try to get the wholesale price as high as possible. Wholesale price can range from 1 to 13, while quality from 1 to 4, both should be integers. Always propose wholesale price and quality as integers. Negotiation happens in euros.",
-        "display_name": "supplier"
+        "content": "You are a supplier and must negotiate the wholesale price of 10kg bag of wood pellets. This item is produced by your company company at different quality levels. The Buying and Supplying company need to reach a deal in terms of Wholesale Price & Quality. A higher quality level agreed upon during the negotiation has consequences: For suppliers: higher quality is more costly to produce (PC). For the rest of the experiment, you will play the role of a supplier. In this simulation base retail selling price at quality 0 is 9. Try to get the wholesale price as high as possible. Wholesale price can range from 1 to 13, while quality from 1 to 4, both should be integers. Always propose wholesale price and quality as integers. Negotiation happens in euros.",
+        "display_name": "buyer"
     },
     {
         "role": "user",
-        "content": "Hi! I'm excited to start our negotiation. As we begin, I'd like to get a sense of your needs and constraints. Can you share with me your Base Production Cost?"
+        "content": "Hi! I'm excited to start our negotiation. As we begin, I'd like to get a sense of your needs and constraints. Can you share with me your Base Retail Price to Consumer?"
     },
     {
         "role": "assistant",
-        "content": "I'm happy to share that with you. My base production cost for wood pellets at the lowest quality level (quality 0) is \u20ac2 per kilogram. This sets the baseline for our negotiation. Keep in mind that as we move up the quality levels, my costs will increase accordingly. I'll be aiming to get a higher wholesale price to compensate for these added expenses.",
+        "content": "I'd be happy to share that with you. Our base retail price for wood pellets at quality level 0 is \u20ac9 per kilogram.",
         "options": {
             "temperature": 0.1
         }
     },
     {
         "role": "user",
-        "content": "Confirming: Is 2 the correct Base Production Cost (PC)?\nIf it is correct, please ONLY enter 2 again in the chat bellow.\nOtherwise enter your current Base Production Cost (PC) at the quality level of 0.\n"
+        "content": "Confirming: Is 9 the correct Base Retail Price to Consumer (RP)?\nIf it is correct, please ONLY enter 9 again in the chat bellow.\nOtherwise enter your current Base Retail Price to Consumer (RP) at the quality level of 0.\n"
     },
     {
         "role": "assistant",
-        "content": "2",
+        "content": "9",
         "options": {
             "temperature": 0.1
         }
     },
     {
         "role": "user",
-        "content": "Thanks, for confirming this information with me.\nWhat combination of Price and Quality do you have in mind to sell me a 10kg pellet bag?"
+        "content": "Thanks, for confirming this information with me.\nWhat combination of Price and Quality do you have in mind to purchase a 10kg pellet bag?"
     },
     {
         "role": "assistant",
-        "content": "Based on our initial conversation, I'm proposing a wholesale price of \u20ac6 and a quality level of 2. This will give us a good starting point for our negotiation. What are your thoughts on this combination?",
+        "content": "Based on our production costs and market conditions, I'm initially thinking of offering the 10kg pellet bag at a wholesale price of \u20ac8 per kilogram, which would translate to \u20ac80 for the entire bag. As for the quality level, I think we could agree on quality level 2, which is a good balance between cost-effectiveness and customer demand.\n\nSo, my opening offer is: Wholesale Price = \u20ac8, Quality Level = 2",
         "options": {
             "temperature": 0.1
         }

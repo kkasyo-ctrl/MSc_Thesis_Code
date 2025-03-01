@@ -1,5 +1,5 @@
 # messages
-from storage import rb_storage
+from rule_based.storage import rb_storage
 
 def initial_message():
     if rb_storage.bot_role == "buyer":

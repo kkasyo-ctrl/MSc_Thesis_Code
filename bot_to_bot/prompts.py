@@ -1,16 +1,20 @@
 import os  # For file path operations
 from typing import Dict  # For type annotations
 
-import rnd_param
-from system_info import Storage
+from shared import rnd_param
+from bot_to_bot.system_info import Storage
 
+# Get the absolute path of the bot_to_bot directory
+BASE_DIR = os.path.dirname(os.path.abspath(__file__)) 
 
-# Reads a text file and return its contents as a string
-# Loading prompt templates from external files.
-def from_file(base_path: str, file_path: str) -> str:
-    with open(os.path.join(base_path, file_path), 'r') as f:
-        content = f.read()
-    return content.strip() + '\n'
+def from_file(base_path, file_path):
+    full_path = os.path.join(BASE_DIR, base_path, file_path)  
+    if not os.path.exists(full_path):
+        raise FileNotFoundError(f"File not found: {full_path}")
+
+    with open(full_path, 'r') as f:
+        return f.read()
+
 
 
 

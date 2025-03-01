@@ -1,5 +1,6 @@
 import re
-from storage import rb_storage
+from shared import rnd_param
+from rule_based.storage import rb_storage
 
 # extract bot constraint - seems to work
 def extract_constraint(text):

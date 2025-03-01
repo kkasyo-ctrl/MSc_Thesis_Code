@@ -1,8 +1,8 @@
 from typing import Tuple
 
-from offer import Offer, OfferList
-from prompts import PROMPTS
-from rnd_param import QUALITY_RANGE, PRICE_RANGE
+from bot_to_bot.offer import Offer, OfferList
+from bot_to_bot.prompts import PROMPTS
+from shared.rnd_param import QUALITY_RANGE, PRICE_RANGE
 
 # this is needed because user can suggest better than pareto efficient offer
 def pareto_efficient(offer: Offer, all_offers: OfferList) -> bool:
