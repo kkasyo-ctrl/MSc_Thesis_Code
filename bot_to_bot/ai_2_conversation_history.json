@@ -10,7 +10,7 @@
     },
     {
         "role": "user",
-        "content": "I'd be happy to share that with you. Our base retail price for wood pellets at quality level 0 is \u20ac9 per kilogram."
+        "content": "Nice to negotiate with you!\n\nMy base retail selling price for the lowest quality wood pellets is \u20ac9 per kilogram. This gives us a baseline to work from.\n\nNow, I'm interested in hearing about your company's needs and constraints before we dive into the wholesale price discussion. What are your expectations, and what do you hope to achieve from our negotiation?"
     },
     {
         "role": "assistant",
@@ -26,11 +26,11 @@
     },
     {
         "role": "user",
-        "content": "Based on our production costs and market conditions, I'm initially thinking of offering the 10kg pellet bag at a wholesale price of \u20ac8 per kilogram, which would translate to \u20ac80 for the entire bag. As for the quality level, I think we could agree on quality level 2, which is a good balance between cost-effectiveness and customer demand.\n\nSo, my opening offer is: Wholesale Price = \u20ac8, Quality Level = 2"
+        "content": "As the supplier, I'm initially proposing a wholesale price of \u20ac8 and a quality level of 2. This is a reasonable starting point for both parties.\n\nPlease let me know your thoughts on this proposal!"
     },
     {
         "role": "assistant",
-        "content": "I'm pleased to accept your offer! Thank you for considering our needs. To confirm, the agreed-upon terms are: Wholesale Price of \u20ac8 per kilogram, translating to a total price of \u20ac80 for the 10kg pellet bag, and a quality level of 2. I appreciate your understanding and look forward to a successful partnership.",
+        "content": "I'm pleased to accept your initial offer of \u20ac8 per kilogram with a quality level of 2. Thank you for considering my needs, I believe this is a mutually beneficial agreement.",
         "options": {
             "temperature": 0.1
         }

@@ -43,7 +43,7 @@ def initial():
     if rnd_param.role == "buyer":
         message = PROMPTS['first_message_PC']
     else:
-        message = PROMPTS['first_message_MP']
+        message = PROMPTS['first_message_RP']
     
     return message
 
@@ -52,7 +52,7 @@ def constraint_initial(message):
 
     constraint_user = logic.interpret_constraints(message, ai_number=2, ai_chat=supplier_buyer)
     context_constraint = PROMPTS['context_constraint'][rnd_param.role]
-
+    print(f'constraint_user: {context_constraint}')
     if logic.constraint_in_range(constraint_user):
         params = (constraint_user, context_constraint) * 2
         message = PROMPTS['constraint_confirm'] % params

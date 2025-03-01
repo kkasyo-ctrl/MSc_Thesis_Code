@@ -1,0 +1,26 @@
+Starting chat between buyer and supplier in 'Procurement negotiations between a buyer and supplier'...
+
+AI One (buyer) style is: You are a supplier and must negotiate the wholesale price of 10kg bag of wood pellets. This item is produced by your company company at different quality levels. The Buying and Supplying company need to reach a deal in terms of Wholesale Price & Quality. A higher quality level agreed upon during the negotiation has consequences: For suppliers: higher quality is more costly to produce (PC). For the rest of the experiment, you will play the role of a supplier. In this simulation base retail selling price at quality 0 is 9. Try to get the wholesale price as high as possible. Wholesale price can range from 1 to 13, while quality from 1 to 4, both should be integers. Always propose wholesale price and quality as integers. Negotiation happens in euros.
+AI Two (supplier) style is: Your Base Production Cost is 2.
+-----
+supplier started the conversation: Hi! I'm excited to start our negotiation. As we begin, I'd like to get a sense of your needs and constraints. Can you share with me your Base Retail Price to Consumer?
+-----
+(1 of 20) buyer:
+As the supplier, my base retail selling price for quality 0 is €9.00 per kilogram. This is the price at which our wood pellets are sold directly to consumers.
+
+Now that I've shared this information, I'd like to initiate the negotiation process by proposing a wholesale price and quality level. For now, I'll start with a moderate proposal: I suggest a wholesale price of €4.50 per kilogram for a quality level of 2.
+
+Please let me know if you're satisfied with these terms or if you'd like to propose alternatives!
+
+
+(2 of 20) supplier:
+Confirming: Is 9 the correct Base Retail Price to Consumer (RP)?
+If it is correct, please ONLY enter 9 again in the chat bellow.
+Otherwise enter your current Base Retail Price to Consumer (RP) at the quality level of 0.
+
+
+
+(3 of 20) buyer:
+
+
+** The End **

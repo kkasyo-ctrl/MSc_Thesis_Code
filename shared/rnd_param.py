@@ -23,8 +23,8 @@ def profit_buy(MP, quality, neg_price):
 greedy = 0 
 
 
-role = 'supplier'
-role_other = 'buyer'
+role = 'buyer'
+role_other = 'supplier'
 
 if role == 'supplier':
     # supplier parameters

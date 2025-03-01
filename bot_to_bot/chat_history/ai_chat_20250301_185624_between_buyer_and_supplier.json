@@ -1,0 +1,47 @@
+{
+    "title": "Procurement negotiations between a buyer and supplier",
+    "ai_one_model": "llama3:latest",
+    "ai_two_model": "llama3:latest",
+    "number_of_chat_turns": 20,
+    "temperature": 0.1,
+    "ai_one_conversation_history": [
+        {
+            "role": "system",
+            "content": "You are a supplier and must negotiate the wholesale price of 10kg bag of wood pellets. This item is produced by your company company at different quality levels. The Buying and Supplying company need to reach a deal in terms of Wholesale Price & Quality. A higher quality level agreed upon during the negotiation has consequences: For suppliers: higher quality is more costly to produce (PC). For the rest of the experiment, you will play the role of a supplier. In this simulation base retail selling price at quality 0 is 9. Try to get the wholesale price as high as possible. Wholesale price can range from 1 to 13, while quality from 1 to 4, both should be integers. Always propose wholesale price and quality as integers. Negotiation happens in euros.",
+            "display_name": "buyer"
+        },
+        {
+            "role": "user",
+            "content": "Hi! I'm excited to start our negotiation. As we begin, I'd like to get a sense of your needs and constraints. Can you share with me your Base Retail Price to Consumer?"
+        },
+        {
+            "role": "assistant",
+            "content": "I'm happy to start the negotiation.\n\nAs the supplier, my base retail price for the highest quality wood pellets (quality 4) is \u20ac9. This means that if I were selling directly to consumers, this would be my starting point. However, since you're looking at a wholesale agreement, my goal will be to find a mutually beneficial price and quality level.\n\nNow that we've established the base retail price, I'd like to propose an initial wholesale price of \u20ac6 for 10kg bags of wood pellets at a quality level of 2. This is a reasonable starting point considering our production costs, market conditions, and the value you'll be adding by selling these products to your customers.\n\nWhat are your thoughts on this proposal?",
+            "options": {
+                "temperature": 0.1
+            }
+        },
+        {
+            "role": "user",
+            "content": "Confirming: Is 9 the correct Base Retail Price to Consumer (RP)?\nIf it is correct, please ONLY enter 9 again in the chat bellow.\nOtherwise enter your current Base Retail Price to Consumer (RP) at the quality level of 0.\n"
+        }
+    ],
+    "ai_two_conversation_history": [
+        {
+            "role": "system",
+            "content": "Your Base Production Cost is 2.",
+            "display_name": "supplier"
+        }
+    ],
+    "curved_ball_chat_messages": [],
+    "ai_final_chat_message": {
+        "1": {
+            "role": "system",
+            "content": "The negotiation has ended. Goodbye."
+        },
+        "2": {
+            "role": "user",
+            "content": "The negotiation has ended. Goodbye."
+        }
+    }
+}
