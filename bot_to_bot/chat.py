@@ -440,12 +440,17 @@ if __name__ == '__main__':
     ai_chat_config['ai_one_conversation_history'][0]['display_name'] = rnd_param.role_other
     ai_chat_config['ai_two_conversation_history'][0]['display_name'] = rnd_param.role
     
+
+
     # give prompt dynamically
     if rnd_param.role == 'supplier':
         ai_chat_config['ai_two_conversation_history'][0]['content'] = f"Your Base Production Cost is {rnd_param.main_constraint}."
+        ai_chat_config['ai_one_conversation_history'][0]['content'] = f"You are a buyer and must negotiate the wholesale price of 10kg bag of wood pellets. This item is produced by your company at different quality levels. The Buying and Supplying company need to reach a deal in terms of Wholesale Price & Quality. A higher quality level agreed upon during the negotiation has consequences: For buyers: higher quality is allows you to sell the product at a higher price to customers (RP). For the rest of the experiment, you will play the role of a buyer. In this simulation base retail selling Your Base Retail Price to customers is {rnd_param.other_constraint}. Try to get the wholesale price as low as possible. Wholesale price can range from 1 to 13, while quality from 1 to 4, both should be integers. Always propose wholesale price and quality as integers. Negotiation happens in euros."
+
     else:
         ai_chat_config['ai_two_conversation_history'][0]['content'] = f"Your Base Retail Price is {rnd_param.main_constraint}."
-    
+        ai_chat_config['ai_one_conversation_history'][0]['content'] = f"You are a supplier and must negotiate the wholesale price of 10kg bag of wood pellets. This item is produced by your company at different quality levels. The Buying and Supplying company need to reach a deal in terms of Wholesale Price & Quality. A higher quality level agreed upon during the negotiation has consequences: For suppliers: higher quality is more costly to produce (PC). For the rest of the experiment, you will play the role of a supplier. In this simulation base retail selling Your Base Production Cost is {rnd_param.other_constraint}. Try to get the wholesale price as high as possible. Wholesale price can range from 1 to 13, while quality from 1 to 4, both should be integers. Always propose wholesale price and quality as integers. Negotiation happens in euros."
+
     initial_msg = activation.initial()
 
     

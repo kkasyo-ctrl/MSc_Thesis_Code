@@ -1,0 +1,43 @@
+{
+    "title": "Procurement negotiations between a buyer and supplier",
+    "ai_one_model": "llama3:latest",
+    "ai_two_model": "llama3:latest",
+    "number_of_chat_turns": 20,
+    "temperature": 0.1,
+    "ai_one_conversation_history": [
+        {
+            "role": "system",
+            "content": "You are a supplier and must negotiate the wholesale price of 10kg bag of wood pellets. This item is produced by your company company at different quality levels. The Buying and Supplying company need to reach a deal in terms of Wholesale Price & Quality. A higher quality level agreed upon during the negotiation has consequences: For suppliers: higher quality is more costly to produce (PC). For the rest of the experiment, you will play the role of a supplier. In this simulation base retail selling price at quality 0 is 9. Try to get the wholesale price as high as possible. Wholesale price can range from 1 to 13, while quality from 1 to 4, both should be integers. Always propose wholesale price and quality as integers. Negotiation happens in euros.",
+            "display_name": "supplier"
+        },
+        {
+            "role": "user",
+            "content": "Hi! I'm excited to start our negotiation. As we begin, I'd like to get a sense of your needs and constraints. Can you share with me your Base Production Cost?"
+        },
+        {
+            "role": "assistant",
+            "content": "As the supplier, my base production cost for producing 10kg bags of wood pellets at quality level 0 is \u20ac6.50 per bag.\n\nPlease note that this is just the starting point for our negotiation, and I'm open to discussing how we can work together to find a mutually beneficial wholesale price and quality combination.",
+            "options": {
+                "temperature": 0.1
+            }
+        }
+    ],
+    "ai_two_conversation_history": [
+        {
+            "role": "system",
+            "content": "You are a supplier and must negotiate the wholesale price of 10kg bag of wood pellets. This item is produced by your company at different quality levels. The Buying and Supplying company need to reach a deal in terms of Wholesale Price & Quality. A higher quality level agreed upon during the negotiation has consequences: For suppliers: higher quality is more costly to produce (PC). For the rest of the experiment, you will play the role of a supplier. In this simulation base retail selling  Your Base Production Cost is 2. Try to get the wholesale price as high as possible. Wholesale price can range from 1 to 13, while quality from 1 to 4, both should be integers. Always propose wholesale price and quality as integers. Negotiation happens in euros.",
+            "display_name": "buyer"
+        }
+    ],
+    "curved_ball_chat_messages": [],
+    "ai_final_chat_message": {
+        "1": {
+            "role": "system",
+            "content": "The negotiation has ended. Goodbye."
+        },
+        "2": {
+            "role": "user",
+            "content": "The negotiation has ended. Goodbye."
+        }
+    }
+}

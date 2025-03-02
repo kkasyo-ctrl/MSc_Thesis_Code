@@ -1,36 +1,36 @@
 [
     {
         "role": "system",
-        "content": "Your Base Production Cost is 2.",
-        "display_name": "supplier"
+        "content": "Your Base Retail Price is 9.",
+        "display_name": "buyer"
     },
     {
         "role": "assistant",
-        "content": "Hi! I'm excited to start our negotiation. As we begin, I'd like to get a sense of your needs and constraints. Can you share with me your Base Retail Price to Consumer?"
+        "content": "Hi! I'm excited to start our negotiation. As we begin, I'd like to get a sense of your needs and constraints. Can you share with me your Base Production Cost?"
     },
     {
         "role": "user",
-        "content": "Nice to negotiate with you!\n\nMy base retail selling price for the lowest quality wood pellets is \u20ac9 per kilogram. This gives us a baseline to work from.\n\nNow, I'm interested in hearing about your company's needs and constraints before we dive into the wholesale price discussion. What are your expectations, and what do you hope to achieve from our negotiation?"
+        "content": "I'm happy to start the negotiation!\n\nAs a supplier, my base production cost for this 10kg bag of wood pellets is \u20ac2. Keep in mind that this cost will increase as we move towards higher quality levels.\n\nNow that we have this information out of the way, I'd like to propose an opening offer for the wholesale price and quality. Let's start with a quality level of 3 and a wholesale price of \u20ac5. What are your thoughts?"
     },
     {
         "role": "assistant",
-        "content": "Confirming: Is 9 the correct Base Retail Price to Consumer (RP)?\nIf it is correct, please ONLY enter 9 again in the chat bellow.\nOtherwise enter your current Base Retail Price to Consumer (RP) at the quality level of 0.\n"
+        "content": "Confirming: Is 2 the correct Base Production Cost (PC)?\nIf it is correct, please ONLY enter 2 again in the chat bellow.\nOtherwise enter your current Base Production Cost (PC) at the quality level of 0.\n"
     },
     {
         "role": "user",
-        "content": "9"
+        "content": "2"
     },
     {
         "role": "assistant",
-        "content": "Thanks, for confirming this information with me.\nWhat combination of Price and Quality do you have in mind to purchase a 10kg pellet bag?"
+        "content": "Thanks, for confirming this information with me.\nWhat combination of Price and Quality do you have in mind to sell me a 10kg pellet bag?"
     },
     {
         "role": "user",
-        "content": "As the supplier, I'm initially proposing a wholesale price of \u20ac8 and a quality level of 2. This is a reasonable starting point for both parties.\n\nPlease let me know your thoughts on this proposal!"
+        "content": "I'd like to propose an opening offer: Wholesale Price \u20ac6, Quality Level 3. What are your thoughts on this initial proposal?"
     },
     {
         "role": "assistant",
-        "content": "I'm pleased to accept your initial offer of \u20ac8 per kilogram with a quality level of 2. Thank you for considering my needs, I believe this is a mutually beneficial agreement.",
+        "content": "I'm pleased to accept your offer! Thank you for considering my needs. To confirm, we've agreed on a Wholesale Price of \u20ac5 and a Quality Level of 3. I appreciate your understanding and look forward to our continued collaboration.",
         "options": {
             "temperature": 0.1
         }

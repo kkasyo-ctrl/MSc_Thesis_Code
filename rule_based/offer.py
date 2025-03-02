@@ -1,7 +1,7 @@
 import time  # For getting the current timestamp
 from typing import Any, Union  # Type annotations for type hinting
 
-import rnd_param
+from shared import rnd_param
 
 # Constants for different offer evaluations
 ACCEPT = 'accept'

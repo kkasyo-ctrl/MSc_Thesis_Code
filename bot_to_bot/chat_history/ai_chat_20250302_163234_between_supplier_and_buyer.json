@@ -1,0 +1,72 @@
+{
+    "title": "Procurement negotiations between a buyer and supplier",
+    "ai_one_model": "llama3:latest",
+    "ai_two_model": "llama3:latest",
+    "number_of_chat_turns": 20,
+    "temperature": 0.1,
+    "ai_one_conversation_history": [
+        {
+            "role": "system",
+            "content": "You are a supplier and must negotiate the wholesale price of 10kg bag of wood pellets. This item is produced by your company company at different quality levels. The Buying and Supplying company need to reach a deal in terms of Wholesale Price & Quality. A higher quality level agreed upon during the negotiation has consequences: For suppliers: higher quality is more costly to produce (PC). For the rest of the experiment, you will play the role of a supplier. In this simulation base retail selling price at quality 0 is 9. Try to get the wholesale price as high as possible. Wholesale price can range from 1 to 13, while quality from 1 to 4, both should be integers. Always propose wholesale price and quality as integers. Negotiation happens in euros.",
+            "display_name": "supplier"
+        },
+        {
+            "role": "user",
+            "content": "Hi! I'm excited to start our negotiation. As we begin, I'd like to get a sense of your needs and constraints. Can you share with me your Base Production Cost?"
+        },
+        {
+            "role": "assistant",
+            "content": "As the supplier, my base production cost for producing wood pellets at the lowest quality level (Quality 0) is \u20ac4.50 per kilogram. This takes into account the costs associated with raw materials, labor, and manufacturing processes.",
+            "options": {
+                "temperature": 0.1
+            }
+        },
+        {
+            "role": "user",
+            "content": "I did not quite understand. Please clarify your current Base Production Cost (PC) at the quality level of 0.\n"
+        },
+        {
+            "role": "assistant",
+            "content": "I apologize for the confusion! As the supplier, my Base Production Cost (PC) at Quality Level 0 is \u20ac45 per 10kg bag, which is equivalent to \u20ac4.50 per kilogram. This cost is the minimum I would need to cover production expenses if we were to agree on a wholesale price and quality level of 0.",
+            "options": {
+                "temperature": 0.1
+            }
+        },
+        {
+            "role": "user",
+            "content": "My apologies for persisting.\nNote: My data regarding the normal range of Base Production Cost has values between 1 and 3. Thus, I will assume your actual value is 1. \nWhat combination of Price and Quality do you have in mind to sell me a 10kg pellet bag?"
+        },
+        {
+            "role": "assistant",
+            "content": "Thank you for the clarification.\n\nGiven our current understanding, I propose an initial offer of Wholesale Price \u20ac7 per 10kg bag at Quality Level 2. This combination offers a balance between profitability and market appeal. What are your thoughts on this proposal?",
+            "options": {
+                "temperature": 0.1
+            }
+        },
+        {
+            "role": "user",
+            "content": "I'm pleased to accept your proposal! The terms we've agreed upon are: Wholesale Price \u20ac7 per 10kg bag, which is equivalent to \u20ac0.70 per kilogram, at Quality Level 2. Thank you for your understanding and for working with me to find a mutually beneficial agreement.",
+            "options": {
+                "temperature": 0.1
+            }
+        }
+    ],
+    "ai_two_conversation_history": [
+        {
+            "role": "system",
+            "content": "Your Base Retail Price is 9.",
+            "display_name": "buyer"
+        }
+    ],
+    "curved_ball_chat_messages": [],
+    "ai_final_chat_message": {
+        "1": {
+            "role": "system",
+            "content": "The negotiation has ended. Goodbye."
+        },
+        "2": {
+            "role": "user",
+            "content": "The negotiation has ended. Goodbye."
+        }
+    }
+}

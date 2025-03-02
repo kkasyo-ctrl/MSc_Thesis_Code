@@ -64,9 +64,9 @@ def constraint_initial(message):
 
 # store the final constraint
 def constraint_final(inp_msg):
- 
+    print(f"constraint_final: {inp_msg}")
     if not inp_msg.isdigit():
-        constraint_user = logic.interpret_constraints(inp_msg)
+        constraint_user = logic.interpret_constraints(inp_msg, ai_number=2, ai_chat=supplier_buyer)
     else:
         constraint_user = inp_msg
 
@@ -82,7 +82,11 @@ def constraint_final(inp_msg):
                 message = PROMPTS['constraint_final_supplier']
                 final_constraint = constraint_user
     if message is None or final_constraint is None:
-        message = PROMPTS['constraint_persisting']
+        if rnd_param.role == 'supplier':
+            message = PROMPTS['constraint_persist_final_buyer']
+        elif rnd_param.role == 'buyer':
+            message = PROMPTS['constraint_persist_final_supplier']
+        
         final_constraint = logic.constant_draw_constraint()
 
 
