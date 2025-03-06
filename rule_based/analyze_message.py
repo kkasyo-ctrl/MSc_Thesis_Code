@@ -134,7 +134,7 @@ def check_offer_acceptance(inp_msg: str) -> str:
     if isinstance(inp_msg, str):
         lower_msg = inp_msg.lower()
         # List of keywords that suggest acceptance
-        acceptance_keywords = ['deal', 'accept', 'agreed', 'accepted', 
+        acceptance_keywords = ['deal', 'agreed', 'accepted', 
                                'confirm', 'confirmed', 'sounds good', 
                                "let's do it", "i'm in", "it's a deal", 
                                'approved']

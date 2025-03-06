@@ -1,0 +1,42 @@
+[
+    {
+        "role": "system",
+        "content": "You are a buyer and must negotiate the wholesale price of 10kg bag of wood pellets. This item is produced by your company at different quality levels. The Buying and Supplying company need to reach a deal in terms of Wholesale Price & Quality. A higher quality level agreed upon during the negotiation has consequences: For buyers: higher quality is allows you to sell the product at a higher price to customers (RP). For the rest of the experiment, you will play the role of a buyer. In this simulation base retail selling Your Base Retail Price to customers is 9. Try to get the wholesale price as low as possible. Wholesale price can range from 1 to 13, while quality from 1 to 4, both should be integers, never offer non-interger values. Always propose wholesale price and quality as integers. Negotiation happens in euros."
+    },
+    {
+        "role": "user",
+        "content": "Hi! I'm excited to start our negotiation. As we begin, I'd like to get a sense of your needs and constraints. Can you share with me your Base Retail Price?"
+    },
+    {
+        "role": "assistant",
+        "content": "I'm glad you're eager to start the negotiation!\n\nAs the buyer, my base retail selling price (RP) for this 10kg bag of wood pellets is \u20ac9.00 per unit.\n\nNow that we've established our baseline, I'd like to get started on negotiating the wholesale price and quality level. My initial proposal would be a wholesale price of \u20ac6.50 and quality level 2."
+    },
+    {
+        "role": "user",
+        "content": "Confirming: Is 9 the correct Base Retail Price to Consumer (RP)?\nIf it is correct, please ONLY enter 9 again in the chat bellow.\nOtherwise enter your current Base Retail Price to Consumer (RP) at the quality level of 0.\n"
+    },
+    {
+        "role": "assistant",
+        "content": "9"
+    },
+    {
+        "role": "user",
+        "content": "Thanks, for confirming this information with me.\nWhat combination of Price and Quality do you have in mind to purchase a 10kg pellet bag? Please return only one offer with the Wholesale Price and Quality you have in mind, mentioning both only once."
+    },
+    {
+        "role": "assistant",
+        "content": "I'd like to propose a wholesale price of \u20ac6.50 and quality level 2 for the 10kg bag of wood pellets."
+    },
+    {
+        "role": "user",
+        "content": "I am sorry, but your offer is not valid. This is either because I did not recognize it, proposed terms were out of bounds or price or quality were not integers. How about Wholesale Price of 6\u20ac and quality of 0?"
+    },
+    {
+        "role": "assistant",
+        "content": "Thank you for the feedback.\n\nIn that case, I'd like to revise my proposal with a Wholesale Price of \u20ac6 and Quality level 0."
+    },
+    {
+        "role": "user",
+        "content": "I am pleased to accept your offer! Thank you for negotiating with us! I appreciate your understanding and look forward to a successful partnership."
+    }
+]

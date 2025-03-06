@@ -5,7 +5,7 @@ import requests
 import datetime
 import copy
 from rule_based import rb_control 
-from rule_based.storage import rb_storage
+from rule_based.storage import rb_storage, saving_convo
 from shared import rnd_param 
 
 # LLM-based chat function with streaming output
@@ -72,9 +72,9 @@ def run_chat_interaction(num_turns=20):
     
     # context for LLM
     if rnd_param.role == 'supplier':
-        syst_txt = f"You are a supplier and must negotiate the wholesale price of 10kg bag of wood pellets. This item is produced by your company at different quality levels. The Buying and Supplying company need to reach a deal in terms of Wholesale Price & Quality. A higher quality level agreed upon during the negotiation has consequences: For suppliers: higher quality is more costly to produce (PC). For the rest of the experiment, you will play the role of a supplier. In this simulation base retail selling Your Base Production Cost is {rnd_param.main_constraint}. Try to get the wholesale price as high as possible. Wholesale price can range from 1 to 13, while quality from 1 to 4, both should be integers. Always propose wholesale price and quality as integers. Negotiation happens in euros."
+        syst_txt = f"You are a supplier and must negotiate the wholesale price of 10kg bag of wood pellets. This item is produced by your company at different quality levels. The Buying and Supplying company need to reach a deal in terms of Wholesale Price & Quality. A higher quality level agreed upon during the negotiation has consequences: For suppliers: higher quality is more costly to produce (PC). For the rest of the experiment, you will play the role of a supplier. In this simulation base retail selling Your Base Production Cost is {rnd_param.main_constraint}. Try to get the wholesale price as high as possible. Wholesale price can range from 1 to 13, while quality from 1 to 4, both should be integers. Always propose wholesale price and quality as integers, never offer non-interger values. Negotiation happens in euros."
     else:
-        syst_txt = f"You are a buyer and must negotiate the wholesale price of 10kg bag of wood pellets. This item is produced by your company at different quality levels. The Buying and Supplying company need to reach a deal in terms of Wholesale Price & Quality. A higher quality level agreed upon during the negotiation has consequences: For buyers: higher quality is allows you to sell the product at a higher price to customers (RP). For the rest of the experiment, you will play the role of a buyer. In this simulation base retail selling Your Base Retail Price to customers is {rnd_param.main_constraint}. Try to get the wholesale price as low as possible. Wholesale price can range from 1 to 13, while quality from 1 to 4, both should be integers. Always propose wholesale price and quality as integers. Negotiation happens in euros."
+        syst_txt = f"You are a buyer and must negotiate the wholesale price of 10kg bag of wood pellets. This item is produced by your company at different quality levels. The Buying and Supplying company need to reach a deal in terms of Wholesale Price & Quality. A higher quality level agreed upon during the negotiation has consequences: For buyers: higher quality is allows you to sell the product at a higher price to customers (RP). For the rest of the experiment, you will play the role of a buyer. In this simulation base retail selling Your Base Retail Price to customers is {rnd_param.main_constraint}. Try to get the wholesale price as low as possible. Wholesale price can range from 1 to 13, while quality from 1 to 4, both should be integers, never offer non-interger values. Always propose wholesale price and quality as integers. Negotiation happens in euros."
 
     system_message = {"role": "system", "content": syst_txt}
     conversation_history.append(system_message)
@@ -84,30 +84,61 @@ def run_chat_interaction(num_turns=20):
     conversation_history.append(initial_rule_message)
     
     print("Rule-based Bot:", initial_rule_message['content'])
-
+    
+    
+    rb_storage.interaction_list_bot1 = []
+    rb_storage.interaction_list_bot2 = []
+    rb_storage.interaction_list_bot2.append({
+        'role': 'user',
+        'content': initial_rule_message['content']
+        })
+    rb_storage.interaction_list_bot1.append({
+        'role': 'assistant',
+        'content': initial_rule_message['content']
+        })
     
     chat_counter = 1
     num_turns = 10  
 
-    # Note: Using "or" means the loop will continue if either condition is true.
     while rb_storage.end_convo == False and chat_counter < int(num_turns):
-        if chat_counter % 2 == 1:  # Supplier (LLM) turn on odd-numbered turns
+        if chat_counter % 2 == 1:  
             print("\n({} of {}) {}:".format(chat_counter, num_turns, rb_storage.bot2_role))
             ai_response = _chat_to_ai(conversation_history, ai_number=1, mod_used='llama3', temperature=0.1)
             supplier_message = ai_response['content'].strip()
-            # Append supplier's message to conversation history.
+
             conversation_history.append({"role": "assistant", "content": supplier_message})
-        else:  # Buyer (rule–based) turn on even-numbered turns
+
+
+            rb_storage.interaction_list_bot1.append({
+                'role': 'user',
+                'content': supplier_message
+            })
+            
+            rb_storage.interaction_list_bot2.append({
+                'role': 'assistant',
+                'content': supplier_message
+            })
+
+        else: 
             print("\n({} of {}) {}:".format(chat_counter, num_turns, rb_storage.bot1_role))
-            # Generate buyer's reply using the supplier's last message as input.
-            buyer_reply = non_llm_response(conversation_history[-1]['content'])
-            print(buyer_reply)
-            # Append buyer's message (as user) to conversation history.
-            conversation_history.append({"role": "user", "content": buyer_reply})
-        
+            rb_msg = non_llm_response(conversation_history[-1]['content'])
+            print(rb_msg)
+            conversation_history.append({"role": "user", "content": rb_msg})
+            
+            rb_storage.interaction_list_bot1.append({
+                'role': 'assistant',
+                'content': rb_msg
+            })
+
+            rb_storage.interaction_list_bot2.append({
+                'role': 'user',
+                'content': supplier_message
+            })
+
         chat_counter += 1
 
-    # Optionally, save the conversation to a file.
+    # save the conversation to a file.
+    saving_convo()
     save_file_name = 'chat_history/ai_chat_{}.txt'.format(datetime.datetime.now().strftime('%Y%m%d_%H%M%S'))
     save_path = os.path.join("rule_based", save_file_name)
     with open(save_path, 'w') as f:

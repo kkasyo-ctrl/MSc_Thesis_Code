@@ -8,7 +8,7 @@ supplier started the conversation: Hi! I'm excited to start our negotiation. As 
 (1 of 20) buyer:
 Nice to negotiate with you!
 
-My base retail selling price for the lowest quality wood pellets is €9 per kilogram. This gives us a baseline to work from.
+My base retail selling price for the lowest quality wood pellets is  9 per kilogram. This gives us a baseline to work from.
 
 Now, I'm interested in hearing about your company's needs and constraints before we dive into the wholesale price discussion. What are your expectations, and what do you hope to achieve from our negotiation?
 
@@ -30,13 +30,13 @@ What combination of Price and Quality do you have in mind to purchase a 10kg pel
 
 
 (5 of 20) buyer:
-As the supplier, I'm initially proposing a wholesale price of €8 and a quality level of 2. This is a reasonable starting point for both parties.
+As the supplier, I'm initially proposing a wholesale price of  8 and a quality level of 2. This is a reasonable starting point for both parties.
 
 Please let me know your thoughts on this proposal!
 
 
 (6 of 20) supplier:
-I'm pleased to accept your initial offer of €8 per kilogram with a quality level of 2. Thank you for considering my needs, I believe this is a mutually beneficial agreement.
+I'm pleased to accept your initial offer of  8 per kilogram with a quality level of 2. Thank you for considering my needs, I believe this is a mutually beneficial agreement.
 
 
 

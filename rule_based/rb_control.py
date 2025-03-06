@@ -44,6 +44,8 @@ def incoming_message(message):
         else:
         # try to accept the offer yourself
             rb_storage.offer_user = analyze_message.interpret_offer(message)
+            rb_storage.offer_list.append(rb_storage.offer_user)
+            rb_storage.user_message = message
             msg = generate_responses.evaluate()
             # ending mechanism
             if rb_storage.end_convo:

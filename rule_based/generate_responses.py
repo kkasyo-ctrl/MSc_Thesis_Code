@@ -27,7 +27,7 @@ def evaluate():
     rb_storage.offers_pareto_efficient = pareto.pareto_efficient_string(
         rb_storage.bot2_constraint,rb_storage.bot1_constraint, rb_storage.bot1_role
     )
-    
+    print(f'offers_pareto_efficient: {rb_storage.offer_user}')
     evaluation = rb_storage.offer_user.evaluate(greedy)
     print(f'evaluation: {evaluation}')
     if evaluation == ACCEPT:
@@ -41,6 +41,7 @@ def evaluate():
     
 def add_profits(offer: Offer):
     offer.profits(rb_storage.bot1_role, rb_storage.bot2_constraint, rb_storage.bot1_constraint)
+    print(offer.profits)
 
 
 def get_greediness(constraint_user: int, constraint_bot: int) -> int:
