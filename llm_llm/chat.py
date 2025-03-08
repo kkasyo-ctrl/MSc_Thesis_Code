@@ -113,48 +113,49 @@ def run_chat_interaction(num_turns=20):
             ai_response = _chat_to_ai(eval_history, ai_number=1, mod_used='llama3', temperature=0.1)
             ai_eval = ai_response['content'].strip()
 
+        if ai_eval == "CONTINUE":
+            if chat_counter % 2 == 1:             
+                print("\n({} of {}) {}:".format(chat_counter, num_turns, rnd_param.role))
+                ai_response = _chat_to_ai(conversation_history1, ai_number=1, mod_used='llama3', temperature=0.1)
+                bot1msg = ai_response['content'].strip()
 
-        if chat_counter % 2 == 1:             
-            print("\n({} of {}) {}:".format(chat_counter, num_turns, rnd_param.role))
-            ai_response = _chat_to_ai(conversation_history1, ai_number=1, mod_used='llama3', temperature=0.1)
-            bot1msg = ai_response['content'].strip()
+                conversation_history1.append({"role": "assistant", "content": bot1msg})
+                conversation_history2.append({"role": "user", "content": bot1msg})
+                
+                llm_storage.interaction_list_bot1.append({
+                    'role': 'user',
+                    'content': bot1msg
+                })
+                
+                llm_storage.interaction_list_bot2.append({
+                    'role': 'assistant',
+                    'content': bot1msg
+                })
 
-            conversation_history1.append({"role": "assistant", "content": bot1msg})
-            conversation_history2.append({"role": "user", "content": bot1msg})
-            
-            llm_storage.interaction_list_bot1.append({
-                'role': 'user',
-                'content': bot1msg
-            })
-            
-            llm_storage.interaction_list_bot2.append({
-                'role': 'assistant',
-                'content': bot1msg
-            })
+            else: 
+                print("\n({} of {}) {}:".format(chat_counter, num_turns, rnd_param.role_other))
+                ai_response = _chat_to_ai(conversation_history2, ai_number=2, mod_used='llama3', temperature=0.1)
+                bot2msg = ai_response['content'].strip()
+                
+                conversation_history1.append({"role": "user", "content": bot2msg})
+                conversation_history2.append({"role": "assistant", "content": bot2msg})
+                
+                llm_storage.interaction_list_bot1.append({
+                    'role': 'assistant',
+                    'content': bot2msg
+                })
 
-        else: 
-            print("\n({} of {}) {}:".format(chat_counter, num_turns, rnd_param.role_other))
-            ai_response = _chat_to_ai(conversation_history2, ai_number=2, mod_used='llama3', temperature=0.1)
-            bot2msg = ai_response['content'].strip()
-            
-            conversation_history1.append({"role": "user", "content": bot2msg})
-            conversation_history2.append({"role": "assistant", "content": bot2msg})
-            
-            llm_storage.interaction_list_bot1.append({
-                'role': 'assistant',
-                'content': bot2msg
-            })
+                llm_storage.interaction_list_bot2.append({
+                    'role': 'user',
+                    'content': bot2msg
+                })
 
-            llm_storage.interaction_list_bot2.append({
-                'role': 'user',
-                'content': bot2msg
-            })
-
-        chat_counter += 1
+            chat_counter += 1
 
     # find agreement
     find_outcomes = PROMPTS['find_outcomes'] % conversation_history1[-4:]
-    ai_response = _chat_to_ai(find_outcomes, ai_number=1, mod_used='llama3', temperature=0.1)
+    extract_message = [{"role": "system", "content": find_outcomes}]
+    ai_response = _chat_to_ai(extract_message, ai_number=1, mod_used='llama3', temperature=0.1)
     agreed_pq = ai_response['content'].strip()
     llm_storage.agreed_price , llm_storage.agreed_quality = extract_price_and_quality(agreed_pq)
     
