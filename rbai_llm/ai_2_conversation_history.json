@@ -10,7 +10,7 @@
     },
     {
         "role": "user",
-        "content": "I'm happy to start the negotiation!\n\nAs a supplier, my base production cost for this 10kg bag of wood pellets is \u20ac2. Keep in mind that this cost will increase as we move towards higher quality levels.\n\nNow that we have this information out of the way, I'd like to propose an opening offer for the wholesale price and quality. Let's start with a quality level of 3 and a wholesale price of \u20ac5. What are your thoughts?"
+        "content": "I'm happy to be open about my costs. My Base Production Cost (PC) for producing wood pellets is 2 euros per kilogram. This is the minimum price at which I need to sell to break even, considering my production expenses. Keep in mind that this is just a starting point for our negotiation, and I'll aim to reach a wholesale price that benefits both parties while also reflecting the quality of the product we agree upon."
     },
     {
         "role": "assistant",
@@ -26,11 +26,11 @@
     },
     {
         "role": "user",
-        "content": "I'd like to propose an opening offer: Wholesale Price \u20ac6, Quality Level 3. What are your thoughts on this initial proposal?"
+        "content": "I'm thinking of proposing a wholesale price of 5 euros per kilogram, which would translate to 50 euros for a 10kg bag. As for the quality level, I'd like to start with a quality level of 2, which is already a high-quality product that meets your typical standards. This combination should provide a good starting point for our negotiation."
     },
     {
         "role": "assistant",
-        "content": "I'm pleased to accept your offer! Thank you for considering my needs. To confirm, we've agreed on a Wholesale Price of \u20ac5 and a Quality Level of 3. I appreciate your understanding and look forward to our continued collaboration.",
+        "content": "I'm pleased to accept your offer! You're proposing a wholesale price of 5 euros per kilogram, which would translate to 50 euros for a 10kg bag, and a quality level of 2. I appreciate your understanding and think this is a great starting point for our negotiation.",
         "options": {
             "temperature": 0.1
         }

@@ -1,12 +1,12 @@
 #### Logic
-from bot_to_bot.prompts import PROMPTS, system_final_prompt
-from bot_to_bot.chat import _chat_to_ai
+from rbai_llm.prompts import PROMPTS, system_final_prompt
+from rbai_llm.chat import _chat_to_ai
 from shared import rnd_param
-from bot_to_bot.system_info import Storage
-from bot_to_bot.offer import Offer
+from rbai_llm.system_info import Storage
+from rbai_llm.offer import Offer
 from typing import Any, Dict, Optional 
 import time
-from bot_to_bot import pareto
+from rbai_llm import pareto
 
 
 # extracts the constraint of counterpart from the message using the LLM
@@ -14,7 +14,7 @@ def interpret_constraints(message: str, ai_number: int, ai_chat) -> Optional[int
 
     def log(result):
         file_name = \
-            "C:/Users/david/Desktop/MSc Thesis/Code_OG_Mine/bot_to_bot/debug/constraints.csv"
+            "C:/Users/david/Desktop/MSc Thesis/MSc Code/github/MSc_Thesis_Code/rbai_llm/debug/constraints.csv"
         cleaned_llm_output = llm_output.replace("\n", " ### ")
         with open(file_name, "a") as f:
             f.write(f"{message};{cleaned_llm_output};{result}\n") 
@@ -172,7 +172,7 @@ def interpret_offer(message: str, ai_number: int, ai_chat) -> Optional[Offer]:
         price = quality = None
 
 
-    file_name = "C:/Users/david/Desktop/MSc Thesis/Code_OG_Mine/bot_to_bot/debug/interpret.csv"
+    file_name = "C:/Users/david/Desktop/MSc Thesis/MSc Code/github/MSc_Thesis_Code/rbai_llm/debug/interpret.csv"
     cleaned = llm_output.replace("\n", " ### ")
     with open(file_name, "a") as f:
         f.write(f"{message};{cleaned};{price};{quality}\n")

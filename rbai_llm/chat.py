@@ -3,11 +3,11 @@ import requests # making HTTP requests to ollama api
 import json # reading javescript object notation
 import sys # for command-line arguments and I/O encoding.
 import os 
-from bot_to_bot import activation 
-from bot_to_bot import system_info
+from rbai_llm import activation 
+from rbai_llm import system_info
 from shared import rnd_param
 import copy
-from bot_to_bot.prompts import system_final_prompt
+from rbai_llm.prompts import system_final_prompt
 
 # ensure encoding is utf-8
 sys.stdout.reconfigure(encoding='utf-8')
@@ -142,7 +142,7 @@ def _chat_to_ai(conversation_history, ai_number, mod_used, temperature=0.1):
 
 # Call this function to save conversation history
 def _save_conversation_json(filename, conversation, display_save_message=False):
-    save_path = os.path.join("bot_to_bot", filename)  
+    save_path = os.path.join("rbai_llm", filename)  
     if display_save_message:
         print('Conversation saved to {}'.format(save_path))
     with open(save_path, 'w') as f:
@@ -151,7 +151,7 @@ def _save_conversation_json(filename, conversation, display_save_message=False):
 
 # takes formatted_conversation_list (which is human-readable strings of the chat) and saves it to a text file.
 def _save_formatted_conversation(filename):
-    save_path = os.path.join("bot_to_bot", filename)  # Ensure saving in bot_to_bot
+    save_path = os.path.join("rbai_llm", filename)  # Ensure saving in rbai_llm
     print('Formatted Conversation saved to {}'.format(save_path))
     with open(save_path, 'w') as f:
         for line in formatted_conversation_list:

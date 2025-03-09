@@ -2,9 +2,9 @@ import os  # For file path operations
 from typing import Dict  # For type annotations
 
 from shared import rnd_param
-from bot_to_bot.system_info import Storage
+from rbai_llm.system_info import Storage
 
-# Get the absolute path of the bot_to_bot directory
+# Get the absolute path of the rbai_llm directory
 BASE_DIR = os.path.dirname(os.path.abspath(__file__)) 
 
 def from_file(base_path, file_path):

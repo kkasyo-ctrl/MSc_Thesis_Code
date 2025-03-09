@@ -2,15 +2,15 @@
 # import packages
 import os
 from shared import rnd_param
-from bot_to_bot import logic
+from rbai_llm import logic
 import json
 import random
 from typing import Any, List, Union
-from bot_to_bot.system_info import Storage
-from bot_to_bot.pareto import pareto_efficient_string
-from bot_to_bot.offer import (Offer, OfferList, ACCEPT, OFFER_QUALITY, OFFER_PRICE,
+from rbai_llm.system_info import Storage
+from rbai_llm.pareto import pareto_efficient_string
+from rbai_llm.offer import (Offer, OfferList, ACCEPT, OFFER_QUALITY, OFFER_PRICE,
                     NOT_OFFER, INVALID_OFFER, NOT_PROFITABLE)
-from bot_to_bot.prompts import (PROMPTS, not_profitable_prompt, empty_offer_prompt,
+from rbai_llm.prompts import (PROMPTS, not_profitable_prompt, empty_offer_prompt,
                       offer_without_price_prompt, offer_without_quality_prompt,
                       offer_invalid)
 

@@ -1,6 +1,6 @@
 # storage of system variables
 from typing import Optional
-from bot_to_bot.offer import Offer, OfferList 
+from rbai_llm.offer import Offer, OfferList 
 from shared import rnd_param
 import csv
 import datetime
@@ -28,7 +28,7 @@ def update_system(history):
 
 
 def saving_convo():
-    save_path = os.path.join("bot_to_bot", "output.csv")  # Ensure correct save location
+    save_path = os.path.join("rbai_llm", "output.csv")  # Ensure correct save location
 
     with open(save_path, "a", newline="") as f:
         writer = csv.writer(f, delimiter=",")  # Use `;` as separator

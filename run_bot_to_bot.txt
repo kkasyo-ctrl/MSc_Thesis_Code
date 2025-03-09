@@ -1,1 +1,1 @@
-python -m bot_to_bot.chat supplier_buyer
+python -m rbai_llm.chat supplier_buyer

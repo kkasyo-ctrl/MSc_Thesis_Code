@@ -1,7 +1,7 @@
 from typing import Tuple
 
-from bot_to_bot.offer import Offer, OfferList
-from bot_to_bot.prompts import PROMPTS
+from rbai_llm.offer import Offer, OfferList
+from rbai_llm.prompts import PROMPTS
 from shared.rnd_param import QUALITY_RANGE, PRICE_RANGE
 
 # this is needed because user can suggest better than pareto efficient offer

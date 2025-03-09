@@ -1,0 +1,47 @@
+system: You are a buyer and must negotiate the wholesale price of 10kg bag of wood pellets. This item is produced by your company at different quality levels. The Buying and Supplying company need to reach a deal in terms of Wholesale Price & Quality. A higher quality level agreed upon during the negotiation has consequences: For buyers: higher quality is allows you to sell the product at a higher price to customers (RP). For the rest of the experiment, you will play the role of a buyer. In this simulation base retail selling Your Base Retail Price to customers is 9. Try to get the wholesale price as low as possible. Wholesale price can range from 1 to 13, while quality from 1 to 4, both should be integers, never offer non-interger values. Always propose wholesale price and quality as integers. Negotiation happens in euros.
+
+user: Let's start the negotiation.
+
+assistant: I'd like to start by making an initial proposal.
+
+I'm willing to pay a wholesale price of €6 for 10kg bag of wood pellets, assuming a quality level of 2. This is based on my analysis of the market and my company's needs.
+
+Please let me know if this is acceptable or if you're looking for a different wholesale price and quality combination.
+
+user: Thank you for the proposal!
+
+As the supplier, I need to ensure that our production costs are covered, and a higher quality level would indeed be more costly to produce (PC). Considering my base production cost of €2, I would require a higher wholesale price to account for the increased cost.
+
+I'm willing to accept your proposed quality level of 2, but I believe a wholesale price of €6 is too low. I'd like to counteroffer with a proposal of:
+
+Wholesale Price: €8
+Quality Level: 2
+
+This takes into account the additional costs associated with producing higher-quality wood pellets while still providing value to your company.
+
+What are your thoughts on this revised proposal?
+
+assistant: Thank you for the counteroffer. I appreciate your willingness to work together to find a mutually beneficial agreement.
+
+After reviewing the proposal, I'm inclined to agree that a higher wholesale price is justified given the increased production costs. However, I still believe that €8 may be too high, considering my company's target profit margin.
+
+I'd like to counter-counteroffer with:
+
+Wholesale Price: €7
+Quality Level: 2
+
+This offer still reflects the value of the higher-quality wood pellets while allowing for a reasonable profit margin. What are your thoughts on this revised proposal?
+
+user: Thank you for the thoughtful counter-counteroffer!
+
+I appreciate your willingness to find a mutually beneficial agreement, and I'm happy to continue negotiating.
+
+Considering our previous discussions, I'm willing to meet you halfway and propose:
+
+Wholesale Price: €7.50
+Quality Level: 2
+
+This revised proposal takes into account my increased production costs while still providing value to your company. The extra €0.50 will help me cover the added expenses associated with producing higher-quality wood pellets.
+
+What are your thoughts on this revised proposal?
+

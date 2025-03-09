@@ -4,8 +4,8 @@ import sys
 import requests
 import datetime
 import copy
-from rule_based import rb_control 
-from rule_based.storage import rb_storage, saving_convo
+from rb_llm import rb_control 
+from rb_llm.storage import rb_storage, saving_convo
 from shared import rnd_param 
 
 # LLM-based chat function with streaming output
@@ -140,7 +140,7 @@ def run_chat_interaction(num_turns=20):
     # save the conversation to a file.
     saving_convo()
     save_file_name = 'chat_history/ai_chat_{}.txt'.format(datetime.datetime.now().strftime('%Y%m%d_%H%M%S'))
-    save_path = os.path.join("rule_based", save_file_name)
+    save_path = os.path.join("rb_llm", save_file_name)
     with open(save_path, 'w') as f:
         json.dump(conversation_history, f, indent=4)
     print("\nConversation saved to", save_path)
