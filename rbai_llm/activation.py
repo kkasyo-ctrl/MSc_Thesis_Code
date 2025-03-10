@@ -50,11 +50,11 @@ def initial():
 # asks the counterparts for their initial constraints (e.g., production cost or retail price)
 def constraint_initial(message):
 
-    constraint_user = logic.interpret_constraints(message, ai_number=2, ai_chat=supplier_buyer)
+    constraint_bot2 = logic.interpret_constraints(message, ai_number=2, ai_chat=supplier_buyer)
     context_constraint = PROMPTS['context_constraint'][rnd_param.role]
-    print(f'constraint_user: {context_constraint}')
-    if logic.constraint_in_range(constraint_user):
-        params = (constraint_user, context_constraint) * 2
+    print(f'constraint bot llm: {context_constraint}')
+    if logic.constraint_in_range(constraint_bot2):
+        params = (constraint_bot2, context_constraint) * 2
         message = PROMPTS['constraint_confirm'] % params
     else:
         message = PROMPTS['constraint_clarify'] % context_constraint
@@ -66,21 +66,21 @@ def constraint_initial(message):
 def constraint_final(inp_msg):
     print(f"constraint_final: {inp_msg}")
     if not inp_msg.isdigit():
-        constraint_user = logic.interpret_constraints(inp_msg, ai_number=2, ai_chat=supplier_buyer)
+        constraint_bot2 = logic.interpret_constraints(inp_msg, ai_number=2, ai_chat=supplier_buyer)
     else:
-        constraint_user = inp_msg
+        constraint_bot2 = inp_msg
 
     message = final_constraint = None
-    if constraint_user is not None:
+    if constraint_bot2 is not None:
         if rnd_param.role == 'supplier':
-            if logic.constraint_in_range(constraint_user):
+            if logic.constraint_in_range(constraint_bot2):
                 message = PROMPTS['constraint_final_buyer']
-                final_constraint = constraint_user
+                final_constraint = constraint_bot2
         
         else:
-            if logic.constraint_in_range(constraint_user):
+            if logic.constraint_in_range(constraint_bot2):
                 message = PROMPTS['constraint_final_supplier']
-                final_constraint = constraint_user
+                final_constraint = constraint_bot2
     if message is None or final_constraint is None:
         if rnd_param.role == 'supplier':
             message = PROMPTS['constraint_persist_final_buyer']
@@ -103,11 +103,11 @@ def interpretation(message):
         state = determine_state()
     
     if state == "CONTINUE":    
-        Storage.offer_user = logic.interpret_offer(message, ai_number=2, ai_chat=supplier_buyer)
+        Storage.offer_bot2 = logic.interpret_offer(message, ai_number=2, ai_chat=supplier_buyer, offer_by=rnd_param.role_other)
         if Storage.offer_list is None:
             Storage.offer_list = OfferList()
-        Storage.offer_list.append(Storage.offer_user)
-        Storage.user_message = message
+        Storage.offer_list.append(Storage.offer_bot2)
+        Storage.bot2_message = message
         return evaluate()
 
     elif state == "DEAL":
@@ -130,7 +130,7 @@ def evaluate():
         Storage.other_constraint, Storage.main_bot_cons, rnd_param.role
     )
     
-    evaluation = Storage.offer_user.evaluate(greedy)
+    evaluation = Storage.offer_bot2.evaluate(greedy)
 
     if evaluation == ACCEPT:
         return accept_offer()
@@ -153,15 +153,15 @@ def respond_to_offer(evaluation: str, greedy: int):
 
     while len(llm_offers) < 3 and evaluation != ACCEPT:
         response = logic.get_llm_response(content1, ai_number=2, ai_chat=supplier_buyer)
-        last_offer = logic.interpret_offer(response, ai_number=2, ai_chat=supplier_buyer)
+        last_offer = logic.interpret_offer(response, ai_number=2, ai_chat=supplier_buyer, offer_by=rnd_param.role)
 
         if last_offer.is_complete:
             logic.add_profits(last_offer)
         else:
-            last_offer.profit_bot = 0
-            last_offer.profit_user = 0
+            last_offer.profit_bot1 = 0
+            last_offer.profit_bot2 = 0
 
-        llm_offers.append([last_offer.profit_bot, response, last_offer])
+        llm_offers.append([last_offer.profit_bot1, response, last_offer])
         evaluation = last_offer.evaluate(greedy)
         print(f'Evalutation from the while loop: {evaluation}')
         print(f'Offer in offer.py: {OfferList}')
@@ -173,21 +173,21 @@ def respond_to_offer(evaluation: str, greedy: int):
 def get_respond_prompt(evaluation: str) -> str:
     if evaluation == NOT_OFFER:
         return empty_offer_prompt(
-            Storage.user_message, Storage.offers_pareto_efficient, str(Storage.interaction_list_bot2)
+            Storage.bot2_message, Storage.offers_pareto_efficient, str(Storage.interaction_list_bot2)
         )
     elif evaluation == OFFER_QUALITY:
         return offer_without_price_prompt(
-            Storage.user_message, Storage.offers_pareto_efficient, str(Storage.interaction_list_bot2)
+            Storage.bot2_message, Storage.offers_pareto_efficient, str(Storage.interaction_list_bot2)
         )
     elif evaluation == OFFER_PRICE:
         return offer_without_quality_prompt(
-            Storage.user_message, Storage.offers_pareto_efficient, str(Storage.interaction_list_bot2)
+            Storage.bot2_message, Storage.offers_pareto_efficient, str(Storage.interaction_list_bot2)
         )
     elif evaluation == INVALID_OFFER:
-        return offer_invalid(Storage.user_message)
+        return offer_invalid(Storage.bot2_message)
     else:
         return not_profitable_prompt(
-            Storage.user_message, Storage.offers_pareto_efficient, str(Storage.interaction_list_bot2)
+            Storage.bot2_message, Storage.offers_pareto_efficient, str(Storage.interaction_list_bot2)
         )
 
 
@@ -213,22 +213,11 @@ def send_response(evaluation: str, last_offer: Offer,
 # accept the bots offer
 def accept_offer():
     print('accept')
-    content = PROMPTS['accept_from_chat'] + Storage.user_message
+    content = PROMPTS['accept_from_chat'] + Storage.bot2_message
     Storage.end_convo = True
-    accept_final_chat()
 
     return content
 
-# store the final offer in the storage
-def accept_final_chat():
-    bot_offer = Offer(
-        idx=-1,
-        price=Storage.offer_user.price,
-        quality=Storage.offer_user.quality,
-        test="accept_final_chat"
-    )
-    logic.add_profits(bot_offer)
-    Storage.offer_list.append(bot_offer)
 
 
 # respond to the counterpart's offer in case the offer is not valid or no offer is provided
@@ -242,15 +231,15 @@ def respond_to_non_offer(evaluation: str, greedy: int):
 
     while len(llm_offers) < 3 and evaluation != ACCEPT:
         response = logic.get_llm_response(content1, ai_number=2, ai_chat=supplier_buyer)
-        last_offer = logic.interpret_offer(response, ai_number=2, ai_chat=supplier_buyer)
+        last_offer = logic.interpret_offer(response, ai_number=2, ai_chat=supplier_buyer, offer_by=rnd_param.role)
 
         if last_offer.is_complete:
             logic.add_profits(last_offer)
         else:
-            last_offer.profit_bot = 0 
-            last_offer.profit_user = 0
+            last_offer.profit_bot1 = 0 
+            last_offer.profit_bot2 = 0
 
-        llm_offers.append([last_offer.profit_bot, response, last_offer])
+        llm_offers.append([last_offer.profit_bot1, response, last_offer])
         evaluation = last_offer.evaluate(greedy)
         print(f'Evalutation from the while loop: {evaluation}')
         print(f'Offer in offer.py: {Offer}')

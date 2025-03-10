@@ -10,7 +10,7 @@
     },
     {
         "role": "assistant",
-        "content": "I'm happy to be open about my costs. My Base Production Cost (PC) for producing wood pellets is 2 euros per kilogram. This is the minimum price at which I need to sell to break even, considering my production expenses. Keep in mind that this is just a starting point for our negotiation, and I'll aim to reach a wholesale price that benefits both parties while also reflecting the quality of the product we agree upon.",
+        "content": "As the supplier, my Base Production Cost is \u20ac2 per kilogram. Since we're discussing a 10kg bag of wood pellets, that would be a total production cost of \u20ac20. Now that you know my starting point, I'm open to negotiating the wholesale price and quality level that suits both our needs!",
         "options": {
             "temperature": 0.1
         }
@@ -32,7 +32,21 @@
     },
     {
         "role": "assistant",
-        "content": "I'm thinking of proposing a wholesale price of 5 euros per kilogram, which would translate to 50 euros for a 10kg bag. As for the quality level, I'd like to start with a quality level of 2, which is already a high-quality product that meets your typical standards. This combination should provide a good starting point for our negotiation.",
+        "content": "Given my base production cost of \u20ac2 per kilogram, I'd like to propose a wholesale price of \u20ac4.50 and a quality level of 3 for the 10kg bag of wood pellets. This combination takes into account the costs involved in producing higher-quality products while still offering you a competitive price point.",
+        "options": {
+            "temperature": 0.1
+        }
+    },
+    {
+        "role": "user",
+        "content": "The proposed offer contains an invalid combination. A valid alternative is a wholesale price of 9\u20ac with a quality level of 3. Would you consider this option?",
+        "options": {
+            "temperature": 0.1
+        }
+    },
+    {
+        "role": "assistant",
+        "content": "I'd like to consider the revised proposal of \u20ac9 and a quality level of 3 for the 10kg bag of wood pellets. This seems like a more reasonable combination given my production costs, and I'm willing to entertain this offer. What are your thoughts on this revised proposal?",
         "options": {
             "temperature": 0.1
         }

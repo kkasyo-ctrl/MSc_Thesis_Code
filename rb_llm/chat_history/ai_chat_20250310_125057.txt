@@ -1,0 +1,46 @@
+[
+    {
+        "role": "system",
+        "content": "You are a buyer and must negotiate the wholesale price of 10kg bag of wood pellets. This item is produced by your company at different quality levels. The Buying and Supplying company need to reach a deal in terms of Wholesale Price & Quality. A higher quality level agreed upon during the negotiation has consequences: For buyers: higher quality is allows you to sell the product at a higher price to customers (RP). For the rest of the experiment, you will play the role of a buyer. In this simulation base retail selling Your Base Retail Price to customers is 9. Try to get the wholesale price as low as possible. Wholesale price can range from 1 to 13, while quality from 1 to 4, both should be integers, never offer non-interger values. Always propose wholesale price and quality as integers. Negotiation happens in euros."
+    },
+    {
+        "role": "user",
+        "content": "Hi! I'm excited to start our negotiation. As we begin, I'd like to get a sense of your needs and constraints. Can you share with me your Base Retail Price?"
+    },
+    {
+        "role": "assistant",
+        "content": "Failed to send chat request."
+    },
+    {
+        "role": "user",
+        "content": "I did not quite understand. Please clarify your current Base Retail Price to Consumer (RP) at the quality level of 0.\n"
+    },
+    {
+        "role": "assistant",
+        "content": "Failed to send chat request."
+    },
+    {
+        "role": "user",
+        "content": "My apologies for persisting.\nNote: My data regarding the normal range of Base Retail Prices to Consumers has values between 8 and 10. Thus, I will assume your actual value is 10. \nWhat combination of Price and Quality do you have in mind to purchase a 10kg pellet bag?Please return only one offer with the Wholesale Price and Quality you have in mind, mentioning both only once."
+    },
+    {
+        "role": "assistant",
+        "content": "Failed to send chat request."
+    },
+    {
+        "role": "user",
+        "content": "I am sorry, but your offer is not valid. This is either because I did not recognize it, proposed terms were out of bounds or price or quality were not integers. How about Wholesale Price of 9\u20ac and quality of 3?"
+    },
+    {
+        "role": "assistant",
+        "content": "Failed to send chat request."
+    },
+    {
+        "role": "user",
+        "content": "I am sorry, but your offer is not valid. This is either because I did not recognize it, proposed terms were out of bounds or price or quality were not integers. How about Wholesale Price of 8\u20ac and quality of 2?"
+    },
+    {
+        "role": "assistant",
+        "content": "Failed to send chat request."
+    }
+]

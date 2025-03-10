@@ -13,7 +13,6 @@ def extract_constraint(text):
     
     pattern = r'[^.]*\b' + key_phrases + r'\b[^.]*\.'
     rel_sentence = re.search(pattern, text, re.IGNORECASE | re.MULTILINE)
-    print(pattern)
     if rel_sentence:
         sentence = rel_sentence.group().strip()
         print("Extracted sentence:")
@@ -37,7 +36,6 @@ def extract_constraint(text):
         return MESSAGES['constraint_not_found'] % context_constraint
 
 
-
 # add message to the extracted constraint
 def augment_message(message):
     output = extract_constraint(message)
@@ -53,6 +51,7 @@ def augment_message(message):
         message = output
         
     return message
+
 
 # check if the constraint is in range    
 def analyze_constraint(int_const):
@@ -99,6 +98,7 @@ def constraint_final(inp_msg):
     rb_storage.bot2_constraint = int(final_constraint)
     return message
 
+
 # make up a constraint
 def constant_draw_constraint() -> int:
     bot1_role = rb_storage.bot2_role  
@@ -108,39 +108,73 @@ def constant_draw_constraint() -> int:
         return 10 
 
 
-# interpret offer
+# interpret counter parties offer
 def interpret_offer(text):
-    print("interpret offer")
     idx = int(time.time())
-    price_pattern = r'wholesale price.*?€\s?(\d+(?:\.\d+)?)'
-    price_match = re.search(price_pattern, text, re.IGNORECASE)
+    key_phrases = r'(?:wholesale price|offered price|proposed price|selling price|negotiated price).*?(?:quality|quality level)'
     
-    if not price_match:
-        price_pattern = r'€\s?(\d+(?:\.\d+)?)'
-        price_match = re.search(price_pattern, text)
-    
-    price = float(price_match.group(1)) if price_match else None
+    pattern = r'([^.!?]*\b' + key_phrases + r'\b[^.!?]*[.!?])'
+    matches = re.findall(pattern, text, re.IGNORECASE | re.MULTILINE)
+
+    if matches:
+        sentence = matches[-1].strip() 
+        print("Extracted sentence:")
+        print(sentence)
+    else:
+        print("No sentence containing the specified phrases was found. Using fallback.")
+        sentence = text  
+
+    price_pattern = r'(?:(?:[\€\u20AC]|EUR)\s*\d+(?:[,.]\d+)?|\d+(?:[,.]\d+)?\s*(?:[\€\u20AC]|EUR|euros?))'
+    price_match = re.findall(price_pattern, sentence, re.IGNORECASE)
 
     quality_pattern = r'quality(?:\s*level)?\D*(\d+)'
-    quality_match = re.search(quality_pattern, text, re.IGNORECASE)
-    quality = int(quality_match.group(1)) if quality_match else None
+    quality_match = re.findall(quality_pattern, sentence, re.IGNORECASE)
 
-    return Offer(idx=idx, from_chat=True, price=price, quality=quality)
+    if price_match:
+        price_str = price_match[-1] 
+        for token in ['€', '\u20AC', 'EUR', 'euro', 'euros']:
+            price_str = price_str.replace(token, '')
+        price_str = price_str.strip()
+        price_str = re.sub(r'[^\d\.]', '', price_str)
+        price = float(price_str) if '.' in price_str else int(price_str)
+    else:
+        price = None
 
+    # Process extracted quality
+    quality = int(quality_match[-1]) if quality_match else None
+
+    return Offer(idx=idx, from_chat=True, price=price, quality=quality, offer_by=rb_storage.bot2_role)
 
 
 # accept offer
 def check_offer_acceptance(inp_msg: str) -> str:
     if isinstance(inp_msg, str):
         lower_msg = inp_msg.lower()
-        # List of keywords that suggest acceptance
         acceptance_keywords = ['deal', 'agreed', 'accepted', 
                                'confirm', 'confirmed', 'sounds good', 
                                "let's do it", "i'm in", "it's a deal", 
                                'approved']
-        if any(keyword in lower_msg for keyword in acceptance_keywords):
+        not_acceptance = ["i'll counteroffer", "i'll counter-offer", "i'll counter offer", "will counter offer"
+                          "i'll make a counteroffer", "i'll make a counter-offer", "i'll make a counter offer",
+                          "make counter proposal", "not yet ready", "let's discuss further", "not agree", 
+                          "don't have deal", "can we adjust" , "can we do", "can we agree"]
+
+        if any(keyword in lower_msg for keyword in acceptance_keywords) and not any(phrase in lower_msg for phrase in not_acceptance):
             rb_storage.end_convo = True
             return MESSAGES['they_accept_offer']
     return None
 
-# Example usage:
+
+# interpret own offer
+def own_offer(text):
+    idx = int(time.time())
+    pattern = r'Price of\s*(\d+)[€]?\s*and\s*quality of\s*(\d+)'
+    
+    matches = re.findall(pattern, text, re.IGNORECASE)
+
+    if matches:
+        price, quality = map(int, matches[-1])
+    else:
+        return None  
+    
+    return Offer(idx=idx, from_chat=True, price=price, quality=quality, offer_by=rb_storage.bot1_role)

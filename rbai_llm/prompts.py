@@ -49,41 +49,41 @@ def system_final_prompt():
 
 # The functions below dynamically generate promts for different negotiations situations
 # empty_offer_prompt: Handles cases where no valid offer was received.
-def empty_offer_prompt(user_message: str,
+def empty_offer_prompt(bot2_message: str,
                        offers_pareto_efficient: str,
                        interactions: str) -> str:
     bot_role = rnd_param.role
     prompts = PROMPTS[bot_role]
     return (prompts['follow_up_prompt_without_offer'] +
-            user_message + ' ' +
+            bot2_message + ' ' +
             prompts['non_profitable_offer_or_deal'] +
             offers_pareto_efficient + '\n' +
             prompts['follow_up_conversation'] +
             interactions)
 
 
-# offer_without_quality_prompt: Handles cases where quality is missing in the user's offer
-def offer_without_quality_prompt(user_message: str,
+# offer_without_quality_prompt: Handles cases where quality is missing in the bot2 offer
+def offer_without_quality_prompt(bot2_message: str,
                                  offers_pareto_efficient: str,
                                  interactions: str) -> str:
     bot_role = rnd_param.role
     prompts = PROMPTS[bot_role]
     return (prompts['follow_up_prompt_without_quality'] +
-            user_message + ' ' +
+            bot2_message + ' ' +
             prompts['non_quality_offer'] +
             offers_pareto_efficient + '\n' +
             prompts['follow_up_conversation'] +
             interactions)
 
 
-# offer_without_price_prompt: Handles cases where price is missing in the user's offer
-def offer_without_price_prompt(user_message: str,
+# offer_without_price_prompt: Handles cases where price is missing in the bot2 offer
+def offer_without_price_prompt(bot2_message: str,
                                offers_pareto_efficient: str,
                                interactions: str) -> str:
     bot_role = rnd_param.role
     prompts = PROMPTS[bot_role]
     return (prompts['follow_up_prompt_without_price'] +
-            user_message + ' ' +
+            bot2_message + ' ' +
             prompts['non_price_offer'] +
             offers_pareto_efficient + '\n' +
             prompts['follow_up_conversation'] +
@@ -91,14 +91,14 @@ def offer_without_price_prompt(user_message: str,
 
 
 
-# not_profitable_prompt: Responds when the user's offer isn't profitable
-def not_profitable_prompt(user_message: str,
+# not_profitable_prompt: Responds when the bot2 offer isn't profitable
+def not_profitable_prompt(bot2_message: str,
                           offers_pareto_efficient: str,
                           interactions: str) -> str:
     bot_role = rnd_param.role
     prompts = PROMPTS[bot_role]
     return (prompts['follow_up_prompt_2nd'] +
-            user_message + ' ' +
+            bot2_message + ' ' +
             prompts['non_profitable_offer'] +
             offers_pareto_efficient + '\n' +
             prompts['follow_up_conversation'] +
@@ -106,11 +106,11 @@ def not_profitable_prompt(user_message: str,
 
 
 # offer_invalid: Handles invalid offers
-def offer_invalid(user_message: str) -> str:
+def offer_invalid(bot2_message: str) -> str:
     bot_role = rnd_param.role
     prompts = PROMPTS[bot_role]
     return (prompts['follow_up_invalid_offer'] +
-            user_message + ' ' +
+            bot2_message + ' ' +
             prompts['invalid_offer_reminder'])
 
 

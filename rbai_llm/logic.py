@@ -37,30 +37,30 @@ def interpret_constraints(message: str, ai_number: int, ai_chat) -> Optional[int
         
 
 # checks whether the constraint is within valid bounds
-def constraint_in_range(constraint_user) -> bool:
-    if constraint_user is None:
+def constraint_in_range(constraint_bot2) -> bool:
+    if constraint_bot2 is None:
         return False  
 
-    constraint_user = int(constraint_user)
+    constraint_bot2 = int(constraint_bot2)
     bot1_role = rnd_param.role_other  
     if bot1_role == 'supplier':
     
     # Check if constraint is within production cost range
-        return 1 <= constraint_user <= 3
+        return 1 <= constraint_bot2 <= 3
     else:
         # Check if constraint is within retail price range
-        return 8 <= constraint_user <= 10
+        return 8 <= constraint_bot2 <= 10
 
 # if the counterpart has not provided a valud constraint, the bot will assume the worst value
 def constant_draw_constraint() -> int:
-    user_role = rnd_param.role  
-    if user_role == 'supplier':
-        return 1  
+    bot1_role = rnd_param.role  
+    if bot1_role == 'supplier':
+        return 10  
     else:
-        return 10 
+        return 1 
 
 
-# calculate profits for the bot and user based on constraints
+# calculate profits for the bot and bot2 based on constraints
 def add_profits(offer: Offer):
     offer.profits(rnd_param.role, Storage.other_constraint, Storage.main_bot_cons)
 
@@ -117,7 +117,7 @@ def extract_content(response: Dict[str, Any]) -> str:
 
 
 # extract price and quality values from the message and create an Offer object
-def interpret_offer(message: str, ai_number: int, ai_chat) -> Optional[Offer]:
+def interpret_offer(message: str, ai_number: int, ai_chat, offer_by) -> Optional[Offer]:
     def get_int(value: str) -> Optional[int]:
         """Extracts an integer or processes a range like '6-7'."""
         try:
@@ -177,8 +177,7 @@ def interpret_offer(message: str, ai_number: int, ai_chat) -> Optional[Offer]:
     with open(file_name, "a") as f:
         f.write(f"{message};{cleaned};{price};{quality}\n")
 
-    return Offer(idx=idx, from_chat=True, price=price, quality=quality)
-
+    return Offer(idx=idx, from_chat=True, price=price, quality=quality, offer_by=offer_by)
 
 # call LLM for a response prompt
 def get_llm_response(message: str, ai_number: int, ai_chat):
@@ -198,9 +197,9 @@ def get_llm_response(message: str, ai_number: int, ai_chat):
 
 
 # get pareto-efficient offers
-def get_greediness(constraint_user: int, constraint_bot: int) -> int:
-    if constraint_user not in (0, None):
-        return pareto.pareto_efficient_offer(constraint_user, constraint_bot,
+def get_greediness(constraint_bot2: int, constraint_bot: int) -> int:
+    if constraint_bot2 not in (0, None):
+        return pareto.pareto_efficient_offer(constraint_bot2, constraint_bot,
                                         rnd_param.role, False)
     else:
         return 0

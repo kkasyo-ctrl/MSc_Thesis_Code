@@ -10,7 +10,7 @@ def pareto_efficient(offer: Offer, all_offers: OfferList) -> bool:
 
     def coll_abs(o: Offer) -> Tuple[int, int]:
         # Calculate collective profit and absolute profit difference.
-        return o.profit_user + o.profit_bot, abs(o.profit_user - o.profit_bot)
+        return o.profit_bot2 + o.profit_bot1, abs(o.profit_bot2 - o.profit_bot1)
 
     collective_profit, abs_difference = coll_abs(offer)  # Current offer metrics
 
@@ -74,12 +74,12 @@ def pareto_efficient_string(constraint_user: int,
     efficient_offers_for_bot = get_efficient_offers(
         constraint_user, constraint_bot, bot_role)
 
-    profits_bot = [offer.profit_bot for offer in efficient_offers_for_bot]  # Bot profits
+    profits_bot = [offer.profit_bot1 for offer in efficient_offers_for_bot]  # Bot profits
     max_profit_bot = max(profits_bot)  # Find the maximum bot profit
 
     # Get the best offers that yield the maximum profit
     best_offers = [o for o in efficient_offers_for_bot
-                   if o.profit_bot == max_profit_bot]
+                   if o.profit_bot1 == max_profit_bot]
 
     eff_offs = []
     for o in best_offers:

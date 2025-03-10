@@ -3,7 +3,6 @@ import os
 import sys
 import requests
 import datetime
-import copy
 from rb_llm import rb_control 
 from rb_llm.storage import rb_storage, saving_convo
 from shared import rnd_param 
@@ -83,7 +82,10 @@ def run_chat_interaction(num_turns=20):
     initial_rule_message = {"role": "user", "content": non_llm_response("text")}
     conversation_history.append(initial_rule_message)
     
-    print("Rule-based Bot:", initial_rule_message['content'])
+    chat_counter = 1
+    num_turns = 20 
+
+    print(f"({chat_counter} of {num_turns}) {rnd_param.role_other}: \n",initial_rule_message['content'])
     
     
     rb_storage.interaction_list_bot1 = []
@@ -97,11 +99,11 @@ def run_chat_interaction(num_turns=20):
         'content': initial_rule_message['content']
         })
     
-    chat_counter = 1
-    num_turns = 10  
+ 
 
-    while rb_storage.end_convo == False and chat_counter < int(num_turns):
-        if chat_counter % 2 == 1:  
+    while rb_storage.end_convo == False and chat_counter <= int(num_turns):
+        chat_counter += 1
+        if chat_counter % 2 == 0:  
             print("\n({} of {}) {}:".format(chat_counter, num_turns, rb_storage.bot2_role))
             ai_response = _chat_to_ai(conversation_history, ai_number=1, mod_used='llama3', temperature=0.1)
             supplier_message = ai_response['content'].strip()
@@ -135,7 +137,7 @@ def run_chat_interaction(num_turns=20):
                 'content': supplier_message
             })
 
-        chat_counter += 1
+
 
     # save the conversation to a file.
     saving_convo()

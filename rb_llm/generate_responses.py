@@ -5,6 +5,7 @@ from rb_llm.offer import (Offer, OfferList, ACCEPT, OFFER_QUALITY, OFFER_PRICE,
                     NOT_OFFER, INVALID_OFFER, NOT_PROFITABLE)
 from rb_llm.message_storage import MESSAGES 
 import random
+from rb_llm.analyze_message import own_offer
 
 def initial_message():
     if rb_storage.bot1_role == "buyer":
@@ -27,8 +28,8 @@ def evaluate():
     rb_storage.offers_pareto_efficient = pareto.pareto_efficient_string(
         rb_storage.bot2_constraint,rb_storage.bot1_constraint, rb_storage.bot1_role
     )
-    print(f'offers_pareto_efficient: {rb_storage.offer_user}')
-    evaluation = rb_storage.offer_user.evaluate(greedy)
+    print(f'offers_pareto_efficient: {rb_storage.offer_bot2}')
+    evaluation = rb_storage.offer_bot2.evaluate(greedy)
     print(f'evaluation: {evaluation}')
     if evaluation == ACCEPT:
         return accept_offer()
@@ -55,27 +56,19 @@ def accept_offer():
     print('accept')
     content = MESSAGES['accept_offer'] 
     rb_storage.end_convo = True
-    accept_final_chat()
 
     return content
 
-
-def accept_final_chat():
-    bot_offer = Offer(
-        idx=-1,
-        price=rb_storage.offer_user.price,
-        quality=rb_storage.offer_user.quality,
-        test="accept_final_chat"
-    )
-    add_profits(bot_offer)
-    rb_storage.offer_list.append(bot_offer)
 
 
 def respond_to_offer():
     random_offer = pareto.pareto_efficient_string(rb_storage.bot2_constraint,rb_storage.bot1_constraint,rb_storage.bot1_role)
     print(f"random_offer: {random_offer}")
+    print(f"random_offer: {random_offer}")
     offer_num = random.randint(0,len(random_offer)-1)
-    random_offer = random_offer[offer_num]
+    random_offer = str(random_offer[offer_num])
+    rb_storage.offer_bot1 = own_offer(random_offer)
+    rb_storage.offer_list.append(rb_storage.offer_bot1)
     message = MESSAGES['respond_to_offer'] % random_offer
     return message
 
@@ -84,6 +77,9 @@ def respond_to_non_offer():
     random_offer = pareto.pareto_efficient_string(rb_storage.bot2_constraint,rb_storage.bot1_constraint,rb_storage.bot1_role)
     print(f"random_offer: {random_offer}")
     offer_num = random.randint(0,len(random_offer)-1)
-    random_offer = random_offer[offer_num]
+    random_offer = str(random_offer[offer_num])
+    rb_storage.offer_bot1 = own_offer(random_offer)
+    rb_storage.offer_list.append(rb_storage.offer_bot1)
     message = MESSAGES['respond_to_non_offer'] % random_offer
     return message
+

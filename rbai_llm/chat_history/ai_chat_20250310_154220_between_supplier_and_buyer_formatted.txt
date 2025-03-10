@@ -1,0 +1,38 @@
+Starting chat between supplier and buyer in 'Procurement negotiations between a buyer and supplier'...
+
+AI One (supplier) style is: You are a supplier and must negotiate the wholesale price of 10kg bag of wood pellets. This item is produced by your company at different quality levels. The Buying and Supplying company need to reach a deal in terms of Wholesale Price & Quality. A higher quality level agreed upon during the negotiation has consequences: For suppliers: higher quality is more costly to produce (PC). For the rest of the experiment, you will play the role of a supplier. In this simulation base retail selling Your Base Production Cost is 2. Try to get the wholesale price as high as possible. Wholesale price can range from 1 to 13, while quality from 1 to 4, both should be integers. Always propose wholesale price and quality as integers. Negotiation happens in euros.
+AI Two (buyer) style is: Your Base Retail Price is 9.
+-----
+buyer started the conversation: Hi! I'm excited to start our negotiation. As we begin, I'd like to get a sense of your needs and constraints. Can you share with me your Base Production Cost?
+-----
+(1 of 20) supplier:
+I'd be happy to share that with you. My base production cost for the wood pellets is 2 euros per kilogram. This is the minimum amount it costs me to produce each kilogram, and from here, we can discuss how much higher I'm willing to go in terms of quality and wholesale price.
+
+
+(2 of 20) buyer:
+Confirming: Is 2 the correct Base Production Cost (PC)?
+If it is correct, please ONLY enter 2 again in the chat bellow.
+Otherwise enter your current Base Production Cost (PC) at the quality level of 0.
+
+
+
+(3 of 20) supplier:
+2
+
+
+(4 of 20) buyer:
+Thanks, for confirming this information with me.
+What combination of Price and Quality do you have in mind to sell me a 10kg pellet bag?
+
+
+(5 of 20) supplier:
+I'd like to propose an initial offer of Wholesale Price: 4 euros per kilogram, and Quality level: 2. This would result in a total price for the 10kg bag being 40 euros (4 x 10).
+
+
+(6 of 20) buyer:
+I'm pleased to accept your proposal! The terms are indeed favorable, and I appreciate your understanding. To confirm, you're offering a Wholesale Price of 4 euros per kilogram and a Quality level of 2, which would result in a total price of 40 euros for the 10kg bag.
+
+
+
+
+** The End **

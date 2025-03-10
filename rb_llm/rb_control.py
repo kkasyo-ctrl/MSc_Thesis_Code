@@ -24,10 +24,10 @@ def incoming_message(message):
         return msg
     
     elif execution_count == 3:
-        rb_storage.offer_user = analyze_message.interpret_offer(message)
+        rb_storage.offer_bot2 = analyze_message.interpret_offer(message)
         if rb_storage.offer_list is None:
             rb_storage.offer_list = OfferList()
-            rb_storage.offer_list.append(rb_storage.offer_user)
+            rb_storage.offer_list.append(rb_storage.offer_bot2)
             rb_storage.user_message = message
         execution_count += 1
         msg = generate_responses.evaluate()
@@ -43,8 +43,8 @@ def incoming_message(message):
             return "End of conversation"
         else:
         # try to accept the offer yourself
-            rb_storage.offer_user = analyze_message.interpret_offer(message)
-            rb_storage.offer_list.append(rb_storage.offer_user)
+            rb_storage.offer_bot2 = analyze_message.interpret_offer(message)
+            rb_storage.offer_list.append(rb_storage.offer_bot2)
             rb_storage.user_message = message
             msg = generate_responses.evaluate()
             # ending mechanism
