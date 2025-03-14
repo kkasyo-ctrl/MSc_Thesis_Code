@@ -4,12 +4,18 @@ import sys
 import requests
 import datetime
 import copy
-from rb_llm import rb_control 
-from rb_llm.storage import rb_storage, saving_convo
+from rbai_rb import rb_control 
+from rbai_rb import activation
+from rbai_rb.rbai_storage import rbai_storage, saving_convo
+from rbai_rb.rb_storage import rb_storage
 from shared import rnd_param 
+from rbai_rb.prompts import system_final_prompt
+
+# ensure encoding is utf-8
+sys.stdout.reconfigure(encoding='utf-8')
 
 # LLM-based chat function with streaming output
-def _chat_to_ai(conversation_history, ai_number, mod_used, temperature=0.1):
+def _chat_to_ai(conversation_history, mod_used, temperature=0.1):
     response_chat = {
         "role": "assistant",
         "content": "",
@@ -18,14 +24,22 @@ def _chat_to_ai(conversation_history, ai_number, mod_used, temperature=0.1):
         }
     }
 
-    headers = {'Content-Type': 'application/json'}
-
+    headers = {
+        'Content-Type': 'application/json'
+    }
+    
+    # determine the model type
     if mod_used == 'llama3':
         llm_mod = 'llama3:latest'
     elif mod_used == 'llm_reader':
         llm_mod = 'reader:latest'
     elif mod_used == 'llm_constraint':
         llm_mod = 'constrain_reader:latest'
+    elif mod_used == 'rb':
+        if rnd_param.role == 'supplier':
+            llm_mod = 'rb_supplier:latest'
+        else:
+            llm_mod = 'rb_buyer:latest'
     else:
         llm_mod = 'llama3:latest'
 
@@ -45,6 +59,7 @@ def _chat_to_ai(conversation_history, ai_number, mod_used, temperature=0.1):
                     chat_response = json.loads(decoded_line)
                     chat_message = chat_response['message']['content']
                     response_chat['content'] += chat_message
+                    
                     print(chat_message, end='', flush=True)
                     if chat_response.get('done', False):
                         break
@@ -68,81 +83,121 @@ def non_llm_response(last_message):
 
 # negotiation loop
 def run_chat_interaction(num_turns=20):
-    conversation_history = []
+    conversation_history1 = []
     
     # context for LLM
     if rnd_param.role == 'supplier':
-        syst_txt = f"You are a supplier and must negotiate the wholesale price of 10kg bag of wood pellets. This item is produced by your company at different quality levels. The Buying and Supplying company need to reach a deal in terms of Wholesale Price & Quality. A higher quality level agreed upon during the negotiation has consequences: For suppliers: higher quality is more costly to produce (PC). For the rest of the experiment, you will play the role of a supplier. In this simulation base retail selling Your Base Production Cost is {rnd_param.main_constraint}. Try to get the wholesale price as high as possible. Wholesale price can range from 1 to 13, while quality from 1 to 4, both should be integers. Always propose wholesale price and quality as integers, never offer non-interger values. Negotiation happens in euros."
+        syst_txt = f"Your Base Production Cost is {rnd_param.main_constraint}."
     else:
-        syst_txt = f"You are a buyer and must negotiate the wholesale price of 10kg bag of wood pellets. This item is produced by your company at different quality levels. The Buying and Supplying company need to reach a deal in terms of Wholesale Price & Quality. A higher quality level agreed upon during the negotiation has consequences: For buyers: higher quality is allows you to sell the product at a higher price to customers (RP). For the rest of the experiment, you will play the role of a buyer. In this simulation base retail selling Your Base Retail Price to customers is {rnd_param.main_constraint}. Try to get the wholesale price as low as possible. Wholesale price can range from 1 to 13, while quality from 1 to 4, both should be integers, never offer non-interger values. Always propose wholesale price and quality as integers. Negotiation happens in euros."
+        syst_txt =  f"Your Base Retail Price is {rnd_param.main_constraint}."
 
+    
     system_message = {"role": "system", "content": syst_txt}
-    conversation_history.append(system_message)
+    conversation_history1.append(system_message)
+
+    # initial message    
+    initial_msg = activation.initial()
+    init_mod = {"role": "assistant", "content": initial_msg}
+    conversation_history1.append(init_mod)
     
-    # initial message
-    initial_rule_message = {"role": "user", "content": non_llm_response("text")}
-    conversation_history.append(initial_rule_message)
     
-    print("Rule-based Bot:", initial_rule_message['content'])
+    chat_counter = 1
+    num_turns = 20 
+    print("\n({} of {}) {}:".format(chat_counter, num_turns, rbai_storage.bot1_role))
+    print(initial_msg)
     
+    rbai_storage.interaction_list_bot1 = []
+    rbai_storage.interaction_list_bot2 = []
+    rbai_storage.interaction_list_bot2.append({
+        'role': 'user',
+        'content': initial_msg
+        })
+    rbai_storage.interaction_list_bot1.append({
+        'role': 'assistant',
+        'content': initial_msg
+        })
     
     rb_storage.interaction_list_bot1 = []
     rb_storage.interaction_list_bot2 = []
     rb_storage.interaction_list_bot2.append({
         'role': 'user',
-        'content': initial_rule_message['content']
+        'content': initial_msg
         })
     rb_storage.interaction_list_bot1.append({
         'role': 'assistant',
-        'content': initial_rule_message['content']
+        'content': initial_msg
         })
-    
-    chat_counter = 1
-    num_turns = 10  
 
-    while rb_storage.end_convo == False and chat_counter < int(num_turns):
+    # fix while loop
+    while rbai_storage.end_convo == False and chat_counter < int(num_turns):
+        chat_counter += 1
         if chat_counter % 2 == 1:  
-            print("\n({} of {}) {}:".format(chat_counter, num_turns, rb_storage.bot2_role))
-            ai_response = _chat_to_ai(conversation_history, ai_number=1, mod_used='llama3', temperature=0.1)
-            supplier_message = ai_response['content'].strip()
+            
+            
+            modified_content = activation.modify_bot_message(rb_msg)
+            tmp_conversation_history = copy.deepcopy(conversation_history1)
+            tmp_conversation_history[-1]['content'] += modified_content
 
-            conversation_history.append({"role": "assistant", "content": supplier_message})
+            print("\n({} of {}) {}:".format(chat_counter, num_turns, rbai_storage.bot1_role))
+            mod = "rb"
+            rbai_response = _chat_to_ai(tmp_conversation_history, mod, temperature=0.1)
+            rbai_msg = rbai_response['content'].strip()
+            
+            conversation_history1.append({"role": "assistant", "content": rbai_msg})
 
+            rbai_storage.interaction_list_bot1.append({
+                'role': 'assistant',
+                'content': rbai_msg
+            })
+            
+            rbai_storage.interaction_list_bot2.append({
+                'role': 'user',
+                'content': rbai_msg
+            })
 
             rb_storage.interaction_list_bot1.append({
-                'role': 'user',
-                'content': supplier_message
+                'role': 'assistant',
+                'content': rbai_msg
             })
             
             rb_storage.interaction_list_bot2.append({
-                'role': 'assistant',
-                'content': supplier_message
+                'role': 'user',
+                'content': rbai_msg
             })
 
         else: 
-            print("\n({} of {}) {}:".format(chat_counter, num_turns, rb_storage.bot1_role))
-            rb_msg = non_llm_response(conversation_history[-1]['content'])
+            print("\n({} of {}) {}:".format(chat_counter, num_turns, rbai_storage.bot2_role))
+            rb_msg = non_llm_response(conversation_history1[-1]['content'])
             print(rb_msg)
-            conversation_history.append({"role": "user", "content": rb_msg})
-            
-            rb_storage.interaction_list_bot1.append({
+            conversation_history1.append({"role": "user", "content": rb_msg})
+
+            rbai_storage.interaction_list_bot1.append({
+                'role': 'user',
+                'content': rb_msg
+            })
+
+            rbai_storage.interaction_list_bot2.append({
                 'role': 'assistant',
                 'content': rb_msg
             })
 
-            rb_storage.interaction_list_bot2.append({
+            rb_storage.interaction_list_bot1.append({
                 'role': 'user',
-                'content': supplier_message
+                'content': rb_msg
             })
 
-        chat_counter += 1
+            rb_storage.interaction_list_bot2.append({
+                'role': 'assistant',
+                'content': rb_msg
+            })
+
 
     # save the conversation to a file.
     saving_convo()
     save_file_name = 'chat_history/ai_chat_{}.txt'.format(datetime.datetime.now().strftime('%Y%m%d_%H%M%S'))
-    save_path = os.path.join("rb_llm", save_file_name)
+    save_path = os.path.join("rbai_rb", save_file_name)
     with open(save_path, 'w') as f:
-        json.dump(conversation_history, f, indent=4)
+        json.dump(conversation_history1, f, indent=4)
     print("\nConversation saved to", save_path)
 
 if __name__ == '__main__':

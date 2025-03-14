@@ -57,4 +57,9 @@ MESSAGES = {
 
     'respond_to_non_offer':
         'I am sorry, but your offer is not valid. This is either because I did not recognize it, proposed terms were out of bounds or price or quality were not integers. How about Wholesale %s?',
+
+    'initial_offer':
+        'I would like to propose %s. Does that work for you?',
+
+
 }

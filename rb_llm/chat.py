@@ -106,19 +106,19 @@ def run_chat_interaction(num_turns=20):
         if chat_counter % 2 == 0:  
             print("\n({} of {}) {}:".format(chat_counter, num_turns, rb_storage.bot2_role))
             ai_response = _chat_to_ai(conversation_history, ai_number=1, mod_used='llama3', temperature=0.1)
-            supplier_message = ai_response['content'].strip()
+            llm_msg = ai_response['content'].strip()
 
-            conversation_history.append({"role": "assistant", "content": supplier_message})
+            conversation_history.append({"role": "assistant", "content": llm_msg})
 
 
             rb_storage.interaction_list_bot1.append({
                 'role': 'user',
-                'content': supplier_message
+                'content': llm_msg
             })
             
             rb_storage.interaction_list_bot2.append({
                 'role': 'assistant',
-                'content': supplier_message
+                'content': llm_msg
             })
 
         else: 
@@ -134,7 +134,7 @@ def run_chat_interaction(num_turns=20):
 
             rb_storage.interaction_list_bot2.append({
                 'role': 'user',
-                'content': supplier_message
+                'content': rb_msg
             })
 
 

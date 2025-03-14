@@ -1,7 +1,8 @@
 import re
-from rb_llm.storage import rb_storage
-from rb_llm.message_storage import MESSAGES
-from rb_llm.offer import Offer
+from rbai_rb.rb_storage import rb_storage
+from rbai_rb.message_storage import MESSAGES
+from rbai_rb.offer_rb import Offer
+from rbai_rb.generate_responses import propose_offer
 import time
 
 # extract bot constraint - seems to work
@@ -41,11 +42,17 @@ def extract_constraint(text):
 # add message to the extracted constraint
 def augment_message(message):
     output = extract_constraint(message)
-    context_constraint = MESSAGES['context_constraint'][rb_storage.bot1_role]
+    context_constraint = MESSAGES['context_constraint'][rb_storage.bot1_role] 
+    check_const = False
+
     if output != MESSAGES['constraint_not_found'] % context_constraint:
         if analyze_constraint(output):
-            params = (output, context_constraint) * 2
-            message = MESSAGES['constraint_confirm'] % params
+            rb_storage.bot2_constraint = int(output)
+            if check_const:        
+                params = (output, context_constraint) * 2
+                message = MESSAGES['constraint_confirm'] % params
+            else:
+                message = propose_offer()
         else:
             message = MESSAGES['constraint_clarify'] % context_constraint
 

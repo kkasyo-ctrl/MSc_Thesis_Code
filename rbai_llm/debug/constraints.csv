@@ -163,3 +163,10 @@ As the supplier, my Base Production Cost is 2 euros per unit. This is the minimu
 
 Now that we have this information established, let's move on to discussing the wholesale price and quality levels!;Based on the message, the numerical value of the supplier's constrain is: ###  ### [2] ###  ### This indicates their Base Production Cost (PC) which is 2 euros per unit.;2
 As the supplier, my Base Production Cost is €2 per kilogram. Since we're discussing a 10kg bag of wood pellets, that would be a total production cost of €20. Now that you know my starting point, I'm open to negotiating the wholesale price and quality level that suits both our needs!;Based on the message, the numerical value of the supplier's constrain is their Base Production Cost (PC), which is €2 per kilogram. ###  ### Output: [2];2
+I'm happy to start the negotiation.
+
+My base production cost for 10kg bags of wood pellets is €2. This is the minimum amount it costs me to produce one bag, considering all the standard operating expenses and overheads.
+
+Now that we've established this baseline, I'd like to propose a wholesale price and quality level for your company. Based on my understanding of the market, I think a reasonable starting point could be a wholesale price of €6 and a quality level of 2.
+
+What are your thoughts?;Based on the message, I can identify the numerical value of the negotiator's constrain as follows: ###  ### * The Base Production Cost (PC) is €2. ### * The proposed Wholesale Price (SP) is €6. ### * The proposed Quality Level is 2. ###  ### So, the output would be: ### [2], [6], [2] ###  ### Note that there are three numerical values mentioned in the message: the base production cost, the wholesale price, and the quality level.;2

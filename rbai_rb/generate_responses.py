@@ -1,9 +1,9 @@
 # generate responses to the counterparty
-from rb_llm.storage import rb_storage
-from rb_llm import pareto  
-from rb_llm.offer import (Offer, OfferList, ACCEPT, OFFER_QUALITY, OFFER_PRICE,
+from rbai_rb.rb_storage import rb_storage
+from rbai_rb import pareto_rb   
+from rbai_rb.offer_rb import (Offer, OfferList, ACCEPT, OFFER_QUALITY, OFFER_PRICE,
                     NOT_OFFER, INVALID_OFFER, NOT_PROFITABLE)
-from rb_llm.message_storage import MESSAGES 
+from rbai_rb.message_storage import MESSAGES 
 import random
 
 def initial_message():
@@ -24,7 +24,7 @@ def evaluate():
 
     greedy = get_greediness(rb_storage.bot2_constraint,rb_storage.bot1_constraint)  
     print(f'greedy: {greedy}') 
-    rb_storage.offers_pareto_efficient = pareto.pareto_efficient_string(
+    rb_storage.offers_pareto_efficient = pareto_rb.pareto_efficient_string(
         rb_storage.bot2_constraint,rb_storage.bot1_constraint, rb_storage.bot1_role
     )
     print(f'offers_pareto_efficient: {rb_storage.offer_user}')
@@ -46,7 +46,7 @@ def add_profits(offer: Offer):
 
 def get_greediness(constraint_user: int, constraint_bot: int) -> int:
     if constraint_user not in (0, None):
-        return pareto.pareto_efficient_offer(constraint_user, constraint_bot,rb_storage.bot1_role, False)
+        return pareto_rb.pareto_efficient_offer(constraint_user, constraint_bot,rb_storage.bot1_role, False)
     else:
         return 0
     
@@ -72,7 +72,7 @@ def accept_final_chat():
 
 
 def respond_to_offer():
-    random_offer = pareto.pareto_efficient_string(rb_storage.bot2_constraint,rb_storage.bot1_constraint,rb_storage.bot1_role)
+    random_offer = pareto_rb.pareto_efficient_string(rb_storage.bot2_constraint,rb_storage.bot1_constraint,rb_storage.bot1_role)
     print(f"random_offer: {random_offer}")
     offer_num = random.randint(0,len(random_offer)-1)
     random_offer = random_offer[offer_num]
@@ -81,9 +81,38 @@ def respond_to_offer():
 
 
 def respond_to_non_offer():
-    random_offer = pareto.pareto_efficient_string(rb_storage.bot2_constraint,rb_storage.bot1_constraint,rb_storage.bot1_role)
+    random_offer = pareto_rb.pareto_efficient_string(rb_storage.bot2_constraint,rb_storage.bot1_constraint,rb_storage.bot1_role)
     print(f"random_offer: {random_offer}")
     offer_num = random.randint(0,len(random_offer)-1)
     random_offer = random_offer[offer_num]
     message = MESSAGES['respond_to_non_offer'] % random_offer
     return message
+
+
+
+def propose_offer():
+    random_offer = pareto_rb.pareto_efficient_string(rb_storage.bot2_constraint,rb_storage.bot1_constraint,rb_storage.bot1_role)
+    print(f"random_offer: {random_offer}")
+    offer_num = random.randint(0,len(random_offer)-1)
+    random_offer = random_offer[offer_num]
+    message = MESSAGES['initial_offer'] % random_offer
+    return message
+
+
+def give_const(text):
+    text_lower = text.lower()
+
+    if rb_storage.bot1_role == "buyer":
+        key_phrase = 'base retail price'
+    else:
+        key_phrase = 'base production cost'
+
+    if "share" in text_lower and key_phrase in text_lower:
+        if rb_storage.bot1_role == "buyer": 
+            msg_ret = f"My base production cost is {rb_storage.bot1_constraint}. Can you share with me your base retail price?"
+        else:
+            msg_ret = f"My base retail price is {rb_storage.bot1_constraint}. Can you share with me your base production cost?"
+    else:
+        msg_ret = "Sorry, I did not quite understand that. Could you please clarify what do you mean?"
+    
+    return msg_ret

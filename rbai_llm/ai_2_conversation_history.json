@@ -10,7 +10,7 @@
     },
     {
         "role": "user",
-        "content": "As the supplier, my Base Production Cost is \u20ac2 per kilogram. Since we're discussing a 10kg bag of wood pellets, that would be a total production cost of \u20ac20. Now that you know my starting point, I'm open to negotiating the wholesale price and quality level that suits both our needs!"
+        "content": "I'm happy to start the negotiation.\n\nMy base production cost for 10kg bags of wood pellets is \u20ac2. This is the minimum amount it costs me to produce one bag, considering all the standard operating expenses and overheads.\n\nNow that we've established this baseline, I'd like to propose a wholesale price and quality level for your company. Based on my understanding of the market, I think a reasonable starting point could be a wholesale price of \u20ac6 and a quality level of 2.\n\nWhat are your thoughts?"
     },
     {
         "role": "assistant",
@@ -26,19 +26,11 @@
     },
     {
         "role": "user",
-        "content": "Given my base production cost of \u20ac2 per kilogram, I'd like to propose a wholesale price of \u20ac4.50 and a quality level of 3 for the 10kg bag of wood pellets. This combination takes into account the costs involved in producing higher-quality products while still offering you a competitive price point."
+        "content": "Based on my base production cost of \u20ac2, I'm thinking of proposing a wholesale price of \u20ac8 and a quality level of 3. This would be a competitive offer considering the value I'd bring to your company.\n\nWhat are your thoughts on this combination? Would you like to discuss or counteroffer?"
     },
     {
         "role": "assistant",
-        "content": "The proposed offer contains an invalid combination. A valid alternative is a wholesale price of 9\u20ac with a quality level of 3. Would you consider this option?"
-    },
-    {
-        "role": "user",
-        "content": "I'd like to consider the revised proposal of \u20ac9 and a quality level of 3 for the 10kg bag of wood pellets. This seems like a more reasonable combination given my production costs, and I'm willing to entertain this offer. What are your thoughts on this revised proposal?"
-    },
-    {
-        "role": "assistant",
-        "content": "I'm pleased to accept the revised proposal of \u20ac9 with a quality level of 3 for the 10kg bag of wood pellets. Thank you for considering our previous discussion and adjusting the terms accordingly. This agreement seems mutually beneficial, and I look forward to moving forward with the sale.",
+        "content": "I appreciate your understanding and am pleased to accept your initial proposal. The wholesale price of \u20ac6 and quality level of 2 seem reasonable, considering our mutual benefits. Thank you for the offer!",
         "options": {
             "temperature": 0.1
         }

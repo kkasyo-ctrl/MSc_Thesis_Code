@@ -1,15 +1,15 @@
 # control file
-from rb_llm.storage import rb_storage
-from rb_llm import analyze_message
-from rb_llm.offer import OfferList
-from rb_llm import generate_responses
+from rbai_rb.rb_storage import rb_storage
+from rbai_rb import analyze_message
+from rbai_rb.offer_rbai import OfferList
+from rbai_rb import generate_responses
 
 
 execution_count = 0
 def incoming_message(message):
     global execution_count
     if execution_count == 0:
-        msg = generate_responses.initial_message()
+        msg = generate_responses.give_const(message)
         execution_count += 1
         return msg
     
@@ -17,13 +17,8 @@ def incoming_message(message):
         msg = analyze_message.augment_message(message)
         execution_count += 1
         return msg
-    
+
     elif execution_count == 2:
-        msg = analyze_message.constraint_final(message)
-        execution_count += 1
-        return msg
-    
-    elif execution_count == 3:
         rb_storage.offer_user = analyze_message.interpret_offer(message)
         if rb_storage.offer_list is None:
             rb_storage.offer_list = OfferList()

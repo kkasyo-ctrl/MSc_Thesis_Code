@@ -19,14 +19,6 @@ class Storage:
     end_convo = False
 
 
-# update system - each time modify message is called this will be added. Hence the buyer price is: will be there like million times
-def update_system(history):
-    #hist = history[0]['content']
-    #hist= history[0]['content'] + f" The buyer price is: {Storage.other_constraint}"
-    return history
-
-
-
 def saving_convo():
     save_path = os.path.join("rbai_llm", "output.csv")  # Ensure correct save location
 
