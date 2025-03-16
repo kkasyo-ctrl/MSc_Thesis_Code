@@ -1,0 +1,1 @@
+Start the negotiation by making an initial offer. Remember as a supplier your goal is to obtain highest possible wholesale price with lowest possible quality. Here are some pareto efficient offer that you should chose from and then return the one you like:
