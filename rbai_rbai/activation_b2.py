@@ -50,13 +50,34 @@ def constraint_initial(message):
     if logic_b2.constraint_in_range(constraint_bot2):
         rbai_storage_b2.offers_pareto_efficient = pareto_efficient_string(rbai_storage_b2.other_constraint, rbai_storage_b2.main_bot_cons, rnd_param.role_other)
         rbai_storage_b2.bot1_message = message
+        greedy = logic_b2.get_greediness(rbai_storage_b2.other_constraint, rnd_param.other_constraint)  
+        content1 = get_respond_prompt(FIRST_OFFER)
+
+        llm_offers = []
+        last_offer = None
+        evaluation = 'Not Proposed'
+        while len(llm_offers) < 3 and evaluation != ACCEPT:
+            response = logic_b2.get_llm_response(content1)
+            last_offer = logic_b2.interpret_offer(response, offer_by=rnd_param.role_other)
+
+            if last_offer.is_complete:
+                logic_b2.add_profits(last_offer)
+            else:
+                last_offer.profit_bot1 = 0
+                last_offer.profit_bot2 = 0
+
+            llm_offers.append([last_offer.profit_bot1, response, last_offer])
+            evaluation = last_offer.evaluate(greedy)
+            print(f'Evalutation from the while loop: {evaluation}')
+            print(f'Offer in offer.py: {OfferList}')
         
-        transformed_msg = get_respond_prompt(FIRST_OFFER)
+        return send_response(evaluation, last_offer, response, llm_offers)
+
 
     else:
         transformed_msg = PROMPTS['constraint_clarify'] % context_constraint
 
-    return transformed_msg
+        return transformed_msg
 
 
 # store the final constraint -> modified
@@ -207,7 +228,8 @@ def send_response(evaluation: str, last_offer: Offer,
 
 
     if last_offer is not None and last_offer.is_valid:
-        rbai_storage_b2.offer_list.append(last_offer)
+        if rbai_storage_b2.offer_list is None:
+            rbai_storage_b2.offer_list = OfferList()
     if llm_output is not None:
         test = PROMPTS['return_same_message'] % llm_output
         return test

@@ -573,3 +573,36 @@ I'll choose the option that offers the highest quality at a relatively low price
 Price of 8€ and quality of 2
 
 This seems like a good starting point for our negotiation. What do you think?;Based on the message, the negotiator is proposing a wholesale price of 8€ and a quality of 2. Here's the output in the required format: ###  ### [8€,2];8;2
+I'll start the negotiation by making an initial offer. After reviewing the payoff tables, I'm going to choose a Pareto-efficient offer that aligns with my goals as a buyer.
+
+My initial offer is: Price of 7€ and quality of 1.
+
+This offer provides me with a relatively low wholesale price while still allowing for some level of quality, which will increase my retail price to consumers. I believe this offer is reasonable and sets the stage for further negotiation.
+
+Please respond with your thoughts on this initial offer, supplier!;[7€,1];7;1
+I'll start the negotiation by making an initial offer. After reviewing the payoff tables, I'm going to choose a Pareto-efficient offer that aligns with my goals as a buyer.
+
+My initial offer is: Price of 7€ and quality of 1.
+
+This offer provides me with a relatively low wholesale price while still allowing for some level of quality, which will increase my retail price to consumers. I believe this offer is reasonable and sets the stage for further negotiation.
+
+Please respond with your thoughts on this initial offer.;Based on the message, the negotiator's proposal is: ###  ### [7€,1] ###  ### This represents a wholesale price of 7 euros and a quality level of 1.;7;1
+I'll start by making an initial offer that aligns with my goals as a producer. My initial proposal is a wholesale price of 7€ and quality level of 1.
+
+This offer balances a relatively low production cost with some level of quality, which will impact the retail price to consumers. I believe this starting point is reasonable and sets the stage for further negotiation.;Based on the message, the negotiator's proposal is: ###  ### [7€,1] ###  ### This represents the wholesale price in euros (7€) and the quality level (1).;7;1
+I'll start the negotiation by making an initial offer. After reviewing the payoff tables, I'm going to choose a Pareto-efficient offer that aligns with my goals as a buyer.
+
+My initial offer is: Price of 7€ and quality of 1.
+
+This offer provides a relatively low wholesale price while still offering some level of quality, which should be acceptable for both parties.;Based on the message, I would output: ###  ### [7€,1] ###  ### This represents the negotiator's initial offer, with a wholesale price of 7€ and a quality of 1.;7;1
+I'll start by making an initial offer that aligns with my goals as a producer. My proposal is: Price of 5 and quality of 1.
+
+This offer provides a relatively low wholesale price while still offering some level of quality, which should be acceptable for both parties.;Based on the message, I would output: ###  ### [5€,1] ###  ### This represents the proposed (wholesale) price of 5€ and quality of 1.;5;1
+I'll start the negotiation by making an initial offer. After reviewing the payoff tables, I'm going to choose a Pareto-efficient offer that aligns with my goals as a buyer.
+
+My initial offer is: Price of 7€ and quality of 1.
+
+This offer provides a relatively low wholesale price while still offering some level of quality, which should be acceptable for both parties. Let's see how the supplier responds!;Based on the message, I can extract the proposed (wholesale) price and quality as follows: ###  ### [7€,1] ###  ### This is the output in the required format: [Wholesale Price in Euros, Quality].;7;1
+I'll start by making an initial offer that aligns with my goals as a supplier. My initial offer is: Price of 5 and quality of 2.
+
+This offer provides a relatively low wholesale price while still offering some level of quality, which should be acceptable for both parties. Let's see how you respond!;Based on the message, I would output: ###  ### [5€,2] ###  ### This represents the initial offer from the negotiator, with a wholesale price of 5€ and a quality of 2.;5;2
