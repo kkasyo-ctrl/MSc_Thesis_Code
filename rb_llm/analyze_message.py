@@ -7,7 +7,7 @@ import time
 # extract bot constraint - seems to work
 def extract_constraint(text):
     if rb_storage.bot1_role == "buyer":
-        key_phrases = r'(base production cost|production cost|selling price to customer|cost of production|manufacturing cost|production expense|unit production cost|supplier cost)'
+        key_phrases = r'(base production cost|production cost|cost of production|manufacturing cost|production expense|unit production cost|supplier cost)'
     else:
         key_phrases = r'(base retail price|retail price|base selling price|base retail selling price|current retail price|selling price to customer|consumer price|end-user price|list price|final sale price|market price|point of sale price)'
     

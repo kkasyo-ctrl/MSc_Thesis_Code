@@ -14,6 +14,16 @@ PROMPTS = {
         - If the negotiation is still ongoing, return **"CONTINUE"**.
         IMPORTANT: Do **NOT** provide any additional words, explanations, or context—only return "DEAL" or "CONTINUE".""",
     
+    'count_offers':
+        """Evaluate the conversation to determine the number of offers made by each counterparty in total. 
+        For an offer to count, it has to have both quality and wholesale price mentioned. 
+        Only return a single integer of number of offer made by both negotiating parties in total.
+        Here is the last four messages of the conversation: %s
+        
+        
+        IMPORTANT: Do **NOT** provide any additional words, explanations, or context—only return a signle integer.
+        """,
+
     'find_outcomes':
         """Evaluate the conversation to determine the agreed price and quality. 
         If an agreement has been reached, output the agreed price and quality as a list of two integers enclosed in square brackets and separated by a comma. 

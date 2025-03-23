@@ -17,6 +17,7 @@ class llm_storage:
     bot2_const = rnd_param.other_constraint
     profit_bot1 = None
     profit_bot2 = None
+    num_off = None
 
 
 def extract_price_and_quality(message):
@@ -69,7 +70,7 @@ def saving_convo():
     with open(save_path, "a", newline="") as f:
         writer = csv.writer(f, delimiter=",")  # Use `;` as separator
         writer.writerow([datetime.datetime.now().strftime('%Y%m%d_%H%M%S'), rnd_param.role, rnd_param.role_other, rnd_param.main_constraint,  rnd_param.other_constraint,
-                         llm_storage.agreed_price, llm_storage.agreed_quality, llm_storage.profit_bot1, llm_storage.profit_bot2, 
+                         llm_storage.agreed_price, llm_storage.agreed_quality, llm_storage.profit_bot1, llm_storage.profit_bot2, llm_storage.num_off,
                          len(llm_storage.interaction_list_bot1) - 1,llm_storage.interaction_list_bot1])  
 
 

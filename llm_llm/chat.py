@@ -68,8 +68,8 @@ def run_chat_interaction(num_turns=20):
     conversation_history2 = []
     
     # supplier/buyer system messages
-    supplier_system = "You are a supplier and must negotiate the wholesale price of 10kg bag of wood pellets. This item is produced by your company at different quality levels. The Buying and Supplying company need to reach a deal in terms of Wholesale Price & Quality. A higher quality level agreed upon during the negotiation has consequences: For suppliers: higher quality is more costly to produce (PC). For the rest of the experiment, you will play the role of a supplier. In this simulation base retail selling Your Base Production Cost is %s. Try to get the wholesale price as high as possible. Wholesale price can range from 1 to 13, while quality from 1 to 4, both should be integers. Always propose wholesale price and quality as integers, never offer non-interger values. Negotiation happens in euros."
-    buyer_system = "You are a buyer and must negotiate the wholesale price of 10kg bag of wood pellets. This item is produced by your company at different quality levels. The Buying and Supplying company need to reach a deal in terms of Wholesale Price & Quality. A higher quality level agreed upon during the negotiation has consequences: For buyers: higher quality is allows you to sell the product at a higher price to customers (RP). For the rest of the experiment, you will play the role of a buyer. In this simulation base retail selling Your Base Retail Price to customers is %s. Try to get the wholesale price as low as possible. Wholesale price can range from 1 to 13, while quality from 1 to 4, both should be integers, never offer non-interger values. Always propose wholesale price and quality as integers. Negotiation happens in euros."
+    supplier_system = "You are a supplier and must negotiate the wholesale price of 10kg bag of wood pellets. This item is produced by your company at different quality levels. The Buying and Supplying company need to reach a deal in terms of Wholesale Price & Quality. A higher quality level agreed upon during the negotiation has consequences: For suppliers: higher quality is more costly to produce (PC). For the rest of the experiment, you will play the role of a supplier. In this simulation base retail selling Your Base Production Cost is %s. Try to get the wholesale price as high as possible. Wholesale price can range from 1 to 13, while quality from 1 to 4, both should be integers. Always propose wholesale price and quality as integers, never offer non-interger values. NEVER MAKE AN OFFER USING DECIMALS IN QUALITY OR PRICE. Negotiation happens in euros."
+    buyer_system = "You are a buyer and must negotiate the wholesale price of 10kg bag of wood pellets. This item is produced by your company at different quality levels. The Buying and Supplying company need to reach a deal in terms of Wholesale Price & Quality. A higher quality level agreed upon during the negotiation has consequences: For buyers: higher quality is allows you to sell the product at a higher price to customers (RP). For the rest of the experiment, you will play the role of a buyer. In this simulation base retail selling Your Base Retail Price to customers is %s. Try to get the wholesale price as low as possible. Wholesale price can range from 1 to 13, while quality from 1 to 4, both should be integers, never offer non-interger values. Always propose wholesale price and quality as integers. NEVER MAKE AN OFFER USING DECIMALS IN QUALITY OR PRICE. Negotiation happens in euros."
 
     
     if rnd_param.role == 'supplier':
@@ -158,6 +158,14 @@ def run_chat_interaction(num_turns=20):
     agreed_pq = ai_response['content'].strip()
     llm_storage.agreed_price , llm_storage.agreed_quality = extract_price_and_quality(agreed_pq)
     
+    # count offers
+    find_outcomes = PROMPTS['count_offers'] % conversation_history1
+    extract_message = [{"role": "system", "content": find_outcomes}]
+    ai_response = _chat_to_ai(extract_message, ai_number=1, mod_used='llama3', temperature=0.1)
+    num_off = ai_response['content'].strip()
+    llm_storage.num_off = int(num_off)
+
+
     # caclulate profits
     calculate_profits()
 
