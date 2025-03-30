@@ -3,6 +3,7 @@
 import os
 from shared import rnd_param
 from rbai_rbai import logic_b1
+from rbai_rbai import logic_b2
 import json
 import random
 from typing import Any, List, Union

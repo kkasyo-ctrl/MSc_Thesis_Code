@@ -135,7 +135,6 @@ def run_chat_interaction(num_turns=20):
                 print("\n({} of {}) {}:".format(chat_counter, num_turns, rnd_param.role_other))
                 ai_response = _chat_to_ai(conversation_history2, ai_number=2, mod_used='llama3', temperature=0.1)
                 bot2msg = ai_response['content'].strip()
-                
                 conversation_history1.append({"role": "user", "content": bot2msg})
                 conversation_history2.append({"role": "assistant", "content": bot2msg})
                 

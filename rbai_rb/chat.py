@@ -35,11 +35,6 @@ def _chat_to_ai(conversation_history, mod_used, temperature=0.1):
         llm_mod = 'reader:latest'
     elif mod_used == 'llm_constraint':
         llm_mod = 'constrain_reader:latest'
-    elif mod_used == 'rb':
-        if rnd_param.role == 'supplier':
-            llm_mod = 'rb_supplier:latest'
-        else:
-            llm_mod = 'rb_buyer:latest'
     else:
         llm_mod = 'llama3:latest'
 
@@ -52,6 +47,8 @@ def _chat_to_ai(conversation_history, mod_used, temperature=0.1):
         response = requests.post('http://localhost:11434/api/chat', 
                                  data=json.dumps(ollama_payload), headers=headers,
                                  stream=True)
+        print("Request Payload:")
+        print(json.dumps(conversation_history, indent=2))
         if response.status_code == 200:
             for line in response.iter_lines():
                 if line:
@@ -86,10 +83,7 @@ def run_chat_interaction(num_turns=20):
     conversation_history1 = []
     
     # context for LLM
-    if rnd_param.role == 'supplier':
-        syst_txt = f"Your Base Production Cost is {rnd_param.main_constraint}."
-    else:
-        syst_txt =  f"Your Base Retail Price is {rnd_param.main_constraint}."
+    syst_txt = system_final_prompt()
 
     
     system_message = {"role": "system", "content": syst_txt}
@@ -139,7 +133,7 @@ def run_chat_interaction(num_turns=20):
             tmp_conversation_history[-1]['content'] += modified_content
 
             print("\n({} of {}) {}:".format(chat_counter, num_turns, rbai_storage.bot1_role))
-            mod = "rb"
+            mod = "llama3"
             rbai_response = _chat_to_ai(tmp_conversation_history, mod, temperature=0.1)
             rbai_msg = rbai_response['content'].strip()
             

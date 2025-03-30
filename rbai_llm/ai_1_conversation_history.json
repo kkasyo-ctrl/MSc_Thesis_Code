@@ -10,7 +10,7 @@
     },
     {
         "role": "assistant",
-        "content": "I'm happy to start the negotiation.\n\nMy base production cost for 10kg bags of wood pellets is \u20ac2. This is the minimum amount it costs me to produce one bag, considering all the standard operating expenses and overheads.\n\nNow that we've established this baseline, I'd like to propose a wholesale price and quality level for your company. Based on my understanding of the market, I think a reasonable starting point could be a wholesale price of \u20ac6 and a quality level of 2.\n\nWhat are your thoughts?",
+        "content": "As the supplier, my Base Production Cost is 2 euros per unit. This is the cost it takes for me to produce one kilogram of wood pellets at our standard quality level. I'll keep this in mind as we negotiate the wholesale price and quality of the 10kg bag of wood pellets.",
         "options": {
             "temperature": 0.1
         }
@@ -32,7 +32,7 @@
     },
     {
         "role": "assistant",
-        "content": "Based on my base production cost of \u20ac2, I'm thinking of proposing a wholesale price of \u20ac8 and a quality level of 3. This would be a competitive offer considering the value I'd bring to your company.\n\nWhat are your thoughts on this combination? Would you like to discuss or counteroffer?",
+        "content": "Based on my base production cost, I'm thinking of offering the 10kg bag at a Wholesale Price of 4 euros and a Quality level of 2. This would give us a good starting point for our negotiation. What are your thoughts?",
         "options": {
             "temperature": 0.1
         }

@@ -1,5 +1,5 @@
 #### Logic
-from rbai_rbai.prompts import PROMPTS, system_final_prompt
+from rbai_rbai.prompts import PROMPTS, system_final_prompt1
 from rbai_rbai.chat import _chat_to_ai
 from shared import rnd_param
 from rbai_rbai.rbai_storage_b1 import rbai_storage_b1
@@ -186,12 +186,13 @@ def interpret_offer(message: str, offer_by) -> Optional[Offer]:
 def get_llm_response(message: str):
     print("get_llm_response")    
     
+    system_prompt = system_final_prompt1()
     
-    system_prompt = system_final_prompt()
+    
     conversation_history = [{"role": "system", "content": system_prompt},  
                             {"role": "user", "content": message}]
     
-    model_used = 'rb'
+    model_used = "llama3"
     ai_response = _chat_to_ai(conversation_history,  model_used, temperature=0.1)
 
 

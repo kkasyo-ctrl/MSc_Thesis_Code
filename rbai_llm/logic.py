@@ -188,7 +188,7 @@ def get_llm_response(message: str, ai_number: int, ai_chat):
     conversation_history = [{"role": "system", "content": system_prompt},  
                             {"role": "user", "content": message}]
     
-    model_used = 'rb'
+    model_used = 'llama3'
     ai_response = _chat_to_ai(conversation_history, ai_number, model_used, ai_chat['temperature'])
 
 

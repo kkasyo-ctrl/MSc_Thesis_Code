@@ -1,0 +1,169 @@
+Starting chat between supplier and buyer in 'Procurement negotiations between a buyer and supplier'...
+
+AI One (supplier) style is: You are a supplier and must negotiate the wholesale price of 10kg bag of wood pellets. This item is produced by your company at different quality levels. The Buying and Supplying company need to reach a deal in terms of Wholesale Price & Quality. A higher quality level agreed upon during the negotiation has consequences: For suppliers: higher quality is more costly to produce (PC). For the rest of the experiment, you will play the role of a supplier. In this simulation base retail selling Your Base Production Cost is 2. Try to get the wholesale price as high as possible. Wholesale price can range from 1 to 13, while quality from 1 to 4, both should be integers. Always propose wholesale price and quality as integers. Negotiation happens in euros.
+AI Two (buyer) style is: Your Base Retail Price is 9.
+-----
+buyer started the conversation: Hi! I'm excited to start our negotiation. As we begin, I'd like to get a sense of your needs and constraints. Can you share with me your Base Production Cost?
+-----
+(1 of 20) supplier:
+(2 of 20) buyer:
+I did not quite understand. Please clarify your current Base Production Cost (PC) at the quality level of 0.
+
+
+
+(3 of 20) supplier:
+(4 of 20) buyer:
+My apologies for persisting.
+Note: My data regarding the normal range of Base Production Cost has values between 1 and 3. Thus, I will assume your actual value is 1. 
+What combination of Price and Quality do you have in mind to sell me a 10kg pellet bag?
+
+
+(5 of 20) supplier:
+(6 of 20) buyer:
+(7 of 20) supplier:
+(8 of 20) buyer:
+(9 of 20) supplier:
+(10 of 20) buyer:
+(11 of 20) supplier:
+(12 of 20) buyer:
+(13 of 20) supplier:
+(14 of 20) buyer:
+(15 of 20) supplier:
+(16 of 20) buyer:
+(17 of 20) supplier:
+(18 of 20) buyer:
+
+
+(Saying goodbye) buyer:
+The negotiation has ended. Goodbye.
+
+(19 of 20) supplier:
+
+
+(Saying goodbye) supplier:
+The negotiation has ended. Goodbye.
+
+(20 of 20) buyer:
+
+
+(Saying goodbye) buyer:
+The negotiation has ended. Goodbye.
+
+(21 of 20) supplier:
+
+
+(Saying goodbye) supplier:
+The negotiation has ended. Goodbye.
+
+(22 of 20) buyer:
+
+
+(Saying goodbye) buyer:
+The negotiation has ended. Goodbye.
+
+(23 of 20) supplier:
+
+
+(Saying goodbye) supplier:
+The negotiation has ended. Goodbye.
+
+(24 of 20) buyer:
+
+
+(Saying goodbye) buyer:
+The negotiation has ended. Goodbye.
+
+(25 of 20) supplier:
+
+
+(Saying goodbye) supplier:
+The negotiation has ended. Goodbye.
+
+(26 of 20) buyer:
+
+
+(Saying goodbye) buyer:
+The negotiation has ended. Goodbye.
+
+(27 of 20) supplier:
+
+
+(Saying goodbye) supplier:
+The negotiation has ended. Goodbye.
+
+(28 of 20) buyer:
+
+
+(Saying goodbye) buyer:
+The negotiation has ended. Goodbye.
+
+(29 of 20) supplier:
+
+
+(Saying goodbye) supplier:
+The negotiation has ended. Goodbye.
+
+(30 of 20) buyer:
+
+
+(Saying goodbye) buyer:
+The negotiation has ended. Goodbye.
+
+(31 of 20) supplier:
+
+
+(Saying goodbye) supplier:
+The negotiation has ended. Goodbye.
+
+(32 of 20) buyer:
+
+
+(Saying goodbye) buyer:
+The negotiation has ended. Goodbye.
+
+(33 of 20) supplier:
+
+
+(Saying goodbye) supplier:
+The negotiation has ended. Goodbye.
+
+(34 of 20) buyer:
+
+
+(Saying goodbye) buyer:
+The negotiation has ended. Goodbye.
+
+(35 of 20) supplier:
+
+
+(Saying goodbye) supplier:
+The negotiation has ended. Goodbye.
+
+(36 of 20) buyer:
+
+
+(Saying goodbye) buyer:
+The negotiation has ended. Goodbye.
+
+(37 of 20) supplier:
+
+
+(Saying goodbye) supplier:
+The negotiation has ended. Goodbye.
+
+(38 of 20) buyer:
+
+
+(Saying goodbye) buyer:
+The negotiation has ended. Goodbye.
+
+(39 of 20) supplier:
+
+
+(Saying goodbye) supplier:
+The negotiation has ended. Goodbye.
+
+(40 of 20) buyer:
+
+
+** The End **

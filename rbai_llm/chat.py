@@ -89,11 +89,6 @@ def _chat_to_ai(conversation_history, ai_number, mod_used, temperature=0.1):
         llm_mod = 'reader:latest'
     elif mod_used == 'llm_constraint':
         llm_mod = 'constrain_reader:latest'
-    elif mod_used == 'rb':
-        if rnd_param.role == 'supplier':
-            llm_mod = 'rb_supplier:latest'
-        else:
-            llm_mod = 'rb_buyer:latest'
     else:
         llm_mod = 'llama3:latest'
 
@@ -106,6 +101,7 @@ def _chat_to_ai(conversation_history, ai_number, mod_used, temperature=0.1):
     try:
         response = requests.post('http://localhost:11434/api/chat', data=json.dumps(ollama_payload), headers=headers,
                                  stream=True)
+
         if response.status_code == 200:
 
             # Handle the stream of responses
@@ -186,10 +182,7 @@ def _chat_run(conversation_history, ai_number, ai_display_name, ai_other_number,
 
         return  
     
-    if ai_number == 2:
-        model_used = 'rb'
-    else:
-        model_used = 'llama3'
+    model_used = 'llama3'
     
     
     ai_response = _chat_to_ai(conversation_history[ai_number], ai_number, model_used, ai_chat['temperature'])
@@ -444,11 +437,11 @@ if __name__ == '__main__':
 
     # give prompt dynamically
     if rnd_param.role == 'supplier':
-        ai_chat_config['ai_two_conversation_history'][0]['content'] = f"Your Base Production Cost is {rnd_param.main_constraint}."
+        ai_chat_config['ai_two_conversation_history'][0]['content'] = system_final_prompt()
         ai_chat_config['ai_one_conversation_history'][0]['content'] = f"You are a buyer and must negotiate the wholesale price of 10kg bag of wood pellets. This item is produced by your company at different quality levels. The Buying and Supplying company need to reach a deal in terms of Wholesale Price & Quality. A higher quality level agreed upon during the negotiation has consequences: For buyers: higher quality is allows you to sell the product at a higher price to customers (RP). For the rest of the experiment, you will play the role of a buyer. In this simulation base retail selling Your Base Retail Price to customers is {rnd_param.other_constraint}. Try to get the wholesale price as low as possible. Wholesale price can range from 1 to 13, while quality from 1 to 4, both should be integers. Always propose wholesale price and quality as integers. Negotiation happens in euros."
 
     else:
-        ai_chat_config['ai_two_conversation_history'][0]['content'] = f"Your Base Retail Price is {rnd_param.main_constraint}."
+        ai_chat_config['ai_two_conversation_history'][0]['content'] = system_final_prompt()
         ai_chat_config['ai_one_conversation_history'][0]['content'] = f"You are a supplier and must negotiate the wholesale price of 10kg bag of wood pellets. This item is produced by your company at different quality levels. The Buying and Supplying company need to reach a deal in terms of Wholesale Price & Quality. A higher quality level agreed upon during the negotiation has consequences: For suppliers: higher quality is more costly to produce (PC). For the rest of the experiment, you will play the role of a supplier. In this simulation base retail selling Your Base Production Cost is {rnd_param.other_constraint}. Try to get the wholesale price as high as possible. Wholesale price can range from 1 to 13, while quality from 1 to 4, both should be integers. Always propose wholesale price and quality as integers. Negotiation happens in euros."
 
     initial_msg = activation.initial()

@@ -1,5 +1,5 @@
 #### Logic
-from rbai_rbai.prompts import PROMPTS, system_final_prompt
+from rbai_rbai.prompts import PROMPTS, system_final_prompt2
 from rbai_rbai.chat import _chat_to_ai
 from shared import rnd_param
 from rbai_rbai.rbai_storage_b2 import rbai_storage_b2
@@ -189,7 +189,7 @@ def get_llm_response(message: str):
     print("get_llm_response")    
     
     
-    system_prompt = system_final_prompt()
+    system_prompt = system_final_prompt2()
     conversation_history = [{"role": "system", "content": system_prompt},  
                             {"role": "user", "content": message}]
     

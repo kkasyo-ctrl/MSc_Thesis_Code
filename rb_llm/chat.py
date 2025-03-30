@@ -37,6 +37,7 @@ def _chat_to_ai(conversation_history, ai_number, mod_used, temperature=0.1):
         response = requests.post('http://localhost:11434/api/chat', 
                                  data=json.dumps(ollama_payload), headers=headers,
                                  stream=True)
+
         if response.status_code == 200:
             for line in response.iter_lines():
                 if line:

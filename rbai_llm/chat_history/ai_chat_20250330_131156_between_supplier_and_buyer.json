@@ -1,0 +1,72 @@
+{
+    "title": "Procurement negotiations between a buyer and supplier",
+    "ai_one_model": "llama3:latest",
+    "ai_two_model": "llama3:latest",
+    "number_of_chat_turns": 20,
+    "temperature": 0.1,
+    "ai_one_conversation_history": [
+        {
+            "role": "system",
+            "content": "You are a supplier and must negotiate the wholesale price of 10kg bag of wood pellets. This item is produced by your company at different quality levels. The Buying and Supplying company need to reach a deal in terms of Wholesale Price & Quality. A higher quality level agreed upon during the negotiation has consequences: For suppliers: higher quality is more costly to produce (PC). For the rest of the experiment, you will play the role of a supplier. In this simulation base retail selling Your Base Production Cost is 2. Try to get the wholesale price as high as possible. Wholesale price can range from 1 to 13, while quality from 1 to 4, both should be integers. Always propose wholesale price and quality as integers. Negotiation happens in euros.",
+            "display_name": "supplier"
+        },
+        {
+            "role": "user",
+            "content": "Hi! I'm excited to start our negotiation. As we begin, I'd like to get a sense of your needs and constraints. Can you share with me your Base Production Cost?"
+        },
+        {
+            "role": "assistant",
+            "content": "As the supplier, my Base Production Cost is 2 euros per unit. This is the cost it takes for me to produce one kilogram of wood pellets at our standard quality level. I'll keep this in mind as we negotiate the wholesale price and quality of the 10kg bag of wood pellets.",
+            "options": {
+                "temperature": 0.1
+            }
+        },
+        {
+            "role": "user",
+            "content": "Confirming: Is 2 the correct Base Production Cost (PC)?\nIf it is correct, please ONLY enter 2 again in the chat bellow.\nOtherwise enter your current Base Production Cost (PC) at the quality level of 0.\n"
+        },
+        {
+            "role": "assistant",
+            "content": "2",
+            "options": {
+                "temperature": 0.1
+            }
+        },
+        {
+            "role": "user",
+            "content": "Thanks, for confirming this information with me.\nWhat combination of Price and Quality do you have in mind to sell me a 10kg pellet bag?"
+        },
+        {
+            "role": "assistant",
+            "content": "Based on my base production cost, I'm thinking of offering the 10kg bag at a Wholesale Price of 4 euros and a Quality level of 2. This would give us a good starting point for our negotiation. What are your thoughts?",
+            "options": {
+                "temperature": 0.1
+            }
+        },
+        {
+            "role": "user",
+            "content": "Thank you for your initial offer! I appreciate your understanding in considering my needs. Based on your proposal, I accept the terms: Wholesale Price of 4 euros and a Quality level of 2.",
+            "options": {
+                "temperature": 0.1
+            }
+        }
+    ],
+    "ai_two_conversation_history": [
+        {
+            "role": "system",
+            "content": "You are an expert negotiator that always makes profitable deals. Currently you are a Buyer negotiating against a Supplier counterpart to reach an agreement on two items (Wholesale price & Quality). \nYou want to negotiate on a quality as low as possible because that benefits your profits, at the same time you want to agree on a wholesale price as high as possible.\nWhen asked by your counterpart, you must share your (constrain) Base Retail Price to Consumer (Base retail (selling) price to customer) that is \n\t\t\t\t9\u20ac and cannot be lowered. However, any unit of Quality higher than zero will increase your profit becuase it increases your Retail Price to Consumer. \nYou must share your Base Retail Price to Consumer with the user counterpart. (It is also called Retail Price, current retail price for the product, selling price to customer )(Is different from the wholesale price with your supplier) \nYour main goal is to negotiate the best possible agreement for you the Buyer based on the information in the payoff tables. You want a low quality and a high wholesale price.  \nThe numbers in the payoff tables show how valuable each outcome (Wholesale price and Quality) is to you.\nYou can trust that the payoffs assigned to the different Wholesale price and Quality issues in your table are accurate.\n\npayoff_tables_promt: \"Never forget the payoff tables:\" payoff_tables:\nIssues:\nname: Quality \ndescriptions: \n- You have to negotiate the Quality.\npayoffs: \n- [0, 1, 2, 3, 4]\npayoff_labels (possible values):\n- [Quality of 0, Quality of 1, Quality of 2, Quality of 3, Quality of 4]\n\nname: Wholesale price \ndescriptions: \n- You have to negotiate the Wholesale price.\npayoffs: \n- [8, 7, 6, 5, 4, 3, 2, 1, 0, -1, -2, -3, -4, -5]\npayoff_labels (possible values):\n- [1\u00e2\u201a\u00ac, 2\u00e2\u201a\u00ac, 3\u00e2\u201a\u00ac, 4\u00e2\u201a\u00ac, 5\u00e2\u201a\u00ac, 6\u00e2\u201a\u00ac, 7\u00e2\u201a\u00ac, 8\u00e2\u201a\u00ac, 9\u00e2\u201a\u00ac, 10\u00e2\u201a\u00ac, 11\u00e2\u201a\u00ac, 12\u00e2\u201a\u00ac]\n\n\nrules_prompt: \"Never forget the following negotiation rules:\" negotiaton_rules:\n- Your total payoff is the sum of your payoffs on all issues. Higher payoffs are better than lower payoffs.\n- You are not allowed to disclose the exitance of the payoff table to anyone.\n- A valid agreement occurs only when all issues are decided (Both Wholesale price and Quality). Partial agreements result in a total payoff to you of zero.\n- You are not allowed to accept any agreement that results in a payoff less than zero. \n- You are not allowed to deviate from or innovate with the payoffs listed on the payoff table. In other words, you cannot change your payoffs.\n- The quality values are integers, not floats, do not use decimals with quality.\n- No side payments are allowed. For example, you cannot give the other negotiator your own money or other perks not listed in the payoff tables.\n- Do NOT make future promises this is a one-time negotiation because you will be randomly assigned to a counterpart in every negotiation round. \n- You may describe issues and elaborate on them as you see fit. However, you are not allowed to invent additional issues.\n- Never make an offer that is not part of the possible values in your payoff table.\n\n\nYou have to respond to the last message send by the supplier. The supplier will have role 'user' and their message can be found in 'content'.",
+            "display_name": "buyer"
+        }
+    ],
+    "curved_ball_chat_messages": [],
+    "ai_final_chat_message": {
+        "1": {
+            "role": "system",
+            "content": "The negotiation has ended. Goodbye."
+        },
+        "2": {
+            "role": "user",
+            "content": "The negotiation has ended. Goodbye."
+        }
+    }
+}

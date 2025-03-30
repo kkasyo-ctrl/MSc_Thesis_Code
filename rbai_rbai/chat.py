@@ -7,7 +7,7 @@ import copy
 from rbai_rbai.rbai_storage_b1 import rbai_storage_b1, saving_convo
 from rbai_rbai.rbai_storage_b2 import rbai_storage_b2
 from shared import rnd_param 
-from rbai_rbai.prompts import system_final_prompt
+from rbai_rbai.prompts import system_final_prompt1, system_final_prompt2
 
 # ensure encoding is utf-8
 sys.stdout.reconfigure(encoding='utf-8')
@@ -33,11 +33,6 @@ def _chat_to_ai(conversation_history, mod_used, temperature=0.1):
         llm_mod = 'reader:latest'
     elif mod_used == 'llm_constraint':
         llm_mod = 'constrain_reader:latest'
-    elif mod_used == 'rb':
-        if rnd_param.role == 'supplier':
-            llm_mod = 'rb_supplier:latest'
-        else:
-            llm_mod = 'rb_buyer:latest'
     else:
         llm_mod = 'llama3:latest'
 
@@ -83,13 +78,8 @@ def run_chat_interaction(num_turns=20):
     conversation_history2 = []
     
     # context for LLM
-    if rnd_param.role == 'supplier':
-        syst_txt1 = f"Your Base Production Cost is {rnd_param.main_constraint}."
-        syst_txt2=  f"Your Base Retail Price is {rnd_param.other_constraint}."
-
-    else:
-        syst_txt1 =  f"Your Base Retail Price is {rnd_param.main_constraint}."
-        syst_txt2 = f"Your Base Production Cost is {rnd_param.other_constraint}."
+    syst_txt1 = system_final_prompt1()
+    syst_txt2 = system_final_prompt2()
 
     
     system_message1 = {"role": "system", "content": syst_txt1}
@@ -141,7 +131,7 @@ def run_chat_interaction(num_turns=20):
             tmp_conversation_history[-1]['content'] += modified_content
 
             print("\n({} of {}) {}:".format(chat_counter, num_turns, rbai_storage_b1.bot1_role))
-            mod = "rb"
+            mod = "llama3"
             print(f"temp convo hist 1: {tmp_conversation_history}")
             rbai_response = _chat_to_ai(tmp_conversation_history, mod, temperature=0.1)
             rbai_msgb1 = rbai_response['content'].strip()
@@ -176,7 +166,7 @@ def run_chat_interaction(num_turns=20):
             tmp_conversation_history[-1]['content'] += modified_content
 
             print("\n({} of {}) {}:".format(chat_counter, num_turns, rbai_storage_b2.bot2_role))
-            mod = "rb"
+            mod = "llama3"
             print(f"temp convo hist 2: {tmp_conversation_history}")
             rbai_response = _chat_to_ai(tmp_conversation_history, mod, temperature=0.1)
             rbai_msgb2 = rbai_response['content'].strip()

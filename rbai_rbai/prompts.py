@@ -20,7 +20,7 @@ def from_file(base_path, file_path):
 
 # Generates a system prompt based on the bot's role and constraints
 # Constructs a message using predefined phrases and calculated constraint ranges
-def system_final_prompt():
+def system_final_prompt1():
     bot_role = rnd_param.role
     if bot_role == 'supplier':
         production_cost = rbai_storage_b1.main_bot_cons
@@ -45,6 +45,32 @@ def system_final_prompt():
             constraints +
             after_price)
 
+
+
+def system_final_prompt2():
+    bot_role = rnd_param.role_other
+    if bot_role == 'supplier':
+        production_cost = rbai_storage_b1.main_bot_cons
+        retail_price = rbai_storage_b1.other_constraint
+    else: 
+        production_cost = rbai_storage_b1.other_constraint
+        retail_price = rbai_storage_b1.main_bot_cons
+
+    before_constraint = PROMPTS[bot_role]['before_constraint']
+    bot_constraint = \
+        production_cost if bot_role == "supplier" else retail_price
+    after_constraint = PROMPTS[bot_role]['after_constraint_before_price']
+
+    
+    f = 1 - 2 * (bot_role == "buyer")
+    constraints = str([f * (i - bot_constraint) for i in rnd_param.PRICE_RANGE])
+    after_price = PROMPTS[bot_role]['after_price']
+
+    return (before_constraint +
+            f"{bot_constraint}€" +
+            after_constraint +
+            constraints +
+            after_price)
 
 
 # The functions below dynamically generate promts for different negotiations situations
