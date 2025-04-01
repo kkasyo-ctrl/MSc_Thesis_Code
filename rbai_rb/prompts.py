@@ -161,8 +161,8 @@ PROMPTS = {
         
     'constraint_confirm':
         'Confirming: Is %s the correct %s?\n'
-        'If it is correct, please ONLY enter %s again in the chat bellow.\n'
-        'Otherwise enter your current %s at the quality level of 0.\n',
+        'If it is correct, please ONLY return %s again in the chat.\n'
+        'Otherwise return your current %s at the quality level of 0.\n',
                 
     'constraint_offer':
         'I am not ready to respond to your offer yet. '

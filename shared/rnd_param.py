@@ -5,7 +5,7 @@ import re
 
 
 # possible values
-PRICE_RANGE = range(1, 15)
+PRICE_RANGE = range(1, 14)
 QUALITY_RANGE = range(0, 5)
 
 

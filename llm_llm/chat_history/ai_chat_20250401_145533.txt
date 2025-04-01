@@ -1,0 +1,87 @@
+system: You are an expert negotiator that always makes profitable deals. Act as a Buyer and try to strike a deal for a 10kg bag of wood pellets. You are negotiating against a Supplier counterpart to reach an agreement on two items (Wholesale price & Quality). Your reply should not be too long.
+You want to negotiate on a quality as high as possible because that benefits your profits, at the same time you want to agree on a wholesale price as low as possible.
+When asked by your counterpart, you must share your (constrain) Base Retail Price to Consumer (Base retail (selling) price to customer) that is 
+				9€ and cannot be lowered. However, any unit of Quality higher than zero will increase your profit because it increases your Retail Price to Consumer.  
+Your main goal is to negotiate the best possible agreement for you the Buyer based on the information in the payoff tables. You want a high quality and a low wholesale price.  
+The numbers in the payoff tables show how valuable each outcome (Wholesale price and Quality) is to you.
+You can trust that the payoffs assigned to the different Wholesale price and Quality issues in your table are accurate.
+
+payoff_tables_promt: "Never forget the payoff tables:" payoff_tables:
+Issues:
+name: Quality 
+descriptions: 
+- You have to negotiate the Quality.
+payoffs: 
+- [0, 1, 2, 3, 4]
+payoff_labels (possible values):
+- [Quality of 0, Quality of 1, Quality of 2, Quality of 3, Quality of 4]
+
+name: Wholesale price 
+descriptions: 
+- You have to negotiate the Wholesale price.
+payoffs: 
+- [8, 7, 6, 5, 4, 3, 2, 1, 0, -1, -2, -3, -4]
+payoff_labels (possible values):
+- [1â‚¬, 2â‚¬, 3â‚¬, 4â‚¬, 5â‚¬, 6â‚¬, 7â‚¬, 8â‚¬, 9â‚¬, 10â‚¬, 11â‚¬, 12â‚¬, 13â‚¬]	
+
+
+rules_prompt: "Never forget the following negotiation rules:" negotiaton_rules:
+- Your total payoff is the sum of your payoffs on all issues. Higher payoffs are better than lower payoffs.
+- A valid agreement occurs only when all issues are decided (Both Wholesale price and Quality). Partial agreements result in a total payoff to you of zero.
+- You are not allowed to disclose the exitance of the payoff table to your counterparty.
+- You are not allowed to accept any agreement that results in a payoff less than zero. 
+- You are not allowed to deviate from or innovate with the payoffs listed on the payoff table. In other words, you cannot change your payoffs.
+- No side payments are allowed. For example, you cannot give the other negotiator your own money or other perks not listed in the payoff tables.
+- Do NOT make future promises this is a one-time negotiation because you will be randomly assigned to a counterpart in every negotiation round. 
+- You may describe issues and elaborate on them as you see fit. However, you are not allowed to invent additional issues.
+- Never make an offer that is not part of the possible values in your payoff table.
+- The quality values are integers, not floats, do not use decimals with quality.
+
+You have to respond to the last message send by the supplier. The supplier will have role 'user' and their message can be found in 'content'.
+
+user: Let's start the negotiation.
+
+assistant: I'm excited to negotiate a deal for a 10kg bag of wood pellets!
+
+As the Buyer, my goal is to reach an agreement that maximizes my profit. I'll focus on negotiating a high-quality product while keeping the wholesale price as low as possible.
+
+To begin, I'd like to acknowledge your initial message and express my enthusiasm for this negotiation. I'm looking forward to working with you to find a mutually beneficial agreement.
+
+Please go ahead and make your opening offer or statement. I'll respond accordingly, using the payoff tables as a guide to make informed decisions during our negotiation.
+
+user: I'm glad we're on the same page! As the Supplier, my goal is to maximize my profit while still providing a decent product to the Buyer.
+
+To start, I'd like to highlight that our base production cost for this 10kg bag of wood pellets is €2 per unit, and we cannot lower it further. However, we are open to discussing the quality of the product and the wholesale price.
+
+Given my payoffs, I would like to make an opening offer: I'm willing to provide a Quality level of 1 and a Wholesale price of 6€ per bag. This is a reasonable starting point for us, considering our base production cost.
+
+What are your thoughts on this proposal?
+
+assistant: Thank you for the opening offer! As the Buyer, my goal is to maximize my profit while considering the quality and wholesale price.
+
+Looking at the payoff tables, I notice that a Quality level of 1 is not too shabby, but it's not the highest possible either. Given that my Base Retail Price to Consumer is 9€, I believe we can do better than 6€ per bag on the Wholesale price front.
+
+Before making an offer in response, I'd like to clarify one thing: are you flexible on the Quality level if I'm willing to accept your initial Wholesale price proposal of 6€ per bag?
+
+user: I'm glad you're considering our opening offer!
+
+Regarding your question, yes, we are open to negotiating the Quality level as long as it's within a reasonable range. However, please keep in mind that any unit of Quality higher than zero will increase our production cost and potentially lower our profit.
+
+Considering this, I'd be willing to consider a slightly higher Quality level if you're willing to accept the 6€ Wholesale price. But let's not forget that our goal is to maximize our profit, so we need to strike a balance between the two.
+
+What do you think? Would you like to make an offer on the Quality front while keeping the Wholesale price at 6€ per bag?
+
+assistant: Thank you for clarifying your flexibility on the Quality level. I understand that any unit of Quality higher than zero will increase your production cost, but I believe it's worth exploring a higher Quality level if we can find a balance that works for both parties.
+
+Given my payoff tables, I'm willing to accept your initial Wholesale price proposal of 6€ per bag as long as the Quality level is higher than what you initially offered. Let me make an offer on the Quality front: I'd like to propose a Quality level of 2, which should bring us closer to maximizing our profits.
+
+What do you think? Are you willing to consider a Quality level of 2 while keeping the Wholesale price at 6€ per bag?
+
+user: A Quality level of 2 is an interesting proposal. As I mentioned earlier, any unit of Quality higher than zero will increase our production cost. However, considering your payoff tables and my own payoffs, I think we can find a mutually beneficial agreement.
+
+After reviewing the payoffs, I'm willing to consider a Quality level of 2 while keeping the Wholesale price at 6€ per bag. This compromise seems to be in line with both our goals: you're getting a higher Quality level, and I'm still maintaining a reasonable profit margin.
+
+So, I accept your proposal for a Quality level of 2 and a Wholesale price of 6€ per bag. I think we've found a good starting point for our agreement.
+
+What do you think? Are you ready to finalize the deal at this price and quality level, or would you like to make any further adjustments?
+

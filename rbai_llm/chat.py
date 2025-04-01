@@ -7,7 +7,7 @@ from rbai_llm import activation
 from rbai_llm import system_info
 from shared import rnd_param
 import copy
-from rbai_llm.prompts import system_final_prompt
+from rbai_llm.prompts import system_final_prompt, system_final_prompt_other
 
 # ensure encoding is utf-8
 sys.stdout.reconfigure(encoding='utf-8')
@@ -101,7 +101,8 @@ def _chat_to_ai(conversation_history, ai_number, mod_used, temperature=0.1):
     try:
         response = requests.post('http://localhost:11434/api/chat', data=json.dumps(ollama_payload), headers=headers,
                                  stream=True)
-
+        print("Request Payload:")
+        print(json.dumps(ollama_payload, indent=2))
         if response.status_code == 200:
 
             # Handle the stream of responses
@@ -438,15 +439,17 @@ if __name__ == '__main__':
     # give prompt dynamically
     if rnd_param.role == 'supplier':
         ai_chat_config['ai_two_conversation_history'][0]['content'] = system_final_prompt()
-        ai_chat_config['ai_one_conversation_history'][0]['content'] = f"You are a buyer and must negotiate the wholesale price of 10kg bag of wood pellets. This item is produced by your company at different quality levels. The Buying and Supplying company need to reach a deal in terms of Wholesale Price & Quality. A higher quality level agreed upon during the negotiation has consequences: For buyers: higher quality is allows you to sell the product at a higher price to customers (RP). For the rest of the experiment, you will play the role of a buyer. In this simulation base retail selling Your Base Retail Price to customers is {rnd_param.other_constraint}. Try to get the wholesale price as low as possible. Wholesale price can range from 1 to 13, while quality from 1 to 4, both should be integers. Always propose wholesale price and quality as integers. Negotiation happens in euros."
+        ai_chat_config['ai_one_conversation_history'][0]['content'] = system_final_prompt_other()
 
     else:
         ai_chat_config['ai_two_conversation_history'][0]['content'] = system_final_prompt()
-        ai_chat_config['ai_one_conversation_history'][0]['content'] = f"You are a supplier and must negotiate the wholesale price of 10kg bag of wood pellets. This item is produced by your company at different quality levels. The Buying and Supplying company need to reach a deal in terms of Wholesale Price & Quality. A higher quality level agreed upon during the negotiation has consequences: For suppliers: higher quality is more costly to produce (PC). For the rest of the experiment, you will play the role of a supplier. In this simulation base retail selling Your Base Production Cost is {rnd_param.other_constraint}. Try to get the wholesale price as high as possible. Wholesale price can range from 1 to 13, while quality from 1 to 4, both should be integers. Always propose wholesale price and quality as integers. Negotiation happens in euros."
-
+        ai_chat_config['ai_one_conversation_history'][0]['content'] =  system_final_prompt_other()
+    
     initial_msg = activation.initial()
 
-    
+    print(ai_chat_config['ai_two_conversation_history'][0]['content'])
+    print(ai_chat_config['ai_one_conversation_history'][0]['content'])
+     
     # Ensure ai_one_conversation_history has at least two entries
     if len(ai_chat_config["ai_one_conversation_history"]) > 1:
         ai_chat_config["ai_one_conversation_history"][1]["content"] = initial_msg

@@ -36,9 +36,33 @@ def system_final_prompt():
 
     
     f = 1 - 2 * (bot_role == "buyer")
+
     constraints = str([f * (i - bot_constraint) for i in rnd_param.PRICE_RANGE])
     after_price = PROMPTS[bot_role]['after_price']
+    return (before_constraint +
+            f"{bot_constraint}€" +
+            after_constraint +
+            constraints +
+            after_price)
 
+
+def system_final_prompt_other():
+    bot_role = rnd_param.role_other
+    if bot_role == 'supplier':
+        production_cost = rnd_param.other_constraint
+    else: 
+        retail_price = rnd_param.other_constraint
+
+    before_constraint = PROMPTS[bot_role]['before_constraint']
+    bot_constraint = \
+        production_cost if bot_role == "supplier" else retail_price
+    after_constraint = PROMPTS[bot_role]['after_constraint_before_price']
+
+    
+    f = 1 - 2 * (bot_role == "buyer")
+
+    constraints = str([f * (i - bot_constraint) for i in rnd_param.PRICE_RANGE])
+    after_price = PROMPTS[bot_role]['after_price']
     return (before_constraint +
             f"{bot_constraint}€" +
             after_constraint +
@@ -161,8 +185,8 @@ PROMPTS = {
         
     'constraint_confirm':
         'Confirming: Is %s the correct %s?\n'
-        'If it is correct, please ONLY enter %s again in the chat bellow.\n'
-        'Otherwise enter your current %s at the quality level of 0.\n',
+        'If it is correct, please ONLY return %s again in the chat.\n'
+        'Otherwise return your current %s at the quality level of 0.\n',
                 
     'constraint_offer':
         'I am not ready to respond to your offer yet. '

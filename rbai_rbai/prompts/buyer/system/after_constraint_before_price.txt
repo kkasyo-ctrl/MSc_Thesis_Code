@@ -1,6 +1,5 @@
- and cannot be lowered. However, any unit of Quality higher than zero will increase your profit becuase it increases your Retail Price to Consumer. 
-You must share your Base Retail Price to Consumer with the user counterpart. (It is also called Retail Price, current retail price for the product, selling price to customer )(Is different from the wholesale price with your supplier) 
-Your main goal is to negotiate the best possible agreement for you the Buyer based on the information in the payoff tables. You want a low quality and a high wholesale price.  
+ and cannot be lowered. However, any unit of Quality higher than zero will increase your profit because it increases your Retail Price to Consumer.  
+Your main goal is to negotiate the best possible agreement for you the Buyer based on the information in the payoff tables. You want a high quality and a low wholesale price.  
 The numbers in the payoff tables show how valuable each outcome (Wholesale price and Quality) is to you.
 You can trust that the payoffs assigned to the different Wholesale price and Quality issues in your table are accurate.
 

@@ -10,7 +10,7 @@
     },
     {
         "role": "user",
-        "content": "As the supplier, my Base Production Cost is 2 euros per unit. This is the cost it takes for me to produce one kilogram of wood pellets at our standard quality level. I'll keep this in mind as we negotiate the wholesale price and quality of the 10kg bag of wood pellets."
+        "content": "Nice to negotiate with you too!\n\nAs the supplier, my Base Production Cost for producing wood pellets is \u20ac2 per kilogram. This is the minimum cost it takes me to manufacture each kilogram of wood pellets.\n\nNow that I've shared this information with you, are you ready to start negotiating on the wholesale price and quality?"
     },
     {
         "role": "assistant",
@@ -26,11 +26,35 @@
     },
     {
         "role": "user",
-        "content": "Based on my base production cost, I'm thinking of offering the 10kg bag at a Wholesale Price of 4 euros and a Quality level of 2. This would give us a good starting point for our negotiation. What are your thoughts?"
+        "content": "Based on my Base Production Cost of \u20ac2 per kilogram, I'm thinking of offering you a quality level of 3 and a wholesale price of... \u20ac9.50 for a 10kg bag of wood pellets.\n\nThis combination would provide a decent margin for me while still being competitive in the market. What do you think?"
     },
     {
         "role": "assistant",
-        "content": "Thank you for your initial offer! I appreciate your understanding in considering my needs. Based on your proposal, I accept the terms: Wholesale Price of 4 euros and a Quality level of 2.",
+        "content": "Your initial offer contained an invalid combination of Wholesale price and Quality. I'm willing to consider a revised proposal. How about Wholesale Price 6\u20ac and Quality 0? Would that be acceptable?"
+    },
+    {
+        "role": "user",
+        "content": "I apologize for the mistake earlier!\n\nRegarding your counteroffer, Wholesale Price 6\u20ac and Quality 0 is actually quite reasonable! However, considering my Base Production Cost of \u20ac2 per kilogram, I'd need to make a slight adjustment to ensure my profitability.\n\nLet me think for a moment... Ah-ha! I can offer you Wholesale Price 6.20\u20ac and still maintain a decent margin. Would that be acceptable to you?"
+    },
+    {
+        "role": "assistant",
+        "content": "Unfortunately, your previous offer did not meet my expectations. I'd like to counteroffer with a new combination of Wholesale price and Quality considering your Base Production Cost of \u20ac2 per kilogram. I'm willing to consider Wholesale Price 5\u20ac and Quality 0. Would that be acceptable?"
+    },
+    {
+        "role": "user",
+        "content": "You're trying to squeeze me for an even better deal, aren't you?\n\nAlright, alright... I can see that you're really pushing me to get the best value. Considering my Base Production Cost of \u20ac2 per kilogram, Wholesale Price 5\u20ac and Quality 0 is a pretty aggressive offer.\n\nHowever, I'm willing to meet you halfway. How about we settle on Wholesale Price 5.10\u20ac and still maintain Quality 0? That way, both of us can walk away with a reasonable deal. What do you say?"
+    },
+    {
+        "role": "assistant",
+        "content": "The offer I made contains an invalid Wholesale price as it exceeds the base retail price to consumer which is \u20ac9. However, let's move forward with a new proposal: Wholesale Price 6\u20ac and Quality 0. Would you be interested in this alternative?"
+    },
+    {
+        "role": "user",
+        "content": "I apologize for the mistake earlier!\n\nRegarding your new proposal, Wholesale Price 6\u20ac and Quality 0 sounds like a more reasonable offer! Since my Base Production Cost is \u20ac2 per kilogram, I'd need to make a slight adjustment to ensure my profitability.\n\nLet me think for a moment... Ah-ha! I can accept your offer of Wholesale Price 6\u20ac and Quality 0. It's a good compromise that balances our interests."
+    },
+    {
+        "role": "assistant",
+        "content": "Failed to send chat request.",
         "options": {
             "temperature": 0.1
         }

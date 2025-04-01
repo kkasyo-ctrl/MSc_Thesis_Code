@@ -4,7 +4,7 @@ import requests
 import datetime
 from llm_llm.storage import llm_storage
 from llm_llm.storage import extract_price_and_quality, calculate_profits, saving_convo
-from llm_llm.mediator_prompts import PROMPTS
+from llm_llm.mediator_prompts import PROMPTS, system_final_prompt_role, system_final_prompt_role_other
 from shared import rnd_param 
 
 # LLM-based chat function with streaming output (unchanged)
@@ -68,16 +68,8 @@ def run_chat_interaction(num_turns=20):
     conversation_history2 = []
     
     # supplier/buyer system messages
-    supplier_system = "You are a supplier and must negotiate the wholesale price of 10kg bag of wood pellets. This item is produced by your company at different quality levels. The Buying and Supplying company need to reach a deal in terms of Wholesale Price & Quality. A higher quality level agreed upon during the negotiation has consequences: For suppliers: higher quality is more costly to produce (PC). For the rest of the experiment, you will play the role of a supplier. In this simulation base retail selling Your Base Production Cost is %s. Try to get the wholesale price as high as possible. Wholesale price can range from 1 to 13, while quality from 1 to 4, both should be integers. Always propose wholesale price and quality as integers, never offer non-interger values. NEVER MAKE AN OFFER USING DECIMALS IN QUALITY OR PRICE. Negotiation happens in euros."
-    buyer_system = "You are a buyer and must negotiate the wholesale price of 10kg bag of wood pellets. This item is produced by your company at different quality levels. The Buying and Supplying company need to reach a deal in terms of Wholesale Price & Quality. A higher quality level agreed upon during the negotiation has consequences: For buyers: higher quality is allows you to sell the product at a higher price to customers (RP). For the rest of the experiment, you will play the role of a buyer. In this simulation base retail selling Your Base Retail Price to customers is %s. Try to get the wholesale price as low as possible. Wholesale price can range from 1 to 13, while quality from 1 to 4, both should be integers, never offer non-interger values. Always propose wholesale price and quality as integers. NEVER MAKE AN OFFER USING DECIMALS IN QUALITY OR PRICE. Negotiation happens in euros."
-
-    
-    if rnd_param.role == 'supplier':
-        bot1_system = supplier_system % rnd_param.main_constraint
-        bot2_system = buyer_system % rnd_param.other_constraint
-    else:
-        bot1_system = buyer_system % rnd_param.main_constraint
-        bot2_system = supplier_system % rnd_param.other_constraint
+    bot1_system = system_final_prompt_role()
+    bot2_system = system_final_prompt_role_other()
 
     system_message1 = {"role": "system", "content": bot1_system}
     system_message2 = {"role": "system", "content": bot2_system}
@@ -103,11 +95,12 @@ def run_chat_interaction(num_turns=20):
     chat_counter = 1
     num_turns = 10  # total number of negotiation turns
 
+
     ai_eval = 'CONTINUE'
     # interaction loop
     while ai_eval == "CONTINUE" and chat_counter < int(num_turns):
         if chat_counter >= 3:
-            check_status_prompt = PROMPTS['evalutate_conversation'] % conversation_history1[-3:]
+            check_status_prompt = PROMPTS['evalutate_conversation'] % conversation_history1[-4:]
             eval_history = [{"role": "system", "content": check_status_prompt}]
             ai_response = _chat_to_ai(eval_history, ai_number=1, mod_used='llama3', temperature=0.1)
             ai_eval = ai_response['content'].strip()
