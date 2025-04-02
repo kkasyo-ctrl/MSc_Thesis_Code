@@ -50,11 +50,9 @@ def system_final_prompt1():
 def system_final_prompt2():
     bot_role = rnd_param.role_other
     if bot_role == 'supplier':
-        production_cost = rbai_storage_b1.main_bot_cons
-        retail_price = rbai_storage_b1.other_constraint
+        production_cost = rnd_param.other_constraint
     else: 
-        production_cost = rbai_storage_b1.other_constraint
-        retail_price = rbai_storage_b1.main_bot_cons
+        retail_price = rnd_param.other_constraint
 
     before_constraint = PROMPTS[bot_role]['before_constraint']
     bot_constraint = \
@@ -229,18 +227,11 @@ PROMPTS = {
     'accept_from_chat': 
         'Accept the offer sent by your negotiation counterpart '
         'because the price and quality terms are favourable, '
-        'thank your counterpart for their understanding but do not '
-        'disclose the existence of your payoff table. '
+        'thank your counterpart for their understanding.'
         '(Maximum 30 words and one paragraph). '
         'In your response repeat the terms of that you have accepted from the last message from your counterpart.'
-        'Here is the last message from your counterpart: ',
-    'accept_from_interface': 
-        'Accept the offer sent by your negotiation counterpart '
-        'because the price and quality terms are favourable, '
-        'thank your counterpart for their understanding but do not '
-        'disclose the existence of your payoff table. '
-        '(Maximum 30 words and one paragraph) '
-        'Here is the last message from your counterpart: ',
+        'Here is the last message from your counterpart:  ',
+
     
     'evaluate_situation': 
         'Your task is to determine whether the negotiation conversation has reached a conclusion or is still ongoing.'

@@ -13,6 +13,13 @@
         {
             "role": "user",
             "content": "Hi! I'm excited to start our negotiation. As we begin, I'd like to get a sense of your needs and constraints. Can you share with me your Base Production Cost?"
+        },
+        {
+            "role": "assistant",
+            "content": "I'd be happy to share that with you. My base production cost is 2\u20ac per unit, and it's not negotiable. Any quality level above zero will increase my production cost, which is why I'm motivated to keep the quality as low as possible while still agreeing on a wholesale price that's high enough for me to make a profit.",
+            "options": {
+                "temperature": 0.1
+            }
         }
     ],
     "ai_two_conversation_history": [
@@ -22,7 +29,6 @@
             "display_name": "buyer"
         }
     ],
-    "curved_ball_chat_messages": [],
     "ai_final_chat_message": {
         "1": {
             "role": "system",

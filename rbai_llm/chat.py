@@ -64,11 +64,7 @@ def _is_model_available(model_name):
 
 
 # sends a conversation prompt/history to the Ollama endpoint (/api/chat) and streams the response
-def _chat_to_ai(conversation_history, ai_number, mod_used, temperature=0.1):
-    
-    # update system if the parameters have been determined -> do that later
-    ####!!!!
-
+def _chat_to_ai(conversation_history, mod_used, temperature=0.1):
 
     response_chat = {
         "role": "assistant",
@@ -101,8 +97,7 @@ def _chat_to_ai(conversation_history, ai_number, mod_used, temperature=0.1):
     try:
         response = requests.post('http://localhost:11434/api/chat', data=json.dumps(ollama_payload), headers=headers,
                                  stream=True)
-        print("Request Payload:")
-        print(json.dumps(ollama_payload, indent=2))
+  
         if response.status_code == 200:
 
             # Handle the stream of responses
@@ -186,7 +181,7 @@ def _chat_run(conversation_history, ai_number, ai_display_name, ai_other_number,
     model_used = 'llama3'
     
     
-    ai_response = _chat_to_ai(conversation_history[ai_number], ai_number, model_used, ai_chat['temperature'])
+    ai_response = _chat_to_ai(conversation_history[ai_number], model_used, ai_chat['temperature'])
     ai_message = ai_response
 
 
@@ -210,15 +205,6 @@ def _chat_run(conversation_history, ai_number, ai_display_name, ai_other_number,
         conversation_history[ai_other_number].append(ai_other_message)
 
 
-    for curved_ball in ai_chat['curved_ball_chat_messages']:
-        if counter == int(curved_ball['chat_turn_number']) - 1:
-            print('\n\n')
-            _record_conversation('\n\n(Curved Ball) {}:\n{}\n'.format(ai_display_name, curved_ball['chat_message']))
-            # Append the curved-ball message to the last message of both histories:
-            formatted_curved_ball_message = '\n{}'.format(curved_ball['chat_message'])
-            conversation_history[ai_number][-1]['content'] += formatted_curved_ball_message
-            conversation_history[ai_other_number][-1]['content'] += formatted_curved_ball_message
-            break
 
     _save_conversation_json('ai_{}_conversation_history.json'.format(ai_number), conversation_history[ai_number])
 

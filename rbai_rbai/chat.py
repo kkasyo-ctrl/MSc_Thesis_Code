@@ -132,7 +132,6 @@ def run_chat_interaction(num_turns=20):
 
             print("\n({} of {}) {}:".format(chat_counter, num_turns, rbai_storage_b1.bot1_role))
             mod = "llama3"
-            print(f"temp convo hist 1: {tmp_conversation_history}")
             rbai_response = _chat_to_ai(tmp_conversation_history, mod, temperature=0.1)
             rbai_msgb1 = rbai_response['content'].strip()
             
@@ -167,7 +166,6 @@ def run_chat_interaction(num_turns=20):
 
             print("\n({} of {}) {}:".format(chat_counter, num_turns, rbai_storage_b2.bot2_role))
             mod = "llama3"
-            print(f"temp convo hist 2: {tmp_conversation_history}")
             rbai_response = _chat_to_ai(tmp_conversation_history, mod, temperature=0.1)
             rbai_msgb2 = rbai_response['content'].strip()
             

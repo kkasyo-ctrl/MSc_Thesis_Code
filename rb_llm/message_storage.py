@@ -50,6 +50,20 @@ MESSAGES = {
         'supplier': 'Base Retail Price to Consumer (RP)',
     },
 
+    'evalutate_conversation':
+        """You will be given a partial dialogue in which a buyer and a seller negotiate about a deal.
+        If both parties have explicitly agreed on the same price and quality level, return only one word: "DEAL". 
+        If there is any remaining discrepancy in price or quality, or if one party has proposed a new offer that has not yet been accepted, return only one word: "CONTINUE". This is also the case if previous proposal and current proposal do not match in terms of quality and price.
+        The conversation history is provided as a list of messages, where each message has a "role" ("assistant" or "user") and a "content" field. 
+        Only two words are allowed as output: "DEAL" or "CONTINUE", no other outputs are allowed.
+        Here is the conversation history: %s
+        
+        
+        You must return exactly **ONE word** as your response:
+        - If you determine that a final agreement has been reached (either you agree with counterparts offer or they agree with your offer), return **"DEAL"**.
+        - If the negotiation is still ongoing, return **"CONTINUE"**.
+        IMPORTANT: Do **NOT** provide any additional words, explanations, or context—only return "DEAL" or "CONTINUE".""",
+    
     'constraint_clarify':
         'I did not quite understand. Please clarify your current %s at the quality level of 0.\n',
 

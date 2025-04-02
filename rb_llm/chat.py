@@ -9,7 +9,7 @@ from shared import rnd_param
 from rb_llm.message_storage import system_final_prompt
 
 # LLM-based chat function with streaming output
-def _chat_to_ai(conversation_history, ai_number, mod_used, temperature=0.1):
+def _chat_to_ai(conversation_history, mod_used, temperature=0.1):
     response_chat = {
         "role": "assistant",
         "content": "",
@@ -104,7 +104,7 @@ def run_chat_interaction(num_turns=20):
         chat_counter += 1
         if chat_counter % 2 == 0:  
             print("\n({} of {}) {}:".format(chat_counter, num_turns, rb_storage.bot2_role))
-            ai_response = _chat_to_ai(conversation_history, ai_number=1, mod_used='llama3', temperature=0.1)
+            ai_response = _chat_to_ai(conversation_history, mod_used='llama3', temperature=0.1)
             llm_msg = ai_response['content'].strip()
 
             conversation_history.append({"role": "assistant", "content": llm_msg})

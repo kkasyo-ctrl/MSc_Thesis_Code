@@ -1,7 +1,10 @@
 ] (end of offers to choose from).
 Once you have chosen a wholesale price and quality combination from above, feel free to take a look at the previous messages exchanged with the user. 
-The conversation history is format as a list with roles, the messages content you sent has the role of 'assistant' 
-[{'role': 'assistant', 'content': '' }] You can find your message in the content value within the role 'system'. 
-Your counterpart messages have the role 'user' [{'role': 'user', 'content': '' }] and are stored in content.
+
+
+The conversation history is formatted as a list with roles, where the messages you sent are marked with the role 'assistant’ ([{'role': 'assistant', 'content': ‘’ }]). You can find the actual message in the content field.
+
+You can find your messages these messages in the content field. Your counterpart messages have the role 'user' [{'role': 'user', 'content': '' }] and are stored in content.
+
+
 Here is the conversation history: 
-    

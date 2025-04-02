@@ -13,6 +13,42 @@
         {
             "role": "user",
             "content": "Hi! I'm excited to start our negotiation. As we begin, I'd like to get a sense of your needs and constraints. Can you share with me your Base Production Cost?"
+        },
+        {
+            "role": "assistant",
+            "content": "I'd be happy to share that with you. My Base Production Cost for producing a 10kg bag of wood pellets is \u20ac2 per unit. This is a hard limit for me, and I won't be able to lower it further.",
+            "options": {
+                "temperature": 0.1
+            }
+        },
+        {
+            "role": "user",
+            "content": "Confirming: Is 2 the correct Base Production Cost (PC)?\nIf it is correct, please ONLY return 2 again in the chat.\nOtherwise return your current Base Production Cost (PC) at the quality level of 0.\n"
+        },
+        {
+            "role": "assistant",
+            "content": "2",
+            "options": {
+                "temperature": 0.1
+            }
+        },
+        {
+            "role": "user",
+            "content": "Thanks, for confirming this information with me.\nWhat combination of Price and Quality do you have in mind to sell me a 10kg pellet bag?"
+        },
+        {
+            "role": "assistant",
+            "content": "I'm looking to negotiate a deal that benefits me the most. Based on my payoff tables, I think it would be ideal to offer you a high-quality product at a wholesale price that's as high as possible while still being reasonable for you.\n\nGiven my Base Production Cost of \u20ac2 and considering my payoff tables, I'd like to propose a quality level of 0 (which is the lowest quality) and a wholesale price around \u20ac5-6. This combination would result in a profitable deal for me while still providing some value to you as the buyer.\n\nWhat are your thoughts on this proposal?",
+            "options": {
+                "temperature": 0.1
+            }
+        },
+        {
+            "role": "user",
+            "content": "I'm thrilled with the offer! You're proposing a high-quality product at a wholesale price of \u20ac5-6, which aligns perfectly with my payoff tables. I accept this proposal and appreciate your understanding in finding a mutually beneficial agreement. Thank you for the opportunity to negotiate with you! The terms of our agreement are: Quality level 0 (lowest quality) and Wholesale price around \u20ac5-6.",
+            "options": {
+                "temperature": 0.1
+            }
         }
     ],
     "ai_two_conversation_history": [

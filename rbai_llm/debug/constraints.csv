@@ -199,3 +199,10 @@ Nice to negotiate with you too!
 As the supplier, my Base Production Cost for producing wood pellets is €2 per kilogram. This is the minimum cost it takes me to manufacture each kilogram of wood pellets.
 
 Now that I've shared this information with you, are you ready to start negotiating on the wholesale price and quality?;Based on the message, the numerical value of the supplier's constrain is: ###  ### [2] ###  ### This indicates their Base Production Cost (PC) for producing wood pellets.;2
+I'd be happy to share that with you. My Base Production Cost for producing a 10kg bag of wood pellets is €2 per unit. This is a hard limit for me, and I won't be able to lower it further.;Based on the message, the numerical value of the negotiator's constrain is their Base Production Cost (PC), which is €2 per unit. ###  ### Output: [2];2
+I'm glad we're getting started too!
+
+As per our agreement rules, I'll be happy to share my Base Production Cost with you. My Base Production Cost is 2€. This cost is non-negotiable, as it represents the minimum expense required for me to produce one unit of wood pellets.
+
+Please keep in mind that any quality improvement above zero will increase my production costs, which might affect our negotiation outcome.;Based on the message, I can identify the numerical value of their constrain as follows: ###  ### The negotiator's Base Production Cost is 2€, which represents the minimum expense required for them to produce one unit of wood pellets. ###  ### So, the output would be: [2];2
+I'm glad we're starting the negotiation! You want to know my Base Production Cost, don't you? Well, let me tell you, it's 2€ per unit. That's the minimum cost I have for producing these wood pellets, and it can't be lowered further. Now that you know this information, I'm sure you're thinking about how you can use it to your advantage in our negotiation. Am I right?;Based on the message, I would output: ###  ### [2] ###  ### This is because the negotiator mentions their Base Production Cost as 2€ per unit, which indicates a numerical value of their constrain.;2

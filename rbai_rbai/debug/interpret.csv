@@ -618,3 +618,11 @@ Let's see how the buyer responds!;Based on the message, the negotiator is propos
 I'll start by making an initial offer that balances my goals. I've chosen an option that offers me a decent wholesale price while keeping the quality relatively low. My initial offer is 8€ as the wholesale price and Quality of 2.
 
 This offer aims to be attractive enough for you, considering it's not too far off from your preferred option of 6€ with Quality 0. At the same time, I'm trying to keep the quality somewhat reasonable while still maintaining a decent wholesale price. Let's see how you respond!;Based on the message, the negotiator is proposing an initial offer of [8€,2].;8;2
+Thank you for the initial offer! As a Supplier, I'm happy to make an initial counteroffer.
+
+Based on my payoff tables, I'll choose the one that benefits me the most. From the options provided, I'll select... **Price of 9€ and quality of 3**!
+
+My reasoning is simple: I want to maximize my profit by getting a higher wholesale price while still keeping the quality relatively low. This combination seems to be in line with my goals.
+
+Now it's your turn again!;Based on the message, the negotiator is proposing: ###  ### [9€,3] ###  ### This is the single instance of [] that represents the numerical wholesale price and quality.;9;3
+Thank you for sharing your Base Retail Price! As a Supplier, I'm happy to make an initial counteroffer. Based on my payoff tables, I'll choose the one that benefits me the most. I'll select 9€ wholesale price and quality of 3! My reasoning is simple: I want to maximize my profit by getting a higher wholesale price while keeping the quality relatively low. This combination seems in line with my goals. Now it's your turn again!;Based on the message, the negotiator is proposing a [9€,3] offer.;9;3

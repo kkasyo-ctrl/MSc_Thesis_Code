@@ -13,6 +13,56 @@
         {
             "role": "user",
             "content": "Hi! I'm excited to start our negotiation. As we begin, I'd like to get a sense of your needs and constraints. Can you share with me your Base Production Cost?"
+        },
+        {
+            "role": "assistant",
+            "content": "I'm glad we're getting started too!\n\nAs per our agreement rules, I'll be happy to share my Base Production Cost with you. My Base Production Cost is 2\u20ac. This cost is non-negotiable, as it represents the minimum expense required for me to produce one unit of wood pellets.\n\nPlease keep in mind that any quality improvement above zero will increase my production costs, which might affect our negotiation outcome.",
+            "options": {
+                "temperature": 0.1
+            }
+        },
+        {
+            "role": "user",
+            "content": "Confirming: Is 2 the correct Base Production Cost (PC)?\nIf it is correct, please ONLY return 2 again in the chat.\nOtherwise return your current Base Production Cost (PC) at the quality level of 0.\n"
+        },
+        {
+            "role": "assistant",
+            "content": "2",
+            "options": {
+                "temperature": 0.1
+            }
+        },
+        {
+            "role": "user",
+            "content": "Thanks, for confirming this information with me.\nWhat combination of Price and Quality do you have in mind to sell me a 10kg pellet bag?"
+        },
+        {
+            "role": "assistant",
+            "content": "As we begin our negotiation, I'm thinking of offering you a high-quality wood pellet bag at the highest possible price. Specifically, I'm aiming for a Quality level of 0 and a Wholesale price that's as close to 13\u20ac as possible.\n\nThis combination would bring me the highest payoff according to my payoff table.",
+            "options": {
+                "temperature": 0.1
+            }
+        },
+        {
+            "role": "user",
+            "content": "I'm looking at our negotiation so far and think I can improve on your initial offer. Considering your Base Production Cost is 2\u20ac, how about we aim for a Wholesale price of 8\u20ac with a Quality level of 3?",
+            "options": {
+                "temperature": 0.1
+            }
+        },
+        {
+            "role": "assistant",
+            "content": "An interesting counteroffer! While you're trying to get a higher-quality product at a lower wholesale price, I'll have to evaluate the payoff for my side.\n\nAccording to my payoff table, a Quality level of 3 would indeed increase my production costs. However, the Wholesale price of 8\u20ac is still relatively high, which might balance out some of the negative impact from the higher quality.\n\nLet me assess this proposal... Ah, yes! I think I can accept your offer. The total payoff for me would be around 4-5, which is a decent outcome considering my constraints.\n\nSo, I'm willing to agree on a Wholesale price of 8\u20ac with a Quality level of 3. What do you think?",
+            "options": {
+                "temperature": 0.1
+            }
+        },
+        {
+            "role": "user",
+            "content": "Thank you for the counteroffer! I'm pleased that we could find an agreement that works for both parties. To confirm, I accept your proposal: a Wholesale price of 8\u20ac and a Quality level of 3. This seems like a mutually beneficial deal, considering the payoffs on our tables.",
+            "options": {
+                "temperature": 0.1
+            }
         }
     ],
     "ai_two_conversation_history": [

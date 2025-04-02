@@ -31,8 +31,7 @@ def modify_bot_message(message):
         return constraint_final(message)
     elif execution_count == 2:
         execution_count += 1
-        test = interpretation(message)
-        return test
+        return interpretation(message)
     else:  
         return interpretation(message)
 

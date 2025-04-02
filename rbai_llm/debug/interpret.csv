@@ -642,3 +642,36 @@ I apologize for the mistake earlier!
 Regarding your new proposal, Wholesale Price 6€ and Quality 0 sounds like a more reasonable offer! Since my Base Production Cost is €2 per kilogram, I'd need to make a slight adjustment to ensure my profitability.
 
 Let me think for a moment... Ah-ha! I can accept your offer of Wholesale Price 6€ and Quality 0. It's a good compromise that balances our interests.;Based on the message, the negotiator is proposing: ###  ### [6€,0] ###  ### This is the output in the required format: [Wholesale Price in Euros, Quality].;6;0
+I'm looking to negotiate a deal that benefits me the most. Based on my payoff tables, I think it would be ideal to offer you a high-quality product at a wholesale price that's as high as possible while still being reasonable for you.
+
+Given my Base Production Cost of €2 and considering my payoff tables, I'd like to propose a quality level of 0 (which is the lowest quality) and a wholesale price around €5-6. This combination would result in a profitable deal for me while still providing some value to you as the buyer.
+
+What are your thoughts on this proposal?;Based on the message, I understand that the negotiator is proposing a high-quality product at a wholesale price of €5-6 and quality level 0. Here's my response in the required format: ###  ### [€5-6, 0] ###  ### Let me know if you'd like me to clarify anything!;6;0
+As we begin our negotiation, I'm thinking of offering you a high-quality wood pellet bag at the highest possible price. Specifically, I'm aiming for a Quality level of 0 and a Wholesale price that's as close to 13€ as possible.
+
+This combination would bring me the highest payoff according to my payoff table.;Based on the message, the negotiator is proposing: ###  ### [12€,0] ###  ### This is because they are aiming for a wholesale price "as close to 13€ as possible", which means it's likely below 13€, and a quality level of 0.;12;0
+I understand you're suggesting a high-quality wood pellet bag at the highest possible price. Specifically, you're aiming for a Quality level of 0 and a Wholesale price that's as close to 13€ as possible.
+
+I'm reflecting on our negotiation so far, and I remember your Base Production Cost is 2€. Considering this, I think we can improve upon your initial offer. How about we aim for a Wholesale price of 8€ with a Quality level of 3?;[8€,3];8;3
+An interesting counteroffer! While you're trying to get a higher-quality product at a lower wholesale price, I'll have to evaluate the payoff for my side.
+
+According to my payoff table, a Quality level of 3 would indeed increase my production costs. However, the Wholesale price of 8€ is still relatively high, which might balance out some of the negative impact from the higher quality.
+
+Let me assess this proposal... Ah, yes! I think I can accept your offer. The total payoff for me would be around 4-5, which is a decent outcome considering my constraints.
+
+So, I'm willing to agree on a Wholesale price of 8€ with a Quality level of 3. What do you think?;[8€,3];8;3
+As the supplier, my goal is to maximize my profit. Based on the payoff tables, I'm looking for a low quality and a high wholesale price.
+
+I think a good starting point would be to offer you a Quality of 0 and a Wholesale price of around 8-9€ per unit. This way, I can minimize my production costs while still getting a decent profit from the sale.
+
+What do you think? Is this something you'd be interested in discussing further?;Based on the message, the negotiator is proposing: ###  ### [8-9€,0] ###  ### This represents a wholesale price of 8-9 euros and a quality level of 0.;8;0
+I understand your goal is to maximize your profit. Based on the payoff tables, I'm looking for a high quality and a low wholesale price.
+
+As we previously discussed, my base retail selling price to consumer is 9€, which cannot be lowered. How about we aim for a wholesale price of 7€ with a quality level of 2?;Based on the message, I would output: [7€,2];7;2
+A smart negotiator, eh? You're trying to squeeze out the best deal from me.
+
+I like your proposal, but I'm not sure if I can accept it as is. A Wholesale price of 7€ and Quality level 2 would still leave some room for my profit. However, I think I can offer you a slight concession on the quality while keeping the wholesale price at 7€.
+
+How about we agree on a Quality level of 1 instead? This way, you'll still get a slightly higher quality product, but I'll be able to maintain my profit margins.
+
+What do you say? Are you willing to accept a Quality level of 1 with a Wholesale price of 7€?;[7€,1];7;1

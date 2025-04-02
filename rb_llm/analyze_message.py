@@ -3,6 +3,7 @@ from rb_llm.storage import rb_storage
 from rb_llm.message_storage import MESSAGES
 from rb_llm.offer import Offer
 import time
+from rb_llm.chat import _chat_to_ai
 
 # extract bot constraint - seems to work
 def extract_constraint(text):
@@ -160,8 +161,14 @@ def check_offer_acceptance(inp_msg: str) -> str:
                           "don't have deal", "can we adjust" , "can we do", "can we agree"]
 
         if any(keyword in lower_msg for keyword in acceptance_keywords) and not any(phrase in lower_msg for phrase in not_acceptance):
-            rb_storage.end_convo = True
-            return MESSAGES['they_accept_offer']
+            check = MESSAGES['evalutate_conversation'] % rb_storage.interaction_list_bot1[-4:]
+            llm_check = _chat_to_ai(check, mod_used='llama3', temperature=0.1)
+            if llm_check['content'].strip() == "DEAL":
+                rb_storage.end_convo = True
+                return MESSAGES['they_accept_offer']
+
+            else:
+                return None
     return None
 
 

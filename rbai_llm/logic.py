@@ -4,7 +4,7 @@ from rbai_llm.chat import _chat_to_ai
 from shared import rnd_param
 from rbai_llm.system_info import Storage
 from rbai_llm.offer import Offer
-from typing import Any, Dict, Optional 
+from typing import Optional 
 import time
 from rbai_llm import pareto
 
@@ -21,7 +21,7 @@ def interpret_constraints(message: str, ai_number: int, ai_chat) -> Optional[int
 
     conversation_history = [{'role': 'user', 'content': PROMPTS['constraints'] + message}]
     model_used = 'llm_constraint'
-    ai_response = _chat_to_ai(conversation_history, ai_number, model_used, ai_chat['temperature'])
+    ai_response = _chat_to_ai(conversation_history, model_used, ai_chat['temperature'])
     
     # make it not print!!!
     llm_output = ai_response['content']
@@ -66,56 +66,6 @@ def add_profits(offer: Offer):
 
 
 
-# process the LLM response to extract clean content - NOT SURE WHERE IT IS USED AS OF NOW
-def extract_content(response: Dict[str, Any]) -> str:
-    def remove_inner(string: str, start_char: str, end_char: str):
-        while start_char in string and end_char in string:
-            start_pos = string.find(start_char)
-            end_pos = string.find(end_char, start_pos) + 1
-            if 0 <= start_pos < end_pos:
-                string = string[:start_pos] + string[end_pos:]
-            else:
-                break
-        return string
-
-    try:
-        content: str = response.strip()
-    except KeyError as _:
-        print(f"\nUnexpected response format: {response}\n")
-        return f"\nUnexpected response format: {response}\n"
-
-
-    if content.count('"') > 1:
-        start = content.find('"') + 1
-        end = content.rfind('"')
-        content = content[start:end]
-    else:
-        if content.lower().startswith("system:"):
-            content = content[7:].strip()
-        if content.lower().startswith("system,"):
-            content = content[7:].strip()
-
-    # Remove text within parentheses if no quotes are found
-    content = remove_inner(content, '(', ')')
-    # Remove content within square brackets
-    content = remove_inner(content, '[', ']')
-
-    # Remove text before "list_of_offers_to_choose_from"
-    if 'list_of_offers_to_choose_from' in content:
-        split_list = content.split('list_of_offers_to_choose_from:', 1)
-        content = split_list[1].strip() if len(split_list) > 1 else content
-
-    # Remove text before the first colon
-    if ':' in content:
-        split_list = content.split(':', 1)
-        content = split_list[1].strip() if len(split_list) > 1 else content
-
-    # Split the content at line breaks and take only the first part
-    content = content.split('\n', 1)[0]
-
-    return content.strip()
-
-
 # extract price and quality values from the message and create an Offer object
 def interpret_offer(message: str, ai_number: int, ai_chat, offer_by) -> Optional[Offer]:
     def get_int(value: str) -> Optional[int]:
@@ -137,7 +87,7 @@ def interpret_offer(message: str, ai_number: int, ai_chat, offer_by) -> Optional
     conversation_history = [{'role': 'user', 'content': PROMPTS['understanding_offer'] + message}]
 
     model_used = 'llm_reader'
-    ai_response = _chat_to_ai(conversation_history, ai_number, model_used, ai_chat['temperature'])
+    ai_response = _chat_to_ai(conversation_history, model_used, ai_chat['temperature'])
     llm_output = ai_response['content']
         
     price = quality = None
@@ -189,7 +139,7 @@ def get_llm_response(message: str, ai_number: int, ai_chat):
                             {"role": "user", "content": message}]
     
     model_used = 'llama3'
-    ai_response = _chat_to_ai(conversation_history, ai_number, model_used, ai_chat['temperature'])
+    ai_response = _chat_to_ai(conversation_history, model_used, ai_chat['temperature'])
 
 
     llm_output = ai_response['content']
