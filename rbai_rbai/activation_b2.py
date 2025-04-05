@@ -117,22 +117,13 @@ def constraint_final(inp_msg):
 # interpret the counterpart's offer and determine the state of the conversation
 def interpretation(message):
     global execution_count
-    if execution_count == 2:
-        state = "CONTINUE"
-    else:
-        state = determine_state()
-    
-    if state == "CONTINUE":    
-        rbai_storage_b2.offer_bot2 = logic_b2.interpret_offer(message, offer_by=rnd_param.role)
-        if rbai_storage_b2.offer_list is None:
-            rbai_storage_b2.offer_list = OfferList()
-        rbai_storage_b2.offer_list.append(rbai_storage_b2.offer_bot2)
-        rbai_storage_b2.bot1_message = message
-        return evaluate()
+    rbai_storage_b2.offer_bot2 = logic_b2.interpret_offer(message, offer_by=rnd_param.role)
+    if rbai_storage_b2.offer_list is None:
+        rbai_storage_b2.offer_list = OfferList()
+    rbai_storage_b2.offer_list.append(rbai_storage_b2.offer_bot2)
+    rbai_storage_b2.bot1_message = message
+    return evaluate()
 
-    elif state == "DEAL":
-        rbai_storage_b1.end_convo = True
-        return PROMPTS['end_negotiation'] % message
 
 
 # evaluate the counterpart's offer and determine the bot’s response
@@ -239,7 +230,7 @@ def send_response(evaluation: str, last_offer: Offer,
 def accept_offer():
     print('accept')
     content = PROMPTS['accept_from_chat'] + rbai_storage_b2.bot1_message
-    rbai_storage_b1.end_convo = True
+    rbai_storage_b2.end_convo = True
 
     return content
 
@@ -270,16 +261,6 @@ def respond_to_non_offer(evaluation: str, greedy: int):
         print(f'Offer in offer.py: {Offer}')
         
     return send_response(evaluation, last_offer, response, llm_offers)
-
-
-
-# determine the state of the conversation
-def determine_state():
-    state = PROMPTS['evaluate_situation'] % rbai_storage_b2.interaction_list_bot2
-    response = logic_b2.get_llm_response(state)
-
-    return response
-
 
 
 # for this condition

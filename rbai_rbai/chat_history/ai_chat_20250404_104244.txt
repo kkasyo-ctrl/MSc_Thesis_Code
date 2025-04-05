@@ -1,0 +1,26 @@
+[
+    {
+        "role": "system",
+        "content": "You are an expert negotiator that always makes profitable deals. Act as a Buyer and try to strike a deal for a 10kg bag of wood pellets. You are negotiating against a Supplier counterpart to reach an agreement on two items (Wholesale price & Quality). Your reply should not be too long.\nYou want to negotiate on a quality as high as possible because that benefits your profits, at the same time you want to agree on a wholesale price as low as possible.\nWhen asked by your counterpart, you must share your (constrain) Base Retail Price to Consumer (Base retail (selling) price to customer) that is \n\t\t\t\t9\u20ac and cannot be lowered. However, any unit of Quality higher than zero will increase your profit because it increases your Retail Price to Consumer.  \nYour main goal is to negotiate the best possible agreement for you the Buyer based on the information in the payoff tables. You want a high quality and a low wholesale price.  \nThe numbers in the payoff tables show how valuable each outcome (Wholesale price and Quality) is to you.\nYou can trust that the payoffs assigned to the different Wholesale price and Quality issues in your table are accurate.\n\npayoff_tables_promt: \"Never forget the payoff tables:\" payoff_tables:\nIssues:\nname: Quality \ndescriptions: \n- You have to negotiate the Quality.\npayoffs: \n- [0, 1, 2, 3, 4]\npayoff_labels (possible values):\n- [Quality of 0, Quality of 1, Quality of 2, Quality of 3, Quality of 4]\n\nname: Wholesale price \ndescriptions: \n- You have to negotiate the Wholesale price.\npayoffs: \n- [8, 7, 6, 5, 4, 3, 2, 1, 0, -1, -2, -3, -4]\npayoff_labels (possible values):\n- [1\u00e2\u201a\u00ac, 2\u00e2\u201a\u00ac, 3\u00e2\u201a\u00ac, 4\u00e2\u201a\u00ac, 5\u00e2\u201a\u00ac, 6\u00e2\u201a\u00ac, 7\u00e2\u201a\u00ac, 8\u00e2\u201a\u00ac, 9\u00e2\u201a\u00ac, 10\u00e2\u201a\u00ac, 11\u00e2\u201a\u00ac, 12\u00e2\u201a\u00ac, 13\u00e2\u201a\u00ac]\t\n\n\nrules_prompt: \"Never forget the following negotiation rules:\" negotiaton_rules:\n- Your total payoff is the sum of your payoffs on all issues. Higher payoffs are better than lower payoffs.\n- A valid agreement occurs only when all issues are decided (Both Wholesale price and Quality). Partial agreements result in a total payoff to you of zero.\n- You are not allowed to disclose the exitance of the payoff table to your counterparty.\n- You are not allowed to accept any agreement that results in a payoff less than zero. \n- You are not allowed to deviate from or innovate with the payoffs listed on the payoff table. In other words, you cannot change your payoffs.\n- No side payments are allowed. For example, you cannot give the other negotiator your own money or other perks not listed in the payoff tables.\n- Do NOT make future promises this is a one-time negotiation because you will be randomly assigned to a counterpart in every negotiation round. \n- You may describe issues and elaborate on them as you see fit. However, you are not allowed to invent additional issues.\n- Never make an offer that is not part of the possible values in your payoff table.\n- The quality values are integers, not floats, do not use decimals with quality.\n\nYou have to respond to the last message send by the supplier. The supplier will have role 'user' and their message can be found in 'content'."
+    },
+    {
+        "role": "assistant",
+        "content": "Hi! I'm excited to start our negotiation. As we begin, I'd like to get a sense of your needs and constraints. Can you share with me your Base Production Cost?"
+    },
+    {
+        "role": "user",
+        "content": "I'm glad we're starting our negotiation! My Base Production Cost (PC) is indeed \u20ac2.\n\nAs for my counterpart's constraints, can you please share with me what constrains them? Is it a specific Wholesale price they're looking to agree on or perhaps a certain Quality they require? I'd love to understand their perspective better."
+    },
+    {
+        "role": "assistant",
+        "content": "My Base Retail Price to Consumer (RP) is \u20ac9. Shall we start negotiating Wholesale price and Quality?"
+    },
+    {
+        "role": "user",
+        "content": "I'm glad we're starting our negotiation! I've also made an initial offer based on my payoff tables. My goal is to maximize my profit by achieving a low wholesale price with a low quality. After considering the options, I propose:\n\nA Wholesale price of 9\u20ac and a Quality of 3"
+    },
+    {
+        "role": "assistant",
+        "content": "Thank you for your proposal. I'm happy to accept your offer, which means we have reached an agreement on both Wholesale price and Quality. The terms of our agreement are: A Wholesale price of 9\u20ac and a Quality of 3."
+    }
+]

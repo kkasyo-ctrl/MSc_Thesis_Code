@@ -10,37 +10,18 @@
     },
     {
         "role": "user",
-        "content": "I'm glad we're starting the negotiation! You want to know my Base Production Cost, don't you? Well, let me tell you, it's 2\u20ac per unit. That's the minimum cost I have for producing these wood pellets, and it can't be lowered further. Now that you know this information, I'm sure you're thinking about how you can use it to your advantage in our negotiation. Am I right?"
+        "content": ""
     },
     {
         "role": "assistant",
-        "content": "Confirming: Is 2 the correct Base Production Cost (PC)?\nIf it is correct, please ONLY return 2 again in the chat.\nOtherwise return your current Base Production Cost (PC) at the quality level of 0.\n"
+        "content": "I did not quite understand. Please clarify your current Base Production Cost (PC) at the quality level of 0.\n"
     },
     {
         "role": "user",
-        "content": "2"
+        "content": ""
     },
     {
         "role": "assistant",
-        "content": "Thanks, for confirming this information with me.\nWhat combination of Price and Quality do you have in mind to sell me a 10kg pellet bag?"
-    },
-    {
-        "role": "user",
-        "content": "As the supplier, my goal is to maximize my profit. Based on the payoff tables, I'm looking for a low quality and a high wholesale price.\n\nI think a good starting point would be to offer you a Quality of 0 and a Wholesale price of around 8-9\u20ac per unit. This way, I can minimize my production costs while still getting a decent profit from the sale.\n\nWhat do you think? Is this something you'd be interested in discussing further?"
-    },
-    {
-        "role": "assistant",
-        "content": "I'm looking for a high-quality and low-wholesale-price combination to maximize my profit. My base retail selling price to consumer is fixed at 9\u20ac. I propose we aim for a wholesale price of 7\u20ac with quality level 2."
-    },
-    {
-        "role": "user",
-        "content": "A smart negotiator, eh? You're trying to squeeze out the best deal from me.\n\nI like your proposal, but I'm not sure if I can accept it as is. A Wholesale price of 7\u20ac and Quality level 2 would still leave some room for my profit. However, I think I can offer you a slight concession on the quality while keeping the wholesale price at 7\u20ac.\n\nHow about we agree on a Quality level of 1 instead? This way, you'll still get a slightly higher quality product, but I'll be able to maintain my profit margins.\n\nWhat do you say? Are you willing to accept a Quality level of 1 with a Wholesale price of 7\u20ac?"
-    },
-    {
-        "role": "assistant",
-        "content": "I'm pleased that we're making progress. I appreciate your willingness to make a concession on the quality while keeping the wholesale price at 7\u20ac. With that, I'd like to accept your offer: a Quality level of 1 and a Wholesale price of 7\u20ac per unit for the 10kg pellet bag. Thank you for understanding my needs!",
-        "options": {
-            "temperature": 0.1
-        }
+        "content": "My apologies for persisting.\nNote: My data regarding the normal range of Base Production Cost has values between 1 and 3. Thus, I will assume your actual value is 1. \nWhat combination of Price and Quality do you have in mind to sell me a 10kg pellet bag?"
     }
 ]

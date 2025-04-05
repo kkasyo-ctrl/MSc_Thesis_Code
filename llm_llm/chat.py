@@ -76,7 +76,7 @@ def run_chat_interaction(num_turns=20):
     
     conversation_history1.append(system_message1)
     conversation_history2.append(system_message2)
-    
+
     initial_message = "Let's start the negotiation."
     conversation_history1.append({"role": "user", "content": initial_message})
     conversation_history2.append({"role": "assistant", "content": initial_message})

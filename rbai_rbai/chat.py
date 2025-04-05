@@ -123,7 +123,7 @@ def run_chat_interaction(num_turns=20):
         })
 
     # fix while loop
-    while rbai_storage_b1.end_convo == False and chat_counter < int(num_turns):
+    while rbai_storage_b1.end_convo == False and rbai_storage_b2.end_convo == False and chat_counter < int(num_turns):
         chat_counter += 1
         if chat_counter % 2 == 1:  
             modified_content = activation_b1.modify_bot_message(rbai_msgb2)
@@ -172,12 +172,12 @@ def run_chat_interaction(num_turns=20):
             conversation_history2.append({"role": "assistant", "content": rbai_msgb2})
             conversation_history1.append({"role": "user", "content": rbai_msgb2})
 
-            rbai_storage_b2.interaction_list_bot1.append({
+            rbai_storage_b1.interaction_list_bot1.append({
                 'role': 'assistant',
                 'content': rbai_msgb2
             })
             
-            rbai_storage_b2.interaction_list_bot2.append({
+            rbai_storage_b1.interaction_list_bot2.append({
                 'role': 'user',
                 'content': rbai_msgb2
             })

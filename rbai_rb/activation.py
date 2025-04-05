@@ -251,6 +251,6 @@ def respond_to_non_offer(evaluation: str, greedy: int):
 # determine the state of the conversation
 def determine_state():
     state = PROMPTS['evaluate_situation'] % rbai_storage.interaction_list_bot2
-    response = logic.get_llm_response(state)
+    response = logic.get_state(state)
 
     return response

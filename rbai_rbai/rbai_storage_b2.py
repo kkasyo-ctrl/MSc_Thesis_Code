@@ -18,3 +18,4 @@ class rbai_storage_b2:
     interaction_list_bot2 = None
     interaction_list_bot1 = None
     offers_pareto_efficient = None
+    end_convo = False

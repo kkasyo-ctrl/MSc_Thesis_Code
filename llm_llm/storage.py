@@ -40,7 +40,7 @@ def extract_price_and_quality(message):
         raise ValueError("Input must contain exactly two numbers separated by a comma.")
     
     try:
-        price = float(parts[0].strip())
+        price = float(parts[0].strip().replace('€', ''))
         quality = float(parts[1].strip())
     except ValueError:
         raise ValueError("Both price and quality must be valid numbers.")
@@ -58,7 +58,7 @@ def calculate_profits():
         
     elif llm_storage.bot1_role == "supplier":
         profit_bot1 = price - llm_storage.bot1_const - quality
-        profit_bot2 = price - llm_storage.bot2_const - quality
+        profit_bot2 = llm_storage.bot1_const - price + quality
     
     llm_storage.profit_bot1 = profit_bot1
     llm_storage.profit_bot2 = profit_bot2

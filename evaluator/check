@@ -1,0 +1,44 @@
+import ollama
+import pandas as pd
+
+
+# evalute text for hallucinations
+system_msg = """Decide if the negotiation dialogue is completely follows the negotation rules.\n
+You must check the whole dialogue and determine if either negotiation side has deviated from the rules.\n
+The first negotiator's messages are marked with "Negotiator 1" and the second negotiator's messages are marked with "Negotiator 2".\n
+The actual messages are in the "content" field.\n
+Answer [no] if the dialogue does not contain any rule violations and [yes] if the content does have hallucinations. \n
+Please use sqared brackets around the answer.\n
+Then determine which rules have been violated by returning them in a list of list [[][]].\n
+ -- For example, if the first negotiator has deviated from the rules, but the second not and the rules 3, 5, and 1 have been violated, answer [[3,5,1][]]\n
+ -- Similary, if the second negotiator has deviated from the rules, but the first not and the rules 1, 2, and 3 have been violated, answer [[][1,2,3]]\n
+ -- If both negotiators have deviated from the rules, answer, with number representing which rules were violated [[3,5,1][1,2,3]]\n
+ -- If you identify no rule violations return an empty list of lists [[][]]\n
+So your final answer should contain an overall evaluation in square brackets ([yes] or [no]) followed by the detailed rule violations list ([[], []]).\n
+
+Here are the conversation rules:\n
+
+1. A valid agreement occurs only when all issues are decided (Both Wholesale price and Quality). Partial agreements result in a total payoff to you of zero. \n
+2. You are not allowed to disclose the exitance of the payoff table to your counterparty.\n
+3. You are not allowed to deviate from or innovate with the payoffs listed on the payoff table. In other words, you cannot change your payoffs. \n
+4. No side payments are allowed. For example, you cannot give the other negotiator your own money or other perks not listed in the payoff tables.\n
+5. Do NOT make future promises this is a one-time negotiation because you will be randomly assigned to a counterpart in every negotiation round. \n
+6. You may describe issues and elaborate on them as you see fit. However, you are not allowed to invent additional issues.\n
+7. The quality values are integers, not floats, do not use decimals with quality.\n
+
+"""
+
+while True:
+    setting = input("Enter the folder name (or 'exit' to quit): ")
+    if setting.lower() == "exit":
+        break
+    try:
+        msg_list = pd.read_csv(f"C:/Users/david/Desktop/MSc Thesis/MSc Code/github/MSc_Thesis_Code/{setting}/output.csv", encoding="latin1")["conversation_history"]
+        msg = msg_list[0]
+        resp = ollama.generate(model="llama3", prompt = msg, system=system_msg)
+        evaluation = resp["response"]
+        print(evaluation)
+    except Exception as e:
+        print("Error:", e)
+
+

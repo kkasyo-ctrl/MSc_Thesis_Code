@@ -101,6 +101,7 @@ def interpretation(message):
     else:
         state = determine_state()
     
+    print(state)
     if state == "CONTINUE":    
         Storage.offer_bot2 = logic.interpret_offer(message, ai_number=2, ai_chat=supplier_buyer, offer_by=rnd_param.role_other)
         if Storage.offer_list is None:
@@ -250,6 +251,6 @@ def respond_to_non_offer(evaluation: str, greedy: int):
 # determine the state of the conversation
 def determine_state():
     state = PROMPTS['evaluate_situation'] % Storage.interaction_list_bot2
-    response = logic.get_llm_response(state, ai_number=2, ai_chat= supplier_buyer)
+    response = logic.get_state(state, ai_number=2, ai_chat= supplier_buyer)
 
     return response

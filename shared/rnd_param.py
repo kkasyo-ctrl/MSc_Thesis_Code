@@ -23,24 +23,24 @@ def profit_buy(MP, quality, neg_price):
 greedy = 0 
 
 
-role = 'buyer'
-role_other = 'supplier'
+role = random.choice(['buyer', 'supplier'])
+role_other = 'supplier' if role == 'buyer' else 'buyer'
 
 if role == 'supplier':
     # supplier parameters
-    #main_constraint = random.randint(1,3) 
+    main_constraint = random.randint(1,3) 
     # comment it out
-    main_constraint = 2
+    #main_constraint = 2
     # buyer parameters
-    #other_constraint = random.randint(8,10)
-    other_constraint = 9
+    other_constraint = random.randint(8,10)
+    #other_constraint = 9
 else:  
     # buyer parameters
-    #main_constraint = random.randint(8,10)
-    main_constraint = 9
+    main_constraint = random.randint(8,10)
+    #main_constraint = 9
     # buyer parameters
-    #other_constraint = random.randint(1,3)
-    other_constraint = 2
+    other_constraint = random.randint(1,3)
+    #other_constraint = 2
 
 
 PATTERN_CONSTRAINT = re.compile(r'\[.*?\]')

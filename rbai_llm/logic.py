@@ -134,7 +134,7 @@ def get_llm_response(message: str, ai_number: int, ai_chat):
     print("get_llm_response")    
     
     
-    system_prompt = system_final_prompt()
+    system_prompt = "You are a helpful assistant that helps to either determine the a new offer"
     conversation_history = [{"role": "system", "content": system_prompt},  
                             {"role": "user", "content": message}]
     
@@ -155,3 +155,17 @@ def get_greediness(constraint_bot2: int, constraint_bot: int) -> int:
         return 0
 
 
+def get_state(message: str, ai_number: int, ai_chat):
+    print("get_state")    
+    
+    
+    system_prompt = "You are a helpful assistant that helps to determine if the conversation has ended"
+    conversation_history = [{"role": "system", "content": system_prompt},  
+                            {"role": "user", "content": message}]
+    
+    model_used = 'llama3'
+    ai_response = _chat_to_ai(conversation_history, model_used, ai_chat['temperature'])
+
+
+    llm_output = ai_response['content']
+    return llm_output

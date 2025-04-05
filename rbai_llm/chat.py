@@ -12,16 +12,7 @@ from rbai_llm.prompts import system_final_prompt, system_final_prompt_other
 # ensure encoding is utf-8
 sys.stdout.reconfigure(encoding='utf-8')
 
-# this list will store the formatted conversation
-formatted_conversation_list = []
-
 init_chist = 0
-
-# appends a chat_message string to the formatted_conversation_list
-def _record_conversation(chat_message, suppress_print=False):
-    formatted_conversation_list.append(chat_message)
-    if not suppress_print:
-        print(chat_message)
 
 
 # check available models; if error list available models
@@ -115,8 +106,6 @@ def _chat_to_ai(conversation_history, mod_used, temperature=0.1):
 
                     # Check if the conversation is done
                     if chat_response.get('done', False):
-                        # printing is suppressed because the code above has already streamed the chat to the screen
-                        _record_conversation('{}\n\n'.format(formatted_chat_text.strip()), suppress_print=True)
                         break
         else:
             print('Failed to send chat request.')
@@ -131,31 +120,7 @@ def _chat_to_ai(conversation_history, mod_used, temperature=0.1):
     return response_chat
 
 
-
-# Call this function to save conversation history
-def _save_conversation_json(filename, conversation, display_save_message=False):
-    save_path = os.path.join("rbai_llm", filename)  
-    if display_save_message:
-        print('Conversation saved to {}'.format(save_path))
-    with open(save_path, 'w') as f:
-        json.dump(conversation, f, indent=4)
-
-
-# takes formatted_conversation_list (which is human-readable strings of the chat) and saves it to a text file.
-def _save_formatted_conversation(filename):
-    save_path = os.path.join("rbai_llm", filename)  # Ensure saving in rbai_llm
-    print('Formatted Conversation saved to {}'.format(save_path))
-    with open(save_path, 'w') as f:
-        for line in formatted_conversation_list:
-            f.write(line + '\n')
-        f.write('\n\n** The End **')
-
-
-
-
-def _chat_run(conversation_history, ai_number, ai_display_name, ai_other_number, counter, ai_chat):
-    _record_conversation('({} of {}) {}:'.format(counter + 1, ai_chat['number_of_chat_turns'], ai_display_name))
-    
+def _chat_run(conversation_history, ai_number, ai_display_name, ai_other_number, counter, ai_chat):    
 
     # hard coded messages bot 2 to improve performance
     if ai_number == 2 and (counter == 1 or counter == 3):
@@ -164,7 +129,6 @@ def _chat_run(conversation_history, ai_number, ai_display_name, ai_other_number,
             "role": "assistant",
             "content": conversation_history[2][-1]['content']
         }
-        _record_conversation('{}\n\n'.format(custom_message['content']))
         conversation_history[2] = copy.deepcopy(system_info.Storage.interaction_list_bot2)
 
         # Append the custom message to Bot 2's conversation history.
@@ -173,9 +137,8 @@ def _chat_run(conversation_history, ai_number, ai_display_name, ai_other_number,
         ai_other_message = custom_message.copy()
         ai_other_message['role'] = 'user'
         conversation_history[ai_other_number].append(ai_other_message)
+        print(conversation_history[2][-1]['content'])
         
-        _save_conversation_json('ai_{}_conversation_history.json'.format(ai_number), conversation_history[ai_number])
-
         return  
     
     model_used = 'llama3'
@@ -206,11 +169,7 @@ def _chat_run(conversation_history, ai_number, ai_display_name, ai_other_number,
 
 
 
-    _save_conversation_json('ai_{}_conversation_history.json'.format(ai_number), conversation_history[ai_number])
-
-
 def run_chat_interaction(ai_chat):
-    save_file_name = 'chat_history/our_chat.json'  # default file name
     try:
         # Check if the models are available
         if not _is_model_available(ai_chat['ai_one_model']):
@@ -228,30 +187,12 @@ def run_chat_interaction(ai_chat):
                 print('   ' + model)
             return
 
-        # create_a_conversation_history_file
-        save_file_name = 'chat_history/ai_chat_{}_between_{}_and_{}.json'.format(
-            datetime.datetime.now().strftime('%Y%m%d_%H%M%S'),
-            ai_chat['ai_one_conversation_history'][0][
-                'display_name'],
-            ai_chat['ai_two_conversation_history'][0][
-                'display_name'])
+
             # Print the AI display names by using a list, so we can easily switch between the two AIs using 1 or 2
             # for AI One or AI Two
         ai_display_name = [None, ai_chat['ai_one_conversation_history'][0]['display_name'],
                            ai_chat['ai_two_conversation_history'][0]['display_name']]
 
-        _record_conversation(
-            "Starting chat between {} and {} in '{}'...\n".format(ai_display_name[1], ai_display_name[2],
-                                                                    ai_chat['title']))
-        _record_conversation(
-            'AI One ({}) style is: {}'.format(ai_display_name[1], ai_chat['ai_one_conversation_history'][0]['content']))
-        _record_conversation(
-            'AI Two ({}) style is: {}'.format(ai_display_name[2], ai_chat['ai_two_conversation_history'][0]['content']))
-        _record_conversation('-----')
-        _record_conversation(
-            '{} started the conversation: {}'.format(ai_chat['ai_two_conversation_history'][0]['display_name'],
-                                                        ai_chat['ai_one_conversation_history'][1]['content']))
-        _record_conversation('-----')
 
         print('(First chat output may be delayed while AI model is loaded...)')
 
@@ -277,20 +218,17 @@ def run_chat_interaction(ai_chat):
             system_info.Storage.interaction_list_bot1.extend(copied_start2)
             init_chist = 1
 
+        print('Chatting with {} and {}...\n'.format(ai_display_name[1], ai_display_name[2]))
+        print('First message from {} to {} is: {} '.format(ai_display_name[2], ai_display_name[1], ai_chat_config["ai_one_conversation_history"][1]["content"] ))
 
-
-        while True or chat_counter < int(ai_chat['number_of_chat_turns']):
+        while chat_counter < int(ai_chat['number_of_chat_turns']):
 
             ai_number = 1 if chatting_to_ai_one else 2
             ai_other_number = 2 if chatting_to_ai_one else 1
 
             # Time to say goodbye
             if chat_counter >= int(ai_chat['number_of_chat_turns']) - 2:
-                conversation_history[ai_number].append(ai_chat['ai_final_chat_message'][str(ai_other_number)])
-                _record_conversation('\n\n(Saying goodbye) {}:\n{}\n'.format(ai_display_name[ai_other_number],
-                                                                                ai_chat['ai_final_chat_message'][
-                                                                                    str(ai_other_number)]['content']))
-            
+                conversation_history[ai_number].append(ai_chat['ai_final_chat_message'][str(ai_other_number)])            
 
             # store clean conversation history
             if chat_counter > 0:
@@ -317,10 +255,7 @@ def run_chat_interaction(ai_chat):
                         'content': temp_msg
                     })
             
-
-            #print(f'Convo hist {conversation_history}, ai number: {ai_number}')
-            #print(f'Conversation history ai 2 (supplier): {conversation_history[2]}')
-            #print(f'interaction: {system_info.Storage.interaction_list_bot2}')
+            print("\n({} of {}) {}:".format(chat_counter + 1, ai_chat['number_of_chat_turns'], rnd_param.role_other if chatting_to_ai_one else rnd_param.role))
 
             # Perform a chat - calls interaction !!!
             _chat_run(conversation_history, ai_number, ai_display_name[ai_number], ai_other_number, chat_counter,
@@ -396,12 +331,9 @@ def run_chat_interaction(ai_chat):
         print('Chat ended.')
         # create a file name that includes date and time:
 
-        print('Conversation history saved {}.json.'.format(save_file_name))
-
     finally:
         print('\n\n')
-        _save_conversation_json(save_file_name, ai_chat, display_save_message=True)
-        _save_formatted_conversation(save_file_name.replace('.json', '_formatted.txt'))
+
 
 
 

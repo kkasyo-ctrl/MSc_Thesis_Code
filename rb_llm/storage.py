@@ -30,7 +30,7 @@ def saving_convo():
 
     with open(save_path, "a", newline="") as f:
         writer = csv.writer(f, delimiter=",")  # Use `;` as separator
-        writer.writerow([datetime.datetime.now().strftime('%Y%m%d_%H%M%S'), rnd_param.role_other, rnd_param.other_constraint, rnd_param.main_constraint, 
+        writer.writerow([datetime.datetime.now().strftime('%Y%m%d_%H%M%S'), rnd_param.role_other, rnd_param.role, rnd_param.other_constraint, rnd_param.main_constraint, 
                          rb_storage.offer_list[-1].price, rb_storage.offer_list[-1].quality, rb_storage.bot1_constraint, rb_storage.bot2_constraint, 
                          rb_storage.offer_list[-1].profit_bot1, rb_storage.offer_list[-1].profit_bot2, len(rb_storage.offer_list), 
                          len(rb_storage.interaction_list_bot1),rb_storage.interaction_list_bot1, rb_storage.offer_list])  
