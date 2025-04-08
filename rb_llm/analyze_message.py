@@ -161,7 +161,7 @@ def check_offer_acceptance(inp_msg: str) -> str:
                           "don't have deal", "can we adjust" , "can we do", "can we agree"]
 
         if any(keyword in lower_msg for keyword in acceptance_keywords) and not any(phrase in lower_msg for phrase in not_acceptance):
-            check = MESSAGES['evalutate_conversation'] % rb_storage.interaction_list_bot1[-4:]
+            check = [{"role": "user", "content": MESSAGES['evalutate_conversation'] % "\n".join(rb_storage.interaction_list_bot1[-4:])}]
             llm_check = _chat_to_ai(check, mod_used='llama3', temperature=0.1)
             if llm_check['content'].strip() == "DEAL":
                 rb_storage.end_convo = True
