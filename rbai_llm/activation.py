@@ -125,7 +125,6 @@ def evaluate():
 
 
     greedy = logic.get_greediness(Storage.other_constraint, rnd_param.main_constraint)  
-    print(f'greedy: {greedy}') 
     Storage.offers_pareto_efficient = pareto_efficient_string(
         Storage.other_constraint, Storage.main_bot_cons, rnd_param.role
     )
@@ -147,7 +146,6 @@ def respond_to_offer(evaluation: str, greedy: int):
     print(f'respond_to_off with evalutation: {evaluation}')
 
     content1 = get_respond_prompt(evaluation)
-
     llm_offers = []
     last_offer = None
 
@@ -225,7 +223,6 @@ def respond_to_non_offer(evaluation: str, greedy: int):
     print(f'respond_to_non_off with evalutation: {evaluation}')
     
     content1 = get_respond_prompt(evaluation)
-
     llm_offers = []
     last_offer = None
 

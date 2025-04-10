@@ -93,13 +93,13 @@ MESSAGES = {
         'Thanks, for confirming this information with me.\n'
         'What combination of Price and Quality do you have in mind '
         'to purchase a 10kg pellet bag? '
-        'Please return only one offer with the Wholesale Price and Quality you have in mind, mentioning both only once.',
+        'Please return the current proposal in square brackets. For example [Wholesale Price, Quality].',
     
     'constraint_final_supplier':
         'Thanks, for confirming this information with me.\n'
         'What combination of Price and Quality do you have in mind '
         'to sell me a 10kg pellet bag? '
-        'Please return only one offer with the Wholesale Price and Quality you have in mind, mentioning both only once.',    
+        'Please return the current proposal in square brackets. For example [Wholesale Price, Quality].',
 
     'accept_offer': 
         'I am pleased to accept your offer! Thank you for investing time and effort in these negotiations! I look forward to a successful partnership.',
@@ -108,8 +108,10 @@ MESSAGES = {
         'Thank you for negotiating with us! We are looking forward to a successful partnership.',
     
     'respond_to_offer':
-        'I appreciate your offer, but I am looking for a different combination of Price and Quality. How about Wholesale %s?',
+        'I appreciate your offer, but I am looking for a different combination of Price and Quality. How about Wholesale %s? '
+        'If you are not satisfied with this offer, please return the your counter proposal in square brackets. For example [Wholesale Price, Quality].',
 
     'respond_to_non_offer':
-        'I am sorry, but your offer is not valid. This is either because I did not recognize it, proposed terms were out of bounds or price or quality were not integers. How about Wholesale %s?',
+        'I am sorry, but your offer is not valid. This is either because I did not recognize it, proposed terms were out of bounds or price or quality were not integers. How about Wholesale %s?'
+        ' If you are not satisfied with this offer, please return the your counter proposal in square brackets. For example [Wholesale Price, Quality].'
 }

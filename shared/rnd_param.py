@@ -45,3 +45,4 @@ else:
 
 PATTERN_CONSTRAINT = re.compile(r'\[.*?\]')
 PATTERN_OFFER = re.compile(r'\[(?=[^\]]*(?:€|\$))([^\]]+)\]')
+

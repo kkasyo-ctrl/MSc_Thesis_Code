@@ -4,6 +4,8 @@ from rb_llm.message_storage import MESSAGES
 from rb_llm.offer import Offer
 import time
 from rb_llm.chat import _chat_to_ai
+from shared import rnd_param
+from typing import Optional 
 
 # extract bot constraint - seems to work
 def extract_constraint(text):
@@ -100,6 +102,8 @@ def constraint_final(inp_msg):
     return message
 
 
+
+
 # make up a constraint
 def constant_draw_constraint() -> int:
     bot1_role = rb_storage.bot2_role  
@@ -109,42 +113,48 @@ def constant_draw_constraint() -> int:
         return 10 
 
 
-# interpret counter parties offer
+# interpret offer 
 def interpret_offer(text):
+    def get_int(value: str) -> Optional[int]:
+        """Extract integer or average a range like '6-7'."""
+        try:
+            if '-' in value and all(part.strip().isdigit() for part in value.split('-')):
+                parts = value.split('-')
+                return round(sum(float(part) for part in parts) / len(parts))
+            return round(float("".join(char for char in value if char.isdigit() or char == '-')))
+        except ValueError:
+            return None
+
+    text = text.encode('latin-1', errors='ignore').decode('utf-8', errors='ignore')
+
     idx = int(time.time())
-    key_phrases = r'(?:wholesale price|offered price|proposed price|selling price|negotiated price).*?(?:quality|quality level)'
-    
-    pattern = r'([^.!?]*\b' + key_phrases + r'\b[^.!?]*[.!?])'
-    matches = re.findall(pattern, text, re.IGNORECASE | re.MULTILINE)
+    price = quality = None
 
-    if matches:
-        sentence = matches[-1].strip() 
-        print("Extracted sentence:")
-        print(sentence)
-    else:
-        print("No sentence containing the specified phrases was found. Using fallback.")
-        sentence = text  
+    pattern_offer_currency = re.compile(r'\[\s*(€|\$)?\s*(-?\d+)\s*,\s*(\d+)\s*\]')
+    match = pattern_offer_currency.search(text)
 
-    price_pattern = r'(?:(?:[\€\u20AC]|EUR)\s*\d+(?:[,.]\d+)?|\d+(?:[,.]\d+)?\s*(?:[\€\u20AC]|EUR|euros?))'
-    price_match = re.findall(price_pattern, sentence, re.IGNORECASE)
+    if match:
+        price_str, quality_str = match.group(2), match.group(3)
+        price, quality = get_int(price_str), get_int(quality_str)
 
-    quality_pattern = r'quality(?:\s*level)?\D*(\d+)'
-    quality_match = re.findall(quality_pattern, sentence, re.IGNORECASE)
+    if price is None or quality is None:
+        pattern_offer_currency_after = re.compile(r'\[\s*(-?\d+)\s*(€|\$)?\s*,\s*(\d+)\s*(€|\$)?\s*\]')
+        match_after = pattern_offer_currency_after.search(text)
 
-    if price_match:
-        price_str = price_match[-1] 
-        for token in ['€', '\u20AC', 'EUR', 'euro', 'euros']:
-            price_str = price_str.replace(token, '')
-        price_str = price_str.strip()
-        price_str = re.sub(r'[^\d\.]', '', price_str)
-        price = float(price_str) if '.' in price_str else int(price_str)
-    else:
-        price = None
+        if match_after:
+            price_str, quality_str = match_after.group(1), match_after.group(3)
+            price, quality = get_int(price_str), get_int(quality_str)
 
-    # Process extracted quality
-    quality = int(quality_match[-1]) if quality_match else None
+    if price is None or quality is None:
+        pattern_offer_no_currency = re.compile(r'\[\s*(-?\d+)\s*,\s*(\d+)\s*\]')
+        match_fallback = pattern_offer_no_currency.search(text)
+
+        if match_fallback:
+            price_str, quality_str = match_fallback.group(1), match_fallback.group(2)
+            price, quality = get_int(price_str), get_int(quality_str)
 
     return Offer(idx=idx, from_chat=True, price=price, quality=quality, offer_by=rb_storage.bot2_role)
+
 
 
 # accept offer
@@ -161,7 +171,9 @@ def check_offer_acceptance(inp_msg: str) -> str:
                           "don't have deal", "can we adjust" , "can we do", "can we agree"]
 
         if any(keyword in lower_msg for keyword in acceptance_keywords) and not any(phrase in lower_msg for phrase in not_acceptance):
-            check = [{"role": "user", "content": MESSAGES['evalutate_conversation'] % "\n".join(rb_storage.interaction_list_bot1[-4:])}]
+            recent_messages = "\n".join(msg["content"] for msg in rb_storage.interaction_list_bot1[-4:])
+            check = [{"role": "user", "content": MESSAGES['evalutate_conversation'] % recent_messages}]
+
             llm_check = _chat_to_ai(check, mod_used='llama3', temperature=0.1)
             if llm_check['content'].strip() == "DEAL":
                 rb_storage.end_convo = True
