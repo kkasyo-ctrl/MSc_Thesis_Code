@@ -58,8 +58,12 @@ def augment_message(message):
 
 # check if the constraint is in range    
 def analyze_constraint(int_const):
-    if int_const is None:
-        return False  
+    if isinstance(int_const, int):
+        constraint_user = int_const
+    elif isinstance(int_const, str) and int_const.isdigit():
+        constraint_user = int(int_const)
+    else:
+        return None
     constraint_user = int(int_const)
     bot1_role = rb_storage.bot2_role 
     if bot1_role == 'supplier':
@@ -94,7 +98,7 @@ def constraint_final(inp_msg):
         if rb_storage.bot1_role == 'supplier':
             message = MESSAGES['constraint_persist_final_buyer']
         elif rb_storage.bot1_role == 'buyer':
-            message = MESSAGES['constraint_persist_final_suppier']
+            message = MESSAGES['constraint_persist_final_supplier']
         final_constraint = constant_draw_constraint()
 
 

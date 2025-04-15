@@ -27,4 +27,4 @@ def saving_convo():
         writer.writerow([datetime.datetime.now().strftime('%Y%m%d_%H%M%S'), rnd_param.role, rnd_param.role_other, rnd_param.main_constraint, rnd_param.other_constraint, 
                          Storage.offer_list[-1].price, Storage.offer_list[-1].quality, Storage.main_bot_cons, Storage.other_constraint, 
                          Storage.offer_list[-1].profit_bot1, Storage.offer_list[-1].profit_bot2, len(Storage.offer_list), 
-                         len(Storage.interaction_list_bot1) - 1,Storage.interaction_list_bot2, Storage.offer_list])  
+                         len(Storage.interaction_list_bot1) - 1,Storage.interaction_list_bot2[1:], Storage.offer_list])  

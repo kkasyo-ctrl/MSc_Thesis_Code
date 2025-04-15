@@ -60,26 +60,35 @@ def accept_offer():
     return content
 
 
+offer_pool = [] 
 
 def respond_to_offer():
-    random_offer = pareto.pareto_efficient_string(rb_storage.bot2_constraint,rb_storage.bot1_constraint,rb_storage.bot1_role)
-    print(f"random_offer: {random_offer}")
-    print(f"random_offer: {random_offer}")
-    offer_num = random.randint(0,len(random_offer)-1)
-    random_offer = str(random_offer[offer_num])
-    rb_storage.offer_bot1 = own_offer(random_offer)
+    global offer_pool
+
+    if not offer_pool:
+        offer_pool = pareto.pareto_efficient_string(rb_storage.bot2_constraint, rb_storage.bot1_constraint, rb_storage.bot1_role)
+        random.shuffle(offer_pool)
+
+    selected_offer = str(offer_pool.pop(0))
+    print(f'remaining offers: {offer_pool}')
+    rb_storage.offer_bot1 = own_offer(selected_offer)
     rb_storage.offer_list.append(rb_storage.offer_bot1)
-    message = MESSAGES['respond_to_offer'] % random_offer
+    message = MESSAGES['respond_to_offer'] % selected_offer
     return message
 
 
+
 def respond_to_non_offer():
-    random_offer = pareto.pareto_efficient_string(rb_storage.bot2_constraint,rb_storage.bot1_constraint,rb_storage.bot1_role)
-    print(f"random_offer: {random_offer}")
-    offer_num = random.randint(0,len(random_offer)-1)
-    random_offer = str(random_offer[offer_num])
-    rb_storage.offer_bot1 = own_offer(random_offer)
-    rb_storage.offer_list.append(rb_storage.offer_bot1)
-    message = MESSAGES['respond_to_non_offer'] % random_offer
+    global offer_pool
+    
+    if not offer_pool:
+        offer_pool = pareto.pareto_efficient_string(rb_storage.bot2_constraint, rb_storage.bot1_constraint, rb_storage.bot1_role)
+        random.shuffle(offer_pool)
+        
+    selected_offer = str(offer_pool.pop(0))
+    print(f'remaining offers: {offer_pool}')
+    rb_storage.offer_bot1 = own_offer(selected_offer)
+    rb_storage.offer_list.append(rb_storage.offer_bot1)    
+    message = MESSAGES['respond_to_non_offer'] % selected_offer
     return message
 

@@ -4,7 +4,6 @@ from rb_llm import analyze_message
 from rb_llm.offer import OfferList
 from rb_llm import generate_responses
 
-
 execution_count = 0
 def incoming_message(message):
     global execution_count
@@ -38,9 +37,12 @@ def incoming_message(message):
             return msg
     else:
         # check if accepted by counterparty
-        analyze_message.check_offer_acceptance(message)
+        final_msg = analyze_message.check_offer_acceptance(message)
         if rb_storage.end_convo:
-            return "End of conversation"
+            rb_storage.offer_list.append(rb_storage.offer_bot1)
+            for off in rb_storage.offer_list:
+                generate_responses.add_profits(off)
+            return final_msg
         else:
         # try to accept the offer yourself
             rb_storage.offer_bot2 = analyze_message.interpret_offer(message)

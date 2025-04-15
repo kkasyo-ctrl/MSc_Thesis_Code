@@ -4,9 +4,11 @@ import sys
 import requests
 import datetime
 from rb_llm import rb_control 
-from rb_llm.storage import rb_storage, saving_convo
+import rb_llm.storage as storage
 from shared import rnd_param 
 from rb_llm.message_storage import system_final_prompt
+import importlib
+import time
 
 # LLM-based chat function with streaming output
 def _chat_to_ai(conversation_history, mod_used, temperature=0.1):
@@ -87,51 +89,51 @@ def run_chat_interaction(num_turns=20):
     print(f"({chat_counter} of {num_turns}) {rnd_param.role_other}: \n",initial_rule_message['content'])
     
     
-    rb_storage.interaction_list_bot1 = []
-    rb_storage.interaction_list_bot2 = []
-    rb_storage.interaction_list_bot2.append({
+    storage.rb_storage.interaction_list_bot1 = []
+    storage.rb_storage.interaction_list_bot2 = []
+    storage.rb_storage.interaction_list_bot2.append({
         'role': 'user',
         'content': initial_rule_message['content']
         })
-    rb_storage.interaction_list_bot1.append({
+    storage.rb_storage.interaction_list_bot1.append({
         'role': 'assistant',
         'content': initial_rule_message['content']
         })
     
  
 
-    while rb_storage.end_convo == False and chat_counter <= int(num_turns):
+    while storage.rb_storage.end_convo == False and chat_counter <= int(num_turns):
         chat_counter += 1
         if chat_counter % 2 == 0:  
-            print("\n({} of {}) {}:".format(chat_counter, num_turns, rb_storage.bot2_role))
+            print("\n({} of {}) {}:".format(chat_counter, num_turns, storage.rb_storage.bot2_role))
             ai_response = _chat_to_ai(conversation_history, mod_used='llama3', temperature=0.1)
             llm_msg = ai_response['content'].strip()
 
             conversation_history.append({"role": "assistant", "content": llm_msg})
 
 
-            rb_storage.interaction_list_bot1.append({
+            storage.rb_storage.interaction_list_bot1.append({
                 'role': 'user',
                 'content': llm_msg
             })
             
-            rb_storage.interaction_list_bot2.append({
+            storage.rb_storage.interaction_list_bot2.append({
                 'role': 'assistant',
                 'content': llm_msg
             })
 
         else: 
-            print("\n({} of {}) {}:".format(chat_counter, num_turns, rb_storage.bot1_role))
+            print("\n({} of {}) {}:".format(chat_counter, num_turns, storage.rb_storage.bot1_role))
             rb_msg = non_llm_response(conversation_history[-1]['content'])
             print(rb_msg)
             conversation_history.append({"role": "user", "content": rb_msg})
             
-            rb_storage.interaction_list_bot1.append({
+            storage.rb_storage.interaction_list_bot1.append({
                 'role': 'assistant',
                 'content': rb_msg
             })
 
-            rb_storage.interaction_list_bot2.append({
+            storage.rb_storage.interaction_list_bot2.append({
                 'role': 'user',
                 'content': rb_msg
             })
@@ -139,12 +141,13 @@ def run_chat_interaction(num_turns=20):
 
 
     # save the conversation to a file.
-    saving_convo()
+    storage.saving_convo()
     save_file_name = 'chat_history/ai_chat_{}.txt'.format(datetime.datetime.now().strftime('%Y%m%d_%H%M%S'))
     save_path = os.path.join("rb_llm", save_file_name)
     with open(save_path, 'w') as f:
         json.dump(conversation_history, f, indent=4)
     print("\nConversation saved to", save_path)
+
 
 if __name__ == '__main__':
     try:

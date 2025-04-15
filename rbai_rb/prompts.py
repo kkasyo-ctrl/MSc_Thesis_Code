@@ -202,16 +202,28 @@ PROMPTS = {
 
     
     'evaluate_situation': 
-        'Your task is to determine whether the negotiation conversation has reached a conclusion or is still ongoing.'
-        'The conversation history is formatted as a structured list with roles:'
-        '- Messages sent by you (the assistant) have the role **"assistant"**, and their content is stored in the "content" field.'
-        '- Messages from your counterpart (the user) have the role **"user"**, and their content is also stored in the "content" field.'
-        'Below is the full conversation history so far:'
-        '"%s" \n'
-        'You must return exactly **ONE word** as your response:'
-        '- If you determine that a final agreement has been reached (either you agree with counterparts offer or they agree with your offer), return **"DEAL"**.'
-        '- If the negotiation is still ongoing, return **"CONTINUE"**.'
-        'IMPORTANT: Do **NOT** provide any additional words, explanations, or context—only return "DEAL" or "CONTINUE".',
+        """'Your task is to determine whether the negotiation conversation has reached a conclusion or is still ongoing.
+        The conversation history is formatted as a structured list with roles:
+        - Messages sent by you (the assistant) have the role **"assistant"**, and their content is stored in the "content" field.
+        - Messages from your counterpart (the user) have the role **"user"**, and their content is also stored in the "content" field.
+        
+        Here are some examples:
+        Message: {'role': 'assistant', 'content': "I'm afraid our revised proposal still has an invalid offer. I'll suggest a compromise: Wholesale price of 10€ and Quality level 4. Would you consider that?"}, {'role': 'user', 'content': "That's an interesting suggestion! A wholesale price of 10€ is actually matching my Base Retail Price to Consumer, which is fixed at 10€.\n\nConsidering the quality level of 4, which aligns with my initial goal, I'm willing to accept your compromise proposal. A wholesale price of 10€ and a quality level of 4 would result in a total payoff that's acceptable to me.\n\nSo, yes, I'd be happy to accept your revised offer!"}
+        Output: DEAL
+        
+        Message: {'role': 'assistant', 'content': "I'm willing to consider a wholesale price of 6€ paired with a quality level of 1."}, {'role': 'user', 'content': "A slight increase in quality for a slightly higher wholesale price! I think that's a great direction to explore. Given our payoff tables, I believe we can reach an agreement that benefits both parties. I'm willing to accept your proposal: a wholesale price of 6€ paired with a quality level of 1"}
+        Output: DEAL
+
+        Message: {'role': 'assistant', 'content': "I've reflected on our conversation and considered my negotiation rules. Since I aim to negotiate the best possible agreement for myself as the Supplier, I want a low quality and high wholesale price. I'll respond by choosing a combination that matches or builds upon the wholesale price mentioned in your opening offer - which was 5€. Therefore, I choose Price of 8€ and Quality of 2."}, {'role': 'user', 'content': "You're aiming to negotiate a high-quality agreement for yourself as the Supplier! By building upon my opening offer's Wholesale price of 5€, you've chosen an interesting combination.\n\nI'll analyze this proposal: a 10kg bag of wood pellets with Quality level 2 at Wholesale price 8€. Considering my payoffs table, I can see that this combination provides a decent payoff for me as the Buyer.\n\nHowever, I'm not willing to accept an agreement that yields a total payoff less than zero, which is according to our negotiation rules. Since my current total payoff would be lower than zero if I accepted your proposal, I'll make a counteroffer to maintain a positive payoff.\n\nI'll propose: 10kg bag of wood pellets with Quality level 1 at Wholesale price 7€. This combination provides a slightly better total payoff for me compared to your original offer.\n\nYour turn!"} 
+        Output: Continue
+        
+        Below is the full conversation history so far:
+        "%s" \n
+
+        You must return exactly **ONE word** as your response:
+        - If you determine that a final agreement has been reached (either you agree with counterparts offer or they agree with your offer), return **"DEAL"**.
+        - If the negotiation is still ongoing, return **"CONTINUE"**.
+        IMPORTANT: Do **NOT** provide any additional words, explanations, or context—only return "DEAL" or "CONTINUE".""",
 
     'end_negotiation': 
         'It seems that the negotiation has ended. '
