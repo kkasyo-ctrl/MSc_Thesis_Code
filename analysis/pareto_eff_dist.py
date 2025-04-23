@@ -1,13 +1,12 @@
 # analysis file
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
 from shared import rnd_param
 import math
 
 # import data
 df_llm_llm = pd.read_csv(r"C:\Users\david\Desktop\MSc Thesis\MSc Code\github\MSc_Thesis_Code\llm_llm\output_llm_llm_final.csv", encoding='latin-1')
-# df_rbai_llm =  pd.read_csv(r"C:\Users\david\Desktop\MSc Thesis\MSc Code\github\MSc_Thesis_Code\rbai_llm\output_rbai_llm_final.csv", encoding='latin-1')
+df_rbai_llm =  pd.read_csv(r"C:\Users\david\Desktop\MSc Thesis\MSc Code\github\MSc_Thesis_Code\rbai_llm\output_rbai_llm_final.csv", encoding='latin-1')
 df_rb_llm = pd.read_csv(r"C:\Users\david\Desktop\MSc Thesis\MSc Code\github\MSc_Thesis_Code\rb_llm\output_rb_llm_final.csv", encoding='latin-1')
 df_rbai_rbai = pd.read_csv(r"C:\Users\david\Desktop\MSc Thesis\MSc Code\github\MSc_Thesis_Code\rbai_rbai\output_rbai_rbai_final.csv", encoding='latin-1')
 df_rbai_rb = pd.read_csv(r"C:\Users\david\Desktop\MSc Thesis\MSc Code\github\MSc_Thesis_Code\rbai_rb\output_rbai_rb_final.csv", encoding='latin-1')
@@ -295,3 +294,58 @@ df_rbai_rbai['euclidean_deviation'] = dist
 
 # save rbai_rb
 #df_rbai_rbai.to_excel("C:/Users/david/Desktop/MSc Thesis/MSc Code/github/MSc_Thesis_Code/RBAI_RBAI_results.xlsx", sheet_name="Results", index= False)
+
+
+
+
+
+###
+# RBAI_LLM
+###
+
+# add which bot "won"
+df_rbai_llm['won'] = np.where(
+    df_rbai_llm['profit_hybrid'] > df_rbai_llm['profit_llm'],
+    "hybrid",
+    np.where(
+        df_rbai_llm['profit_llm'] > df_rbai_llm['profit_hybrid'],
+        "llm",
+        0      
+    )
+)
+df_rbai_llm.groupby('won')[['profit_hybrid','profit_llm']].describe()
+
+# H1
+pareto_effient = []
+for i in range(0, len(df_rbai_llm)):
+    theoretical_eff_diff = diff(df_rbai_llm['role_hybrid'][i], df_rbai_llm['const_hybrid'][i], df_rbai_llm['const_llm'][i])
+    actual_diff = abs(df_rbai_llm['profit_hybrid'][i] - df_rbai_llm['profit_llm'][i])
+
+    if theoretical_eff_diff >= actual_diff:
+        pareto_effient.append(1)
+    else:
+        pareto_effient.append(0)
+
+df_rbai_llm['pareto_efficient'] = pareto_effient
+
+
+# H2
+dist = [] 
+
+for i in range(0, len(df_rbai_llm)):
+    if df_rbai_llm['pareto_efficient'][i] == 0:
+        offers = pareto_optimality(df_rbai_llm['role_hybrid'][i], df_rbai_llm['const_hybrid'][i], df_rbai_llm['const_llm'][i])
+        dev = euclidean_dist(df_rbai_llm['wholesale_price'][i], df_rbai_llm['quality'][i], offers)
+        
+        
+        dist.append(dev)
+    else:
+        dist.append(0)
+
+
+df_rbai_llm['euclidean_deviation'] = dist
+
+
+# save rbai_llm
+#df_rbai_llm.to_excel("C:/Users/david/Desktop/MSc Thesis/MSc Code/github/MSc_Thesis_Code/RBAI_LLM_results.xlsx", sheet_name="Results", index= False)
+
