@@ -37,7 +37,7 @@ def modify_bot_message(message):
 
 
 
-# sends the initial message to the conterpart based on the bot’s role (buyer or supplier)
+# sends the initial message to the conterpart based on the bots role (buyer or supplier)
 def initial():
     if rnd_param.role == "buyer":
         message = PROMPTS['first_message_PC']
@@ -46,7 +46,7 @@ def initial():
     
     return message
 
-# asks the counterparts for their initial constraints (e.g., production cost or retail price)
+# asks the counterparts for their initial constraints
 def constraint_initial(message):
 
     constraint_bot2 = logic.interpret_constraints(message, ai_number=2, ai_chat=supplier_buyer)
@@ -93,7 +93,7 @@ def constraint_final(inp_msg):
     return message
 
 
-# interpret the counterpart's offer and determine the state of the conversation
+# interpret offer and determine the state of the conversation
 def interpretation(message):
     global execution_count
     if execution_count == 3:
@@ -115,7 +115,7 @@ def interpretation(message):
         return PROMPTS['end_negotiation'] % message
 
 
-# evaluate the counterpart's offer and determine the bot’s response
+# evaluate offer and determine hybrid response
 def evaluate():
     print('evaluate')
  
@@ -167,7 +167,7 @@ def respond_to_offer(evaluation: str, greedy: int):
     return send_response(evaluation, last_offer, response, llm_offers)
 
 
-# provide the RB bot's prompt for generating the response
+# provide the hybrid prompt for generating the response
 def get_respond_prompt(evaluation: str) -> str:
     if evaluation == NOT_OFFER:
         return empty_offer_prompt(
@@ -189,7 +189,7 @@ def get_respond_prompt(evaluation: str) -> str:
         )
 
 
-# decide what to return to the RB bot
+# decide what to return to the llm bot
 def send_response(evaluation: str, last_offer: Offer,
                   llm_output: str, llm_offers: List[List[Union[int, Any]]]):
     print('send_response')
@@ -217,8 +217,7 @@ def accept_offer():
     return content
 
 
-
-# respond to the counterpart's offer in case the offer is not valid or no offer is provided
+# respond to offer in case the offer is not valid or no offer
 def respond_to_non_offer(evaluation: str, greedy: int):
     print(f'respond_to_non_off with evalutation: {evaluation}')
     
@@ -245,7 +244,7 @@ def respond_to_non_offer(evaluation: str, greedy: int):
 
 
 
-# determine the state of the conversation
+# determine state 
 def determine_state():
     state = PROMPTS['evaluate_situation'] % Storage.interaction_list_bot2
     response = logic.get_state(state, ai_number=2, ai_chat= supplier_buyer)

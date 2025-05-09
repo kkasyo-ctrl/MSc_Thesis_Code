@@ -12,8 +12,7 @@ df_rbai_rbai = pd.read_csv(r"C:\Users\david\Desktop\MSc Thesis\MSc Code\github\M
 df_rbai_rb = pd.read_csv(r"C:\Users\david\Desktop\MSc Thesis\MSc Code\github\MSc_Thesis_Code\rbai_rb\output_rbai_rb_final.csv", encoding='latin-1')
 df_rb_rb = pd.read_csv(r"C:\Users\david\Desktop\MSc Thesis\MSc Code\github\MSc_Thesis_Code\rb_rb\output_rb_rb_final.csv", encoding='latin-1')
 
-
-
+# helper functions to calculate pareto efficiency and euclidean distance
 PRICE_RANGE = rnd_param.PRICE_RANGE
 QUALITY_RANGE = rnd_param.QUALITY_RANGE
 
@@ -63,7 +62,7 @@ def euclidean_dist(price, quality, pareto_front):
 # LLM_LLM
 ###
 
-# add which bot "won"
+# which bot won
 df_llm_llm['won'] = np.where(
     df_llm_llm['profit_b1'] > df_llm_llm['profit_b2'],
     1,
@@ -113,7 +112,7 @@ df_llm_llm['euclidean_deviation'] = dist
 # RB_LLM
 ###
 
-# add which bot "won"
+# which bot won
 df_rb_llm['won'] = np.where(
     df_rb_llm['profit_rb'] > df_rb_llm['profit_llm'],
     "rb",
@@ -166,8 +165,7 @@ for i in range(0, len(df_rb_llm)):
 df_rb_llm['euclidean_deviation'] = dist
 
 # save rb_llm
-#df_rb_llm.to_excel("C:/Users/david/Desktop/MSc Thesis/MSc Code/github/MSc_Thesis_Code/RB_LLM_results.xlsx", sheet_name="Results", index= False)
-
+#df_rb_llm.to_excel("C:/Users/david/Desktop/MSc Thesis/MSc Code/github/MSc_Thesis_Code/RB_LLM_results.xlsx", sheet_name="Results", index= False
 
 
 ###
@@ -175,7 +173,7 @@ df_rb_llm['euclidean_deviation'] = dist
 ###
 df_rbai_rb.columns
 
-# add which bot "won"
+# which bot won
 df_rbai_rb['won'] = np.where(
     df_rbai_rb['profit_hybrid'] > df_rbai_rb['profit_rb'],
     "hybrid",
@@ -206,7 +204,6 @@ for i in range(len(df_rbai_rb)):
         pareto_efficient.append(1 if theoretical_eff_diff >= actual_diff else 0)
 
 
-
 df_rbai_rb['pareto_efficient'] = pareto_efficient
 
 
@@ -232,14 +229,12 @@ df_rbai_rb['euclidean_deviation'] = dist
 #df_rbai_rb.to_excel("C:/Users/david/Desktop/MSc Thesis/MSc Code/github/MSc_Thesis_Code/RBAI_RB_results.xlsx", sheet_name="Results", index= False)
 
 
-
-
 ###
 # RBAI_RB
 ###
 df_rbai_rbai.columns
 
-# add which bot "won"
+# which bot won
 df_rbai_rbai['won'] = np.where(
     df_rbai_rbai['profit_b1'] > df_rbai_rbai['profit_b2'],
     1,
@@ -270,9 +265,7 @@ for i in range(len(df_rbai_rbai)):
         pareto_efficient.append(1 if theoretical_eff_diff >= actual_diff else 0)
 
 
-
 df_rbai_rbai['pareto_efficient'] = pareto_efficient
-
 
 # H2
 dist = [] 
@@ -296,14 +289,11 @@ df_rbai_rbai['euclidean_deviation'] = dist
 #df_rbai_rbai.to_excel("C:/Users/david/Desktop/MSc Thesis/MSc Code/github/MSc_Thesis_Code/RBAI_RBAI_results.xlsx", sheet_name="Results", index= False)
 
 
-
-
-
 ###
 # RBAI_LLM
 ###
 
-# add which bot "won"
+# which bot won
 df_rbai_llm['won'] = np.where(
     df_rbai_llm['profit_hybrid'] > df_rbai_llm['profit_llm'],
     "hybrid",

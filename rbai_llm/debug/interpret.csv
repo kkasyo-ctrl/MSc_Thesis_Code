@@ -790,3 +790,18 @@ A quality level of 2 is definitely more attractive to me! According to the payof
 As for the wholesale price of 7€, I'm willing to consider it. However, since my base production cost is 2€ per unit, I'd like to negotiate the price further. Maybe we can meet in the middle and aim for a wholesale price around 8-9€?
 
 What do you think? Is there room for compromise on the quality level or the wholesale price?;Based on the message, the negotiator is proposing: ###  ### [8-9€,2] ###  ### This means they are suggesting a wholesale price of 8-9€ and a quality level of 2.;8;2
+Well, based on my payoff tables, I'm aiming for a low-quality product that still meets your minimum requirements. At the same time, I'd like to maximize my profit by securing a high Wholesale price.
+
+Considering our negotiation, I'll propose an agreement that favors me, with a Quality of 0 and a Wholesale price as high as possible. This combination aligns well with my payoff tables' values, which prioritize low-quality products at higher prices.
+
+What do you think about this proposal?;Based on the message, the negotiator is proposing: ###  ### [7€,0] ###  ### This is because they are aiming for a high wholesale price and a low quality product that still meets the minimum requirements.;7;0
+I understand your proposal. Considering our negotiation so far, I think we can find a better agreement than the one you've suggested.
+
+I'd like to propose an alternative: Price of 7€ and quality of 2. This combination aligns with my payoff tables' values, prioritizing high-quality products at reasonable prices.
+
+What do you think about this revised proposal?;Based on the message, I would output: ###  ### [7€,2] ###  ### This is because the negotiator is proposing a wholesale price of 7€ and a quality level of 2.;7;2
+I appreciate your counterproposal! At first glance, I'm not thrilled about the Quality level of 2, as it would increase my production cost. However, I must admit that the Wholesale price of 7€ is quite attractive.
+
+Let me review my payoff tables again... Ah, yes! A Quality of 2 does result in a lower total payoff for me compared to other options. But, considering the 7€ Wholesale price, it might be worth exploring further.
+
+I'm willing to compromise and consider your proposal. Can we discuss any adjustments or concessions you'd be willing to make on the Quality level, given that I'm comfortable with the Wholesale price?;Based on the message, the negotiator is proposing a wholesale price of 7€ and a quality of 2. Here's the output in the required format: ###  ### [7€,2];7;2

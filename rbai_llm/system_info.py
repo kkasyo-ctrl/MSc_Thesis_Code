@@ -18,9 +18,9 @@ class Storage:
     offers_pareto_efficient = None
     end_convo = False
 
-
+# save convo function
 def saving_convo():
-    save_path = os.path.join("rbai_llm", "output.csv")  # Ensure correct save location
+    save_path = os.path.join("rbai_llm", "output.csv") 
 
     with open(save_path, "a", newline="") as f:
         writer = csv.writer(f, delimiter=",")  # Use `;` as separator

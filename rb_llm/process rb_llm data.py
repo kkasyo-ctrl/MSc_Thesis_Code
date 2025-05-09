@@ -2,14 +2,13 @@
 import pandas as pd
 from ast import literal_eval
 
-
+# load data
 df = pd.read_csv(r'C:\Users\david\Desktop\MSc Thesis\MSc Code\github\MSc_Thesis_Code\rb_llm\output_processed_rb_llm.csv', encoding='latin1')
 df_copy = df.copy()
 
-from ast import literal_eval
-
 df_copy = df.copy()
 
+# helper function
 def safe_parse(x):
     if isinstance(x, str):
         return literal_eval(x)
@@ -17,7 +16,7 @@ def safe_parse(x):
 
 df_copy.iloc[:, 14] = df_copy.iloc[:, 14].apply(safe_parse)
 
-
+# adjust the offers and offer count
 for i in range(len(df_copy)):
     discts = df_copy.iloc[i, 14]
 

@@ -26,22 +26,24 @@ def incoming_message(message):
             rb_storage.user_message = message
         execution_count += 1
         msg = generate_responses.evaluate()
+        
         # ending mechanism
         if rb_storage.end_convo:
             return msg
         else:
             return msg
     else:
+        
         # check if accepted by counterparty
         analyze_message.check_offer_acceptance(message)
         if rb_storage.end_convo:
             return "End of conversation"
         else:
-        # try to accept the offer yourself
             rb_storage.offer_user = analyze_message.interpret_offer(message)
             rb_storage.offer_list.append(rb_storage.offer_user)
             rb_storage.user_message = message
             msg = generate_responses.evaluate()
+            
             # ending mechanism
             if rb_storage.end_convo:
                 return msg

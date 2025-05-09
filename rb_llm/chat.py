@@ -10,7 +10,7 @@ from rb_llm.message_storage import system_final_prompt
 import importlib
 import time
 
-# LLM-based chat function with streaming output
+# LLM call/dump json function 
 def _chat_to_ai(conversation_history, mod_used, temperature=0.1):
     response_chat = {
         "role": "assistant",
@@ -64,7 +64,7 @@ def _chat_to_ai(conversation_history, mod_used, temperature=0.1):
 
     return response_chat
 
-# Rule–based (non LLM) bot's response function.
+# non LLM bot response function.
 def non_llm_response(last_message):
     msg = rb_control.incoming_message(last_message)
     return msg 
@@ -73,7 +73,7 @@ def non_llm_response(last_message):
 def run_chat_interaction(num_turns=20):
     conversation_history = []
     
-    # context for LLM
+    # sytem prompt for LLM
     syst_txt = system_final_prompt()
     system_message = {"role": "system", "content": syst_txt}
     conversation_history.append(system_message)

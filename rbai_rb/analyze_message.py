@@ -38,7 +38,6 @@ def extract_constraint(text):
         return MESSAGES['constraint_not_found'] % context_constraint
 
 
-
 # add message to the extracted constraint
 def augment_message(message):
     output = extract_constraint(message)
@@ -140,7 +139,7 @@ def interpret_offer(text):
 def check_offer_acceptance(inp_msg: str) -> str:
     if isinstance(inp_msg, str):
         lower_msg = inp_msg.lower()
-        # List of keywords that suggest acceptance
+        # keywords that could indicate acceptance 
         acceptance_keywords = ['deal', 'agreed', 'accepted', 
                                'confirm', 'confirmed', 'sounds good', 
                                "let's do it", "i'm in", "it's a deal", 
@@ -150,4 +149,3 @@ def check_offer_acceptance(inp_msg: str) -> str:
             return MESSAGES['they_accept_offer']
     return None
 
-# Example usage:

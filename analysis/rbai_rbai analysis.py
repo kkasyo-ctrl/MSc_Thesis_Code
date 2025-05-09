@@ -27,15 +27,15 @@ msg_range = np.arange(df["message_count"].min(), df["message_count"].max() + 1)
 msg_counts = df["message_count"].value_counts().sort_index()
 msg_counts = msg_counts.reindex(msg_range, fill_value=0)
 
-# Offer count histogram
+# offer count histogram
 offer_range = np.arange(df["offer_count"].min(), df["offer_count"].max() + 1)
 offer_counts = df["offer_count"].value_counts().sort_index()
 offer_counts = offer_counts.reindex(offer_range, fill_value=0)
 
-# Plot
+# plot
 fig, axes = plt.subplots(1, 2, figsize=(12, 5), sharey=False)
 
-# Plot message count
+# message count
 axes[0].bar(msg_counts.index, msg_counts.values, edgecolor="black", color=navy_blue, width=0.6)
 axes[0].set_title("Frequency of Message Count", fontsize=12, weight="bold")
 axes[0].set_xlabel("Message Count", fontsize=12)
@@ -43,20 +43,17 @@ axes[0].set_ylabel("Frequency", fontsize=12)
 axes[0].grid(axis='y', linestyle=':', alpha=0.6)
 axes[0].set_xticks(msg_range)
 
-# Plot offer count
+# offer count
 axes[1].bar(offer_counts.index, offer_counts.values, edgecolor="black", color=sky_blue, width=0.6)
 axes[1].set_title("Frequency of Offer Count", fontsize=12, weight="bold")
 axes[1].set_xlabel("Offer Count", fontsize=12)
 axes[1].grid(axis='y', linestyle=':', alpha=0.6)
 axes[1].set_xticks(offer_range)
 
-# Final layout
+# layout
 plt.tight_layout()
 plt.show()
 
-msg_counts.value_counts
-
-df.columns
 # get number of interpreted correctly
 tmp = df["const_b1"] == df["b1_const_thought_b2"]
 tmp.value_counts()
@@ -79,15 +76,13 @@ df.groupby("role_b1")[["profit_b1", "profit_b2"]].describe()
 
 df[["profit_b1", "profit_b2"]].describe()
 
+# number of negotiations won
 df["won"].value_counts()
 
-
+# negotiations outcome statistics
 df['pareto_efficient'].value_counts()
 df['euclidean_deviation'].value_counts()
 df['euclidean_deviation'].mean()
-
-df['message_count'].mean()
-df['profit_b2'].mean()
 
 
 

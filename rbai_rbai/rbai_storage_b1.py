@@ -22,11 +22,12 @@ class rbai_storage_b1:
     end_convo = False
 
 
+# save conversation
 def saving_convo():
-    save_path = os.path.join("rbai_rbai", "output.csv")  # Ensure correct save location
+    save_path = os.path.join("rbai_rbai", "output.csv")  
 
     with open(save_path, "a", newline="") as f:
-        writer = csv.writer(f, delimiter=",")  # Use `;` as separator
+        writer = csv.writer(f, delimiter=",")  
         writer.writerow([datetime.datetime.now().strftime('%Y%m%d_%H%M%S'), rnd_param.role, rnd_param.role_other, rnd_param.main_constraint, rnd_param.other_constraint, 
                          rbai_storage_b1.offer_list[-1].price, rbai_storage_b1.offer_list[-1].quality, rbai_storage_b1.main_bot_cons, rbai_storage_b1.other_constraint, 
                          rbai_storage_b2.other_constraint, rbai_storage_b2.main_bot_cons, rbai_storage_b1.offer_list[-1].profit_bot1, rbai_storage_b1.offer_list[-1].profit_bot2,

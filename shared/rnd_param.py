@@ -2,12 +2,9 @@
 import random
 import re 
 
-
-
 # possible values
 PRICE_RANGE = range(1, 14)
 QUALITY_RANGE = range(0, 5)
-
 
 # fomulas 
 def profit_sup(PC, quality, neg_price ):
@@ -22,14 +19,13 @@ def profit_buy(MP, quality, neg_price):
 # turn off greediness
 greedy = 0 
 
-
 role = random.choice(['buyer', 'supplier'])
 role_other = 'supplier' if role == 'buyer' else 'buyer'
 
 if role == 'supplier':
     # supplier parameters
     main_constraint = random.randint(1,3) 
-    # comment it out
+    # comment it out - testing
     #main_constraint = 2
     # buyer parameters
     other_constraint = random.randint(8,10)
@@ -37,6 +33,7 @@ if role == 'supplier':
 else:  
     # buyer parameters
     main_constraint = random.randint(8,10)
+    # comment it out - testing
     #main_constraint = 9
     # buyer parameters
     other_constraint = random.randint(1,3)

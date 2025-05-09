@@ -9,7 +9,7 @@ import time
 from rbai_rb import pareto_rbai
 
 
-# extracts the constraint of counterpart from the message using the LLM
+# extracts the constraint of counterpart with helper LLM
 def interpret_constraints(message: str) -> Optional[int]:
 
     def log(result):
@@ -23,7 +23,6 @@ def interpret_constraints(message: str) -> Optional[int]:
     model_used = 'llm_constraint'
     ai_response = _chat_to_ai(conversation_history, model_used, temperature=0.1)
     
-    # make it not print!!!
     llm_output = ai_response['content']
     
     match = rnd_param.PATTERN_CONSTRAINT.search(llm_output)
@@ -44,14 +43,11 @@ def constraint_in_range(constraint_bot2) -> bool:
     constraint_bot2 = int(constraint_bot2)
     bot1_role = rnd_param.role_other  
     if bot1_role == 'supplier':
-    
-    # Check if constraint is within production cost range
         return 1 <= constraint_bot2 <= 3
     else:
-        # Check if constraint is within retail price range
         return 8 <= constraint_bot2 <= 10
 
-# if the counterpart has not provided a valud constraint, the bot will assume the worst value
+# draw random constraint if the rule-based does not respond correctly (never should happen)
 def constant_draw_constraint() -> int:
     bot1_role = rnd_param.role  
     if bot1_role == 'supplier':
@@ -60,74 +56,16 @@ def constant_draw_constraint() -> int:
         return 1 
 
 
-# calculate profits for the bot and bot2 based on constraints
+# calculate profits for the hybrid and rb based on constraints
 def add_profits(offer: Offer):
     offer.profits(rnd_param.role, rbai_storage.other_constraint, rbai_storage.main_bot_cons)
 
 
-
-# process the LLM response to extract clean content - NOT SURE WHERE IT IS USED AS OF NOW
-def extract_content(response: Dict[str, Any]) -> str:
-    def remove_inner(string: str, start_char: str, end_char: str):
-        while start_char in string and end_char in string:
-            start_pos = string.find(start_char)
-            end_pos = string.find(end_char, start_pos) + 1
-            if 0 <= start_pos < end_pos:
-                string = string[:start_pos] + string[end_pos:]
-            else:
-                break
-        return string
-
-    try:
-        content: str = response.strip()
-    except KeyError as _:
-        print(f"\nUnexpected response format: {response}\n")
-        return f"\nUnexpected response format: {response}\n"
-
-
-    if content.count('"') > 1:
-        start = content.find('"') + 1
-        end = content.rfind('"')
-        content = content[start:end]
-    else:
-        if content.lower().startswith("system:"):
-            content = content[7:].strip()
-        if content.lower().startswith("system,"):
-            content = content[7:].strip()
-
-    # Remove text within parentheses if no quotes are found
-    content = remove_inner(content, '(', ')')
-    # Remove content within square brackets
-    content = remove_inner(content, '[', ']')
-
-    # Remove text before "list_of_offers_to_choose_from"
-    if 'list_of_offers_to_choose_from' in content:
-        split_list = content.split('list_of_offers_to_choose_from:', 1)
-        content = split_list[1].strip() if len(split_list) > 1 else content
-
-    # Remove text before the first colon
-    if ':' in content:
-        split_list = content.split(':', 1)
-        content = split_list[1].strip() if len(split_list) > 1 else content
-
-    # Split the content at line breaks and take only the first part
-    content = content.split('\n', 1)[0]
-
-    return content.strip()
-
-
-# extract price and quality values from the message and create an Offer object
+# extract price and quality values from the message 
 def interpret_offer(message: str, offer_by) -> Optional[Offer]:
     def get_int(value: str) -> Optional[int]:
         """Extracts an integer or processes a range like '6-7'."""
         try:
-
-            # Handle ranges like '6-7'
-            if '-' in value and all(part.strip().isdigit() for part in value.split('-')):
-                parts = value.split('-')
-                return round(sum(float(part) for part in parts) / len(parts))
-
-            # Handle single values
             return round(float("".join(char for char in value if char.isdigit() or char == '-')))
         except ValueError:
             return None
@@ -205,7 +143,7 @@ def get_greediness(constraint_bot2: int, constraint_bot: int) -> int:
         return 0
 
 
-
+# determine state
 def get_state(message: str):
     print("get_state")    
     

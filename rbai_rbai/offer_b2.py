@@ -1,9 +1,9 @@
-import time  # For getting the current timestamp
-from typing import Any, Union  # Type annotations for type hinting
+import time 
+from typing import Any, Union  
 
 from shared import rnd_param
 
-# Constants for different offer evaluations
+# constants for different offer evaluations
 ACCEPT = 'accept'
 NOT_PROFITABLE = 'not_profitable'
 OFFER_QUALITY = 'offer_quality'
@@ -12,19 +12,20 @@ NOT_OFFER = 'not_offer'
 INVALID_OFFER = 'invalid_offer'
 FIRST_OFFER = 'first_offer'
 
-class Offer(dict):  # Represents an individual offer
+# offer object - represents an offer as class
+class Offer(dict):  
     def __init__(self,
-                 idx: int = -1,  # Identifier for the offer
-                 price: int = None,  # Price value
-                 quality: int = None, # Quality value
-                 offer_by: str = None, # offer by  
-                 stamp: int = None,  # Timestamp of the offer
-                 from_chat: bool = False,  # Whether the offer came from chat
-                 enhanced: str = None,  # Fields enhanced during processing
-                 profit_bot1: int = None,  # bot1 profit from the offer
-                 profit_bot2: int = None,  # bot2 profit from the offer
-                 test: Any = None):  # Optional test data
-        stamp = stamp or int(time.time())  # Set current timestamp if none provided
+                 idx: int = -1, 
+                 price: int = None,
+                 quality: int = None,
+                 offer_by: str = None,   
+                 stamp: int = None, 
+                 from_chat: bool = False,  
+                 enhanced: str = None,  
+                 profit_bot1: int = None,  
+                 profit_bot2: int = None,  
+                 test: Any = None):  
+        stamp = stamp or int(time.time())  
         dict.__init__(self, idx=idx, price=price, quality=quality, offer_by = offer_by,
                       stamp=stamp, from_chat=from_chat, enhanced=enhanced,
                       profit_bot1=profit_bot1, profit_bot2=profit_bot2,
@@ -34,36 +35,36 @@ class Offer(dict):  # Represents an individual offer
         self.quality = quality
         self.offer_by = offer_by
         self.stamp = stamp
-        self.from_chat = True ### set to true
+        self.from_chat = True 
         self.enhanced = enhanced
         self.profit_bot1 = profit_bot1
         self.profit_bot2 = profit_bot2
 
-    def __getattr__(self, attr):  # Get attribute as dictionary value
+    def __getattr__(self, attr):  
         return self.get(attr)
 
-    def __setattr__(self, key, value):  # Set dictionary key via attribute
+    def __setattr__(self, key, value):  
         self.__setitem__(key, value)
 
     @property
-    def specifics(self) -> str:  # Summary of offer details
+    def specifics(self) -> str:  
         return f"P+Q = {str(self.price):4} + {str(self.quality):4} ; " \
                f"PROF = {str(self.profit_bot1):3} + {str(self.profit_bot2):3} ;"
 
     @property
-    def is_valid(self) -> bool:  # Check if the offer is valid
+    def is_valid(self) -> bool:  
         return self.is_complete and self.price_in_range and self.quality_in_range
 
     @property
-    def is_complete(self) -> bool:  # Check if price and quality are set
+    def is_complete(self) -> bool:
         return None not in (self.price, self.quality)
 
     @property
-    def price_in_range(self) -> bool:  # Check if price is within valid range
+    def price_in_range(self) -> bool:
         return self.price in rnd_param.PRICE_RANGE
 
     @property
-    def quality_in_range(self) -> bool:  # Check if quality is within valid range
+    def quality_in_range(self) -> bool:
         return self.quality in rnd_param.QUALITY_RANGE
 
     def profits(self, bot_role: str, constraint_bot2: int, constraint_bot: int):
@@ -107,35 +108,34 @@ class Offer(dict):  # Represents an individual offer
         """Calculate profit for buyer."""
         return retail_price - price + quality
 
-class OfferList(list):  # A list of offers with additional methods
+class OfferList(list):  
     def __init__(self, *args):
-        list.__init__(self, *args)  # Initialize as a regular list
-        self.sort(key=lambda o: o.stamp)  # Sort offers by timestamp
+        list.__init__(self, *args)  
+        self.sort(key=lambda o: o.stamp)  
 
     def last_valid_price(self, idx: int = None) -> int:
         """Get the last valid price."""
-        for offer in sorted(self, key=lambda o: -o.stamp):  # Sort by latest timestamp
-            if idx is not None and offer.idx != idx:  # Skip offers from other players
+        for offer in sorted(self, key=lambda o: -o.stamp): 
+            if idx is not None and offer.idx != idx: 
                 continue
             if offer.price is not None:
                 return offer.price
-        return 5  # Hardcoded default price
+        return 5  
 
     def last_valid_quality(self, idx: int = None) -> int:
         """Get the last valid quality."""
-        for offer in sorted(self, key=lambda o: -o.stamp):  # Sort by latest timestamp
-            if idx is not None and offer.idx != idx:  # Skip offers from other players
+        for offer in sorted(self, key=lambda o: -o.stamp):  
+            if idx is not None and offer.idx != idx:  
                 continue
             if offer.quality is not None:
                 return offer.quality
-        return 2  # Hardcoded default quality
+        return 2  
 
     @property
     def max_profit(self) -> int:
         """Get the maximum bot profit."""
         if len(self) == 0:
             return 0
-        # Hardcoded filter for valid offers
         return max([offer.profit_bot1 for offer in self if offer.idx != -1])
 
     @property
@@ -143,7 +143,6 @@ class OfferList(list):  # A list of offers with additional methods
         """Get the minimum bot profit."""
         if len(self) == 0:
             return 0
-        # Hardcoded filter for valid offers
         return min([offer.profit_bot1 for offer in self if offer.idx != -1])
 
 

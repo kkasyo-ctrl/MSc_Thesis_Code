@@ -1,26 +1,33 @@
-# rbai_llm descriptive analysis/ visualization
+# llm_llm descriptive analysis/ visualization
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
-from scipy.stats import shapiro, wilcoxon
+from scipy.stats import shapiro, wilcoxon, ttest_rel
 
 # load data
-df = pd.read_excel("C:/Users/david/Desktop/MSc Thesis/MSc Code/github/MSc_Thesis_Code/RBAI_LLM_results.xlsx", sheet_name="Results")
-df.columns
+df = pd.read_excel("C:/Users/david/Desktop/MSc Thesis/MSc Code/github/MSc_Thesis_Code/LLM_LLM_results.xlsx", sheet_name="Results")
 
 # profit differences
-df["profit_diff"] = df["profit_hybrid"] - df["profit_llm"]
+df["profit_diff"] = df["profit_b1"] - df["profit_b2"]
 profit_counts = df["profit_diff"].value_counts().sort_index()
-df["profit_sup"] = np.where(df["role_hybrid"] == "supplier", df["profit_hybrid"], df["profit_llm"])
-df["profit_buy"] = np.where(df["role_hybrid"] == "buyer", df["profit_hybrid"], df["profit_llm"])
+df["profit_sup"] = np.where(df["role_b1"] == "supplier", df["profit_b1"], df["profit_b2"])
+df["profit_buy"] = np.where(df["role_b1"] == "buyer", df["profit_b1"], df["profit_b2"])
 
 df["profit_diff_roles"] = df["profit_sup"] - df["profit_buy"]
+
+# colors
+sky_blue = (162/255, 213/255, 242/255)
+navy_blue = (27/255, 38/255, 59/255)
+
+
+
+
+# visualize profit differences between configurations
+profit_counts = df["profit_diff"].value_counts().sort_index()
 profit_range = np.arange(df["profit_diff"].min(), df["profit_diff"].max() + 1)
 profit_counts = df["profit_diff"].value_counts().sort_index()
 profit_counts = profit_counts.reindex(profit_range, fill_value=0)
-
-# visualize profit differences between configurations
 
 # colors
 sky_blue = (162/255, 213/255, 242/255)
@@ -29,7 +36,7 @@ navy_blue = (27/255, 38/255, 59/255)
 # profit difference
 plt.figure(figsize=(6, 5))
 plt.bar(profit_counts.index, profit_counts.values, edgecolor="black", color=sky_blue, width=0.6)
-plt.title("Profit Difference Distribution (Hybrid - LLM)", fontsize=12, weight="bold")
+plt.title("Profit Difference Distribution (RB - LLM)", fontsize=12, weight="bold")
 plt.xlabel("Profit Difference", fontsize=12)
 plt.ylabel("Frequency", fontsize=12)
 plt.xticks(profit_range)
@@ -38,7 +45,6 @@ plt.tight_layout()
 plt.show()
 
 # profit agreement rate
-
 msg_range = np.arange(df["message_count"].min(), df["message_count"].max() + 1)
 msg_counts = df["message_count"].value_counts().sort_index()
 msg_counts = msg_counts.reindex(msg_range, fill_value=0)
@@ -66,57 +72,59 @@ axes[1].set_xlabel("Offer Count", fontsize=12)
 axes[1].grid(axis='y', linestyle=':', alpha=0.6)
 axes[1].set_xticks(offer_range)
 
-# layout
+# one figure
 plt.tight_layout()
 plt.show()
 
-df['message_count'].describe()
+# build a common set of bins spanning both distributions
+all_profits = np.concatenate([df['profit_sup'], df['profit_buy']])
+bins = np.linspace(all_profits.min(), all_profits.max(), 20)
+plt.figure(figsize=(9, 6))
 
-# distance from pareto optimal 
-dist = df["euclidean_deviation"].value_counts().sort_index()
+# plot step histograms
+sns.histplot(df['profit_sup'], bins=20, kde=False, stat="count", color=sky_blue, element="step", linewidth=1, label='Supplier Profit')
+sns.histplot(df['profit_buy'], bins=20, kde=False, stat="count", color=navy_blue, element="step", linewidth=1, label='Buyer Profit')
 
-plt.figure(figsize=(5, 5))
-plt.bar(dist.index, dist.values, 
-        edgecolor="black", color=sky_blue, width=0.6)
+# mean lines
+plt.axvline(df['profit_sup'].mean(), color=sky_blue, linestyle='--', linewidth=2, label='Supplier Mean')
+plt.axvline(df['profit_buy'].mean(), color=navy_blue, linestyle='--', linewidth=2, label='Buyer Mean')
 
-plt.title("Frequency of Message Count", fontsize=12, weight="bold")
-plt.xlabel("Message Count", fontsize=12)
+# plot style
+plt.title("Distribution of Supplier vs. Buyer Profit", fontsize=14, weight='bold')
+plt.xlabel("Profit", fontsize=12)
 plt.ylabel("Frequency", fontsize=12)
-plt.xticks(dist.index)  
-
-plt.grid(axis='y', linestyle=':', alpha=0.6)
+plt.xticks(fontsize=10)
+plt.yticks(fontsize=10)
+plt.grid(axis='y', linestyle='--', alpha=0.5)
+plt.legend(frameon=False, fontsize=10, loc='upper right')
 plt.tight_layout()
 plt.show()
 
-df[['profit_llm', 'profit_hybrid']].describe()
-df["euclidean_deviation"].value_counts().sort_index()
-
-
-
-# normality test on profit differences based on configurations
+# normality test on profit differences based on roles
 stat, p_normality = shapiro(df["profit_diff"])
 print(f"Shapiro-Wilk Test: W = {stat:.3f}, p = {p_normality:.5f}")
 
-wilcoxon_stat, wilcoxon_p = wilcoxon(df["profit_llm"], df["profit_hybrid"])
-print(f"Wilcoxon Signed-Rank Test: Statistic = {wilcoxon_stat}, p = {wilcoxon_p:.5f}")
-
+t_stat, p_value = ttest_rel(df["profit_b1"], df["profit_b2"])
+print(f"Paired t-test: t = {t_stat:.3f}, p = {p_value:.5f}")
 
 # normality test on profit differences based on roles
 stat, p_normality = shapiro(df["profit_diff_roles"])
 print(f"Shapiro-Wilk Test: W = {stat:.3f}, p = {p_normality:.5f}")
 
-wilcoxon_stat, wilcoxon_p = wilcoxon(df["profit_buy"], df["profit_sup"])
-print(f"Wilcoxon Signed-Rank Test: Statistic = {wilcoxon_stat}, p = {wilcoxon_p:.5f}")
+t_stat, p_value = ttest_rel(df["profit_sup"], df["profit_buy"])
+print(f"Paired t-test: t = {t_stat:.3f}, p = {p_value:.5f}")
 
-df[['message_count', 'offer_count']].describe()
+print("\nSummary Statistics:")
 
-df['llm_const_thought_hyrbid'] == df['const_llm']
-df.columns
-tmp = df['llm_const_thought_rb'] == df['const_llm']
-tmp.value_counts()
+df.groupby("role_b1")[["profit_b1", "profit_b2"]].describe()
+
+df[["profit_b1", "profit_b2"]].describe()
+df[["profit_sup", "profit_buy"]].describe()
 
 # number of negotiations won
-df['won'].value_counts()
+df["won"].value_counts()
 
-df[['profit_hybrid', 'profit_llm']].describe()
+# negotiations outcome statistics
 df['pareto_efficient'].value_counts()
+df['euclidean_deviation'].value_counts()
+df['euclidean_deviation'].mean()

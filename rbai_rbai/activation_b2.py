@@ -31,7 +31,7 @@ def modify_bot_message(message):
 
 
 
-# sends the initial message to the conterpart based on the bot’s role (buyer or supplier)
+# sends the initial message to the conterpart 
 def initial():
     if rnd_param.role_other == "buyer":
         message = PROMPTS['first_message_PC']
@@ -40,7 +40,7 @@ def initial():
     
     return message
 
-# asks the counterparts for their initial constraints (e.g., production cost or retail price)
+# asks for constraints
 def constraint_initial(message):
 
     constraint_bot2 = logic_b2.extract_constraint(message)
@@ -114,7 +114,7 @@ def constraint_final(inp_msg):
         return message
 
 
-# interpret the counterpart's offer and determine the state of the conversation
+# interpret counterpart message 
 def interpretation(message):
     global execution_count
     rbai_storage_b2.offer_bot2 = logic_b2.interpret_offer(message, offer_by=rnd_param.role)
@@ -126,7 +126,7 @@ def interpretation(message):
 
 
 
-# evaluate the counterpart's offer and determine the bot’s response
+# evaluate the offer
 def evaluate():
     print('evaluate')
  
@@ -153,7 +153,7 @@ def evaluate():
         raise Exception
 
 
-# respond to offer in case the offer is not profitable, the quality or price is not provided
+# respond to offer
 def respond_to_offer(evaluation: str, greedy: int):
     print(f'respond_to_off with evalutation: {evaluation}')
 
@@ -180,7 +180,7 @@ def respond_to_offer(evaluation: str, greedy: int):
     return send_response(evaluation, last_offer, response, llm_offers)
 
 
-# provide the RB bot's prompt for generating the response
+# prompt unprofitable offer
 def get_respond_prompt(evaluation: str) -> str:
     if evaluation == FIRST_OFFER:
         return first_offer_prompt(
@@ -206,7 +206,7 @@ def get_respond_prompt(evaluation: str) -> str:
         )
 
 
-# decide what to return to the RB bot
+# send response
 def send_response(evaluation: str, last_offer: Offer,
                   llm_output: str, llm_offers: List[List[Union[int, Any]]]):
     print('send_response')
@@ -236,7 +236,7 @@ def accept_offer():
 
 
 
-# respond to the counterpart's offer in case the offer is not valid or no offer is provided
+# no offer provided prompt
 def respond_to_non_offer(evaluation: str, greedy: int):
     print(f'respond_to_non_off with evalutation: {evaluation}')
     
@@ -263,7 +263,7 @@ def respond_to_non_offer(evaluation: str, greedy: int):
     return send_response(evaluation, last_offer, response, llm_offers)
 
 
-# for this condition
+# for this condition -> give constraint to the other bot
 def provide_constraint():
     give_constraint = PROMPTS['context_constraint'][rnd_param.role]
     message = PROMPTS['give_initial_const'] % (give_constraint, give_constraint, rnd_param.other_constraint) 

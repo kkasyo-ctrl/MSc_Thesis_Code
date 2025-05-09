@@ -7,6 +7,7 @@ from rb_llm.message_storage import MESSAGES
 import random
 from rb_llm.analyze_message import own_offer
 
+# return initial message 
 def initial_message():
     if rb_storage.bot1_role == "buyer":
         message = "Hi! I'm excited to start our negotiation. As we begin, I'd like to get a sense of your needs and constraints. Can you share with me your Base Production Cost?"
@@ -15,6 +16,7 @@ def initial_message():
 
     return message
 
+# evaluate the current offer
 def evaluate():
     print('evaluate')
  
@@ -39,19 +41,20 @@ def evaluate():
         return respond_to_non_offer()
     else:
         raise Exception
-    
+
+# calculate profits    
 def add_profits(offer: Offer):
     offer.profits(rb_storage.bot1_role, rb_storage.bot2_constraint, rb_storage.bot1_constraint)
     print(offer.profits)
 
-
+# calculate greediness (lazy workaround)
 def get_greediness(constraint_user: int, constraint_bot: int) -> int:
     if constraint_user not in (0, None):
         return pareto.pareto_efficient_offer(constraint_user, constraint_bot,rb_storage.bot1_role, False)
     else:
         return 0
     
-
+# acceot offer function
 def accept_offer():
     print('accept')
     content = MESSAGES['accept_offer'] 
@@ -59,9 +62,10 @@ def accept_offer():
 
     return content
 
-
+# offer pool
 offer_pool = [] 
 
+# return potential responses to offer (now with offer pool)
 def respond_to_offer():
     global offer_pool
 
@@ -77,7 +81,7 @@ def respond_to_offer():
     return message
 
 
-
+# return potential responses to not offer (now with offer pool)
 def respond_to_non_offer():
     global offer_pool
     

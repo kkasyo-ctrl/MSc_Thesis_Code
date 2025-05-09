@@ -8,6 +8,7 @@ from typing import Optional
 import csv
 import datetime
 
+# storage class for rb
 class rb_storage:
     bot1_role = rnd_param.role_other
     bot2_role = rnd_param.role
@@ -39,7 +40,7 @@ class rb_storage:
 
 
 
-
+# save info
 def saving_convo():
     save_path = os.path.join("rb_llm", "output.csv")  
 

@@ -9,7 +9,7 @@ import time
 from rbai_llm import pareto
 
 
-# extracts the constraint of counterpart from the message using the LLM
+# extracts the constraint of counterpart with helper LLM
 def interpret_constraints(message: str, ai_number: int, ai_chat) -> Optional[int]:
 
     def log(result):
@@ -23,7 +23,6 @@ def interpret_constraints(message: str, ai_number: int, ai_chat) -> Optional[int
     model_used = 'llm_constraint'
     ai_response = _chat_to_ai(conversation_history, model_used, ai_chat['temperature'])
     
-    # make it not print!!!
     llm_output = ai_response['content']
     
     match = rnd_param.PATTERN_CONSTRAINT.search(llm_output)
@@ -45,13 +44,11 @@ def constraint_in_range(constraint_bot2) -> bool:
     bot1_role = rnd_param.role_other  
     if bot1_role == 'supplier':
     
-    # Check if constraint is within production cost range
         return 1 <= constraint_bot2 <= 3
     else:
-        # Check if constraint is within retail price range
         return 8 <= constraint_bot2 <= 10
 
-# if the counterpart has not provided a valud constraint, the bot will assume the worst value
+# draw random constraint if the LLM does not respond correctly
 def constant_draw_constraint() -> int:
     bot1_role = rnd_param.role  
     if bot1_role == 'supplier':
@@ -66,18 +63,13 @@ def add_profits(offer: Offer):
 
 
 
-# extract price and quality values from the message and create an Offer object
+# extract price and quality values from the message 
 def interpret_offer(message: str, ai_number: int, ai_chat, offer_by) -> Optional[Offer]:
     def get_int(value: str) -> Optional[int]:
         """Extracts an integer or processes a range like '6-7'."""
         try:
 
-            # Handle ranges like '6-7'
-            if '-' in value and all(part.strip().isdigit() for part in value.split('-')):
-                parts = value.split('-')
-                return round(sum(float(part) for part in parts) / len(parts))
-
-            # Handle single values
+            # single values
             return round(float("".join(char for char in value if char.isdigit() or char == '-')))
         except ValueError:
             return None
@@ -154,7 +146,7 @@ def get_greediness(constraint_bot2: int, constraint_bot: int) -> int:
     else:
         return 0
 
-
+# determine the state of the convo
 def get_state(message: str, ai_number: int, ai_chat):
     print("get_state")    
     

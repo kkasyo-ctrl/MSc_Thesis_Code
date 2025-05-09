@@ -9,10 +9,10 @@ from rbai_rbai.rbai_storage_b2 import rbai_storage_b2
 from shared import rnd_param 
 from rbai_rbai.prompts import system_final_prompt1, system_final_prompt2
 
-# ensure encoding is utf-8
+# ensure correct encoding 
 sys.stdout.reconfigure(encoding='utf-8')
 
-# LLM-based chat function with streaming output
+# LLM call/dump json function 
 def _chat_to_ai(conversation_history, mod_used, temperature=0.1):
     response_chat = {
         "role": "assistant",
@@ -122,7 +122,7 @@ def run_chat_interaction(num_turns=20):
         'content': rbai_msgb1
         })
 
-    # fix while loop
+    # negotiation while loop
     while rbai_storage_b1.end_convo == False and rbai_storage_b2.end_convo == False and chat_counter < int(num_turns):
         chat_counter += 1
         if chat_counter % 2 == 1:  

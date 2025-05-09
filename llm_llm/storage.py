@@ -1,4 +1,3 @@
-# Role-based system storage
 # import packages 
 import sys
 import os
@@ -6,6 +5,7 @@ from shared import rnd_param
 import csv
 import datetime
 
+# storage class 
 class llm_storage:
     bot1_role = rnd_param.role
     bot2_role = rnd_param.role_other
@@ -65,10 +65,10 @@ def calculate_profits():
 
 
 def saving_convo():
-    save_path = os.path.join("llm_llm", "output.csv")  # Ensure correct save location
+    save_path = os.path.join("llm_llm", "output.csv") 
 
     with open(save_path, "a", newline="") as f:
-        writer = csv.writer(f, delimiter=",")  # Use `;` as separator
+        writer = csv.writer(f, delimiter=",")  
         writer.writerow([datetime.datetime.now().strftime('%Y%m%d_%H%M%S'), rnd_param.role, rnd_param.role_other, rnd_param.main_constraint,  rnd_param.other_constraint,
                          llm_storage.agreed_price, llm_storage.agreed_quality, llm_storage.profit_bot1, llm_storage.profit_bot2, llm_storage.num_off,
                          len(llm_storage.interaction_list_bot1) - 1,llm_storage.interaction_list_bot1])  

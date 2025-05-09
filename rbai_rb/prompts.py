@@ -1,10 +1,10 @@
-import os  # For file path operations
-from typing import Dict  # For type annotations
+import os  
+from typing import Dict  
 
 from shared import rnd_param
 from rbai_rb.rbai_storage import rbai_storage
 
-# Get the absolute path of the rbai_rb directory
+# get path to bot prompt locations
 BASE_DIR = os.path.dirname(os.path.abspath(__file__)) 
 
 def from_file(base_path, file_path):
@@ -16,10 +16,7 @@ def from_file(base_path, file_path):
         return f.read()
 
 
-
-
-# Generates a system prompt based on the bot's role and constraints
-# Constructs a message using predefined phrases and calculated constraint ranges
+# system prompt for hybrid
 def system_final_prompt():
     bot_role = rnd_param.role
     if bot_role == 'supplier':
@@ -46,9 +43,7 @@ def system_final_prompt():
             after_price)
 
 
-
-# The functions below dynamically generate promts for different negotiations situations
-# empty_offer_prompt: Handles cases where no valid offer was received.
+# empty_offer_prompt
 def empty_offer_prompt(bot2_message: str,
                        offers_pareto_efficient: str,
                        interactions: str) -> str:
@@ -62,7 +57,7 @@ def empty_offer_prompt(bot2_message: str,
             interactions)
 
 
-# offer_without_quality_prompt: Handles cases where quality is missing in the bot2 offer
+# offer without quality
 def offer_without_quality_prompt(bot2_message: str,
                                  offers_pareto_efficient: str,
                                  interactions: str) -> str:
@@ -76,7 +71,7 @@ def offer_without_quality_prompt(bot2_message: str,
             interactions)
 
 
-# offer_without_price_prompt: Handles cases where price is missing in the bot2 offer
+# offer without price
 def offer_without_price_prompt(bot2_message: str,
                                offers_pareto_efficient: str,
                                interactions: str) -> str:
@@ -90,8 +85,7 @@ def offer_without_price_prompt(bot2_message: str,
             interactions)
 
 
-
-# not_profitable_prompt: Responds when the bot2 offer isn't profitable
+# not profitable
 def not_profitable_prompt(bot2_message: str,
                           offers_pareto_efficient: str,
                           interactions: str) -> str:
@@ -105,7 +99,7 @@ def not_profitable_prompt(bot2_message: str,
             interactions)
 
 
-# offer_invalid: Handles invalid offers
+# invalid offer
 def offer_invalid(bot2_message: str) -> str:
     bot_role = rnd_param.role
     prompts = PROMPTS[bot_role]
@@ -114,7 +108,7 @@ def offer_invalid(bot2_message: str) -> str:
             prompts['invalid_offer_reminder'])
 
 
-# Dynamically loads prompts from text files based on the bot’s role (buyer or supplier).
+# load text prompts from file dynamically
 def role_prompts(base: str) -> Dict[str, str]:
     return {
         'before_constraint': from_file(base, 'system/before_constraint.txt'),
@@ -146,7 +140,7 @@ def role_prompts(base: str) -> Dict[str, str]:
             base, 'Not_Price_Send_Pareto_Efficient_Offer.txt'),
     }
 
-# static promts: first message, closing message
+# static promts for hybrid bot
 PROMPTS = {
     'first_message_PC': "Hi! I'm excited to start our negotiation. As we begin, I'd like to get a sense of your needs and constraints. Can you share with me your Base Production Cost?",
     'first_message_RP': "Hi! I'm excited to start our negotiation. As we begin, I'd like to get a sense of your needs and constraints. Can you share with me your Base Retail Price to Consumer?",

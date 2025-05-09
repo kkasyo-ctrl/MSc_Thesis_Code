@@ -7,7 +7,7 @@ from llm_llm.storage import extract_price_and_quality, calculate_profits, saving
 from llm_llm.mediator_prompts import PROMPTS, system_final_prompt_role, system_final_prompt_role_other
 from shared import rnd_param 
 
-# LLM-based chat function with streaming output (unchanged)
+# LLM call function 
 def _chat_to_ai(conversation_history, ai_number, mod_used, temperature=0.1):
     response_chat = {
         "role": "assistant",
@@ -44,11 +44,10 @@ def _chat_to_ai(conversation_history, ai_number, mod_used, temperature=0.1):
                     chat_response = json.loads(decoded_line)
                     chat_message = chat_response['message']['content']
                     response_chat['content'] += chat_message
-                    # Stream output in real time:
                     print(chat_message, end='', flush=True)
                     if chat_response.get('done', False):
                         break
-            print("")  # newline after response
+            print("") 
         else:
             print('Failed to send chat request.')
             print('Status Code:', response.status_code)
@@ -93,10 +92,10 @@ def run_chat_interaction(num_turns=20):
         })
 
     chat_counter = 1
-    num_turns = 10  # total number of negotiation turns
-
+    num_turns = 10  
 
     ai_eval = 'CONTINUE'
+    
     # interaction loop
     while ai_eval == "CONTINUE" and chat_counter < int(num_turns):
         if chat_counter >= 3:
@@ -166,7 +165,8 @@ def run_chat_interaction(num_turns=20):
 
     save_file_name = 'chat_history\\ai_chat_{}.txt'.format(datetime.datetime.now().strftime('%Y%m%d_%H%M%S'))
     save_path = os.path.join("llm_llm", save_file_name)
-    # Write as plain text
+
+    # write as plain text (backup)
     with open(save_path, 'w', encoding='utf-8') as f:
         for msg in conversation_history1:
             f.write(f"{msg['role']}: {msg['content']}\n\n")

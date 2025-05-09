@@ -6,6 +6,7 @@ from rbai_rb.offer_rb import (Offer, OfferList, ACCEPT, OFFER_QUALITY, OFFER_PRI
 from rbai_rb.message_storage import MESSAGES 
 import random
 
+# initial message function
 def initial_message():
     if rb_storage.bot1_role == "buyer":
         message = "Hi! I'm excited to start our negotiation. As we begin, I'd like to get a sense of your needs and constraints. Can you share with me your Base Production Cost?"
@@ -14,6 +15,7 @@ def initial_message():
 
     return message
 
+# evaluate the hybrid offer
 def evaluate():
     print('evaluate')
  
@@ -39,18 +41,19 @@ def evaluate():
     else:
         raise Exception
     
+# calculate the profits of the offer    
 def add_profits(offer: Offer):
     offer.profits(rb_storage.bot1_role, rb_storage.bot2_constraint, rb_storage.bot1_constraint)
     print(offer.profits)
 
-
+# get greediness (im lazy potentially change later)
 def get_greediness(constraint_user: int, constraint_bot: int) -> int:
     if constraint_user not in (0, None):
         return pareto_rb.pareto_efficient_offer(constraint_user, constraint_bot,rb_storage.bot1_role, False)
     else:
         return 0
     
-
+# accept the offer
 def accept_offer():
     print('accept')
     content = MESSAGES['accept_offer'] 
@@ -58,7 +61,6 @@ def accept_offer():
     accept_final_chat()
 
     return content
-
 
 def accept_final_chat():
     bot_offer = Offer(
@@ -71,6 +73,7 @@ def accept_final_chat():
     rb_storage.offer_list.append(bot_offer)
 
 
+# respond to unprofitable offer
 def respond_to_offer():
     random_offer = pareto_rb.pareto_efficient_string(rb_storage.bot2_constraint,rb_storage.bot1_constraint,rb_storage.bot1_role)
     print(f"random_offer: {random_offer}")
@@ -79,7 +82,7 @@ def respond_to_offer():
     message = MESSAGES['respond_to_offer'] % random_offer
     return message
 
-
+# respond to non offer
 def respond_to_non_offer():
     random_offer = pareto_rb.pareto_efficient_string(rb_storage.bot2_constraint,rb_storage.bot1_constraint,rb_storage.bot1_role)
     print(f"random_offer: {random_offer}")
@@ -89,7 +92,7 @@ def respond_to_non_offer():
     return message
 
 
-
+# propose a counteroffer
 def propose_offer():
     random_offer = pareto_rb.pareto_efficient_string(rb_storage.bot2_constraint,rb_storage.bot1_constraint,rb_storage.bot1_role)
     print(f"random_offer: {random_offer}")
@@ -98,7 +101,7 @@ def propose_offer():
     message = MESSAGES['initial_offer'] % random_offer
     return message
 
-
+# provide the hybrid with own constraint
 def give_const(text):
     text_lower = text.lower()
 

@@ -1,9 +1,10 @@
 # Role-based system storage
 # import packages 
 from shared import rnd_param
-from rb_llm.offer import Offer, OfferList
+from rbai_rb.offer_rb import Offer, OfferList
 from typing import Optional
 
+# rb storage class
 class rb_storage:
     bot1_role = rnd_param.role_other
     bot2_role = rnd_param.role

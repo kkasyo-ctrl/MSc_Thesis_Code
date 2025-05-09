@@ -1,4 +1,4 @@
-# messages
+# messages for rb
 MESSAGES = {
     'first_message_PC': "Hi! I'm excited to start our negotiation. As we begin, I'd like to get a sense of your needs and constraints. Can you share with me your Base Production Cost?",
     'offer_string': "Price of %s€ and quality of %s",

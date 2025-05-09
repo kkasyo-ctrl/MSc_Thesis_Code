@@ -7,7 +7,7 @@ import datetime
 import os
 from rbai_rb.rb_storage import rb_storage
 
-# system storage
+# system storage for hybrid
 class rbai_storage:
     bot1_role = rnd_param.role
     bot2_role = rnd_param.role_other
@@ -21,7 +21,7 @@ class rbai_storage:
     offers_pareto_efficient = None
     end_convo = False
 
-
+# save conversation
 def saving_convo():
     save_path = os.path.join("rbai_rb", "output.csv")  # Ensure correct save location
 

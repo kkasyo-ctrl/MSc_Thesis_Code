@@ -1,7 +1,7 @@
-import datetime # used to generate timestamps
-import requests # making HTTP requests to ollama api
-import json # reading javescript object notation
-import sys # for command-line arguments and I/O encoding.
+import datetime 
+import requests 
+import json 
+import sys
 import os 
 from rbai_llm import activation 
 from rbai_llm import system_info
@@ -9,13 +9,13 @@ from shared import rnd_param
 import copy
 from rbai_llm.prompts import system_final_prompt, system_final_prompt_other
 
-# ensure encoding is utf-8
+# ensure correct encoding 
 sys.stdout.reconfigure(encoding='utf-8')
 
 init_chist = 0
 
 
-# check available models; if error list available models
+# check available models
 def _get_List_of_downloaded_models():
     headers = {
         'Content-Type': 'application/json'
@@ -25,7 +25,6 @@ def _get_List_of_downloaded_models():
         response = requests.get('http://localhost:11434/api/tags', headers=headers)
         if response.status_code == 200:
             models = response.json()
-            # check if models is a dictionary
             if isinstance(models, dict):
                 model_name_List = []
                 for model in models['models']:
@@ -54,7 +53,7 @@ def _is_model_available(model_name):
     return False
 
 
-# sends a conversation prompt/history to the Ollama endpoint (/api/chat) and streams the response
+# sends a conversation history to the ollama 
 def _chat_to_ai(conversation_history, mod_used, temperature=0.1):
 
     response_chat = {
@@ -79,7 +78,6 @@ def _chat_to_ai(conversation_history, mod_used, temperature=0.1):
     else:
         llm_mod = 'llama3:latest'
 
-    # Send the chat request with history
     ollama_payload = {
         "model": llm_mod,
         "messages": conversation_history
@@ -91,10 +89,8 @@ def _chat_to_ai(conversation_history, mod_used, temperature=0.1):
   
         if response.status_code == 200:
 
-            # Handle the stream of responses
             formatted_chat_text = ''
             for line in response.iter_lines():
-                # Filter out keep-alive new lines
                 if line:
                     decoded_line = line.decode('utf-8')
                     chat_response = json.loads(decoded_line)
@@ -104,7 +100,6 @@ def _chat_to_ai(conversation_history, mod_used, temperature=0.1):
                     print(chat_message, end='', flush=True)
                     formatted_chat_text += chat_message
 
-                    # Check if the conversation is done
                     if chat_response.get('done', False):
                         break
         else:
@@ -131,7 +126,7 @@ def _chat_run(conversation_history, ai_number, ai_display_name, ai_other_number,
         }
         conversation_history[2] = copy.deepcopy(system_info.Storage.interaction_list_bot2)
 
-        # Append the custom message to Bot 2's conversation history.
+        # append a custom message to hybrid conversation history.
         conversation_history[ai_number].append(custom_message)
         
         ai_other_message = custom_message.copy()
@@ -151,7 +146,6 @@ def _chat_run(conversation_history, ai_number, ai_display_name, ai_other_number,
     conversation_history[2] = copy.deepcopy(system_info.Storage.interaction_list_bot2)
 
 
-    # Depending on which bot is sending, add the message to the proper conversation histories:
     if ai_number == 1:
         conversation_history[ai_number].append(ai_message)
         original_content = ai_message['content']
@@ -171,7 +165,6 @@ def _chat_run(conversation_history, ai_number, ai_display_name, ai_other_number,
 
 def run_chat_interaction(ai_chat):
     try:
-        # Check if the models are available
         if not _is_model_available(ai_chat['ai_one_model']):
             print(
                 'AI One model "{}" is not available. Please download the model first or alter the config file to use one of these models:'.format(
@@ -187,16 +180,13 @@ def run_chat_interaction(ai_chat):
                 print('   ' + model)
             return
 
-
-            # Print the AI display names by using a list, so we can easily switch between the two AIs using 1 or 2
-            # for AI One or AI Two
+        # display name for hybrid or LLM
         ai_display_name = [None, ai_chat['ai_one_conversation_history'][0]['display_name'],
                            ai_chat['ai_two_conversation_history'][0]['display_name']]
 
 
         print('(First chat output may be delayed while AI model is loaded...)')
 
-        # by storing the conversation history in a list, we can easily switch between the two AIs: 1 or 2 for AI One or AI Two
         conversation_history = [None, ai_chat['ai_one_conversation_history'], ai_chat['ai_two_conversation_history']]
         
         chatting_to_ai_one = True
@@ -226,7 +216,6 @@ def run_chat_interaction(ai_chat):
             ai_number = 1 if chatting_to_ai_one else 2
             ai_other_number = 2 if chatting_to_ai_one else 1
 
-            # Time to say goodbye
             if chat_counter >= int(ai_chat['number_of_chat_turns']) - 2:
                 conversation_history[ai_number].append(ai_chat['ai_final_chat_message'][str(ai_other_number)])            
 
@@ -257,7 +246,6 @@ def run_chat_interaction(ai_chat):
             
             print("\n({} of {}) {}:".format(chat_counter + 1, ai_chat['number_of_chat_turns'], rnd_param.role_other if chatting_to_ai_one else rnd_param.role))
 
-            # Perform a chat - calls interaction !!!
             _chat_run(conversation_history, ai_number, ai_display_name[ai_number], ai_other_number, chat_counter,
                       ai_chat)
                 
@@ -265,7 +253,7 @@ def run_chat_interaction(ai_chat):
                 chat_counter += 1
                 
                 
-                #### Save chat history
+                # save chat
                 if ai_number == 1:
                     temp_msg = conversation_history[1][-1]['content']
                     system_info.Storage.interaction_list_bot2.append({
@@ -288,7 +276,7 @@ def run_chat_interaction(ai_chat):
                         'role': 'user',
                         'content': temp_msg
                     })
-                ####
+                
 
                 _chat_run(conversation_history, ai_other_number, ai_display_name[ai_other_number], ai_number, chat_counter, ai_chat)
                 
@@ -314,29 +302,27 @@ def run_chat_interaction(ai_chat):
                         'role': 'user',
                         'content': temp_msg
                     })
-                ####
+                
 
 
                 system_info.saving_convo()
                 print("\n\nNegotiation has reached a deal. Ending chat.")
 
-                break  # Exit loop when DEAL is detected
+                break  
 
-            # Swap AIs
+            # swap AIs
             chatting_to_ai_one = not chatting_to_ai_one
             chat_counter += 1
         
         
     except KeyboardInterrupt:
         print('Chat ended.')
-        # create a file name that includes date and time:
 
     finally:
         print('\n\n')
 
 
-
-
+# starting function
 if __name__ == '__main__':
     if len(sys.argv) > 1:
         ai_chat_file = sys.argv[1] + ('' if sys.argv[1].endswith('.json') else '.json')
@@ -344,7 +330,7 @@ if __name__ == '__main__':
         print('Please specify the AI chat file as a command-line parameter.')
         sys.exit(1)
 
-    ai_chat_file = os.path.join(os.path.dirname(__file__), ai_chat_file)  # Ensure correct path
+    ai_chat_file = os.path.join(os.path.dirname(__file__), ai_chat_file) 
 
     with open(ai_chat_file, 'r') as f:
         ai_chat_config = json.load(f)
@@ -368,7 +354,6 @@ if __name__ == '__main__':
     print(ai_chat_config['ai_two_conversation_history'][0]['content'])
     print(ai_chat_config['ai_one_conversation_history'][0]['content'])
      
-    # Ensure ai_one_conversation_history has at least two entries
     if len(ai_chat_config["ai_one_conversation_history"]) > 1:
         ai_chat_config["ai_one_conversation_history"][1]["content"] = initial_msg
     else:

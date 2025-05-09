@@ -1,10 +1,13 @@
+# rb vs rb simulation
 import random
 import os, csv
 import shared
 from shared import rnd_param
 
+# simulation function
 def simulation():
 
+    # params
     bot1_role = random.choice(['buyer', 'supplier'])
     bot2_role = 'supplier' if bot1_role == 'buyer' else 'buyer'
 
@@ -18,6 +21,7 @@ def simulation():
     PRICE_RANGE = rnd_param.PRICE_RANGE
     QUALITY_RANGE = rnd_param.QUALITY_RANGE
 
+    # random pareto efficient offer
     def is_pareto_efficient(offer, all_offers) -> bool:
         def profit(o):
             price, quality = o
@@ -79,7 +83,6 @@ if __name__ == '__main__':
             break
         print(f"Completed run {run_count + 1} of {total_runs}")
 
-    # Ensure output directory exists.
     save_path = os.path.join("rb_rb", "output.csv")
     os.makedirs(os.path.dirname(save_path), exist_ok=True)
     with open(save_path, 'a', newline='') as f:

@@ -39,7 +39,7 @@ def extract_constraint(text):
         return MESSAGES['constraint_not_found'] % context_constraint
 
 
-# add message to the extracted constraint
+# add constraint confirm/clarify message to the extracted constraint
 def augment_message(message):
     output = extract_constraint(message)
     context_constraint = MESSAGES['context_constraint'][rb_storage.bot1_role]
@@ -117,7 +117,7 @@ def constant_draw_constraint() -> int:
         return 10 
 
 
-# interpret offer 
+# interpret offer (not used in final version)
 def interpret_offer(text):
     def get_int(value: str) -> Optional[int]:
         """Extract integer or average a range like '6-7'."""

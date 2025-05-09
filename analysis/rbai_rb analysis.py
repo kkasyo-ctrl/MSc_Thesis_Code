@@ -27,7 +27,7 @@ plt.bar(profit_counts.index, profit_counts.values, edgecolor="black", color=sky_
 plt.title("Profit Differences (Hybrid - Rule-based)", fontsize=12, weight = 'bold')
 plt.xlabel("Profit Difference", fontsize=12)
 plt.ylabel("Frequency", fontsize=12)
-plt.xticks(profit_counts.index)  # Ensure all x labels show
+plt.xticks(profit_counts.index) 
 plt.grid(axis='y', linestyle='--', alpha=0.7)
 plt.tight_layout()
 plt.show()
@@ -47,8 +47,6 @@ bar_width = 0.4
 plt.figure(figsize=(8, 5))
 plt.bar(x - bar_width/2, sup_counts, width=bar_width, label="Supplier Profit", color=sky_blue, edgecolor="black")
 plt.bar(x + bar_width/2, buy_counts, width=bar_width, label="Buyer Profit", color=navy_blue, edgecolor="black")
-
-# Labels and title
 plt.xticks(x, all_profits)
 plt.xlabel("Profit", fontsize=12)
 plt.ylabel("Frequency", fontsize=12)

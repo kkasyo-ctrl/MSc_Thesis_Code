@@ -2,6 +2,7 @@
 from shared import rnd_param
 import os
 
+# txt msg location
 BASE_DIR = r'C:\Users\david\Desktop\MSc Thesis\MSc Code\github\MSc_Thesis_Code\rb_llm'
 
 def from_file(file_path):
@@ -12,7 +13,7 @@ def from_file(file_path):
     with open(full_path, 'r') as f:
         return f.read()
     
-
+# system prompt for LLM
 def system_final_prompt():
     bot_role = rnd_param.role
     if bot_role == 'supplier':
@@ -39,7 +40,7 @@ def system_final_prompt():
             constraints +
             after_price)
 
-
+# message storage (rule-based bot)
 MESSAGES = {
     'first_message_PC': "Hi! I'm excited to start our negotiation. As we begin, I'd like to get a sense of your needs and constraints. Can you share with me your Base Production Cost?",
     'offer_string': "Price of %s€ and quality of %s",
