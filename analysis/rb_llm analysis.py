@@ -113,3 +113,5 @@ df['llm_const_thought_rb'] == df['const_llm']
 tmp = df['llm_const_thought_rb'] == df['const_llm']
 tmp.value_counts()
 
+df_deal['profit_llm'].median()
+df_deal['profit_rb'].median()

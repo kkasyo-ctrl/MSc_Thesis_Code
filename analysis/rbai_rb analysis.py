@@ -88,3 +88,6 @@ df.groupby("role_hybrid")[["profit_hybrid", "profit_rb"]].mean()
 
 df["won"].value_counts()
 
+
+df['profit_hybrid'].median()
+df['profit_rb'].median()

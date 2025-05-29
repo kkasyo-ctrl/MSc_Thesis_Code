@@ -120,3 +120,7 @@ df['won'].value_counts()
 
 df[['profit_hybrid', 'profit_llm']].describe()
 df['pareto_efficient'].value_counts()
+
+
+df['profit_llm'].median()
+df['profit_hybrid'].median()

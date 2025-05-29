@@ -85,4 +85,5 @@ df['euclidean_deviation'].value_counts()
 df['euclidean_deviation'].mean()
 
 
-
+df['profit_b1'].median()
+df['profit_b1'].median()

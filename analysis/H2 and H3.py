@@ -96,6 +96,10 @@ print(f"Shapiro-Wilk Test: W = {stat:.3f}, p = {p_normality:.5f}")
 stat, p_normality = shapiro(rule_offs)
 print(f"Shapiro-Wilk Test: W = {stat:.3f}, p = {p_normality:.5f}")
 
+hybrid_offs.median()
+llm_offs.median()
+rule_offs.median()
+
 
 # Kruskal-Wallis
 stat_offs, p_offs = kruskal(hybrid_offs, llm_offs, rule_offs)
@@ -116,6 +120,7 @@ stds = [rule_offs.std(), hybrid_offs.std(), llm_offs.std()]
 n_obs = [len(rule_offs), len(hybrid_offs), len(llm_offs)]
 
 sems = [std / np.sqrt(n) for std, n in zip(stds, n_obs)]
+
 
 # plot differences
 sky_blue = (162/255, 213/255, 242/255)

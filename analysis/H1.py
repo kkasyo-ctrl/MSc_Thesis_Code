@@ -41,7 +41,6 @@ print(f"Z-statistic: {z_stat}")
 print(f"P-value: {p_value}")
 
 
-
 # visualize results
 conditions = ['Hybrid', 'LLM']
 proportions = [hybrid_pareto_prop, llm_pareto_prop]
